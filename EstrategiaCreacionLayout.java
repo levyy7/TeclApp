@@ -1,12 +1,12 @@
 
 
 import java.util.*;
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
 public interface EstrategiaCreacionLayout {
     
-    
-    public Vector<Integer> crearLayout(
-        Vector<Vector<Double>> distLoc,
-        Vector<Vector<Double>> traficoInst);
+    public int[] crearLayout(
+        double[][] distLoc,
+        double[][] traficoInst);
+
 }

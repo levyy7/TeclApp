@@ -6,10 +6,9 @@ public class CtrlAlgoritmo {
         Vector<Vector<Pair<String, Integer>>> listaP, 
         TipoAlg tipo) {
 
-
         EstrategiaCreacionLayout algoritmo;
 
-        if (tipo == TipoAlg.QAPBB) algoritmo = new Algoritmo1();
+        if (tipo == TipoAlg.QAPBB) algoritmo = new QAPBasic();
         else algoritmo = new Algoritmo2();
 
         /*

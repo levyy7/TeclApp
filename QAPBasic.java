@@ -2,8 +2,9 @@
 
 import java.util.*;
 
-public class Algoritmo2 implements EstrategiaCreacionLayout {
-
+public class QAPBasic implements EstrategiaCreacionLayout {
+    
+    
     public int[] crearLayout(
         double[][] distLoc,
         double[][] traficoInst) {
@@ -11,4 +12,5 @@ public class Algoritmo2 implements EstrategiaCreacionLayout {
         
         return new int[0];
     }
+
 }

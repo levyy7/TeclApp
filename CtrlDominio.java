@@ -14,8 +14,11 @@ public class CtrlDominio {
 
         Vector<Vector<Double>> lslGlobal = ca.calcularTLPGlobal(lslConj);
         
-        Vector<Integer> layout = ca.crearLayout(pl.distanceMatrix(), lslGlobal, nombreAlgoritmo)
+        Vector<Integer> layout = ca.crearLayout(pl.distanceMatrix(), lslGlobal, nombreAlgoritmo);
 
-        ce.insertarTeclado(nombreTeclado, layout, alf);*/
+        ce.insertarTeclado(nombreTeclado, layout, alf);
+        */
     }
+
+
 }
