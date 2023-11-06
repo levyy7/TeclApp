@@ -4,10 +4,11 @@ import java.util.*;
 
 public class Algoritmo2 implements EstrategiaCreacionLayout {
 
-    public Vector<Integer> crearLayout(
-        Vector<Vector<Double>> distLoc,
-        Vector<Vector<Double>> traficoInst) {
+    public int[] crearLayout(
+        double[][] distLoc,
+        double[][] traficoInst) {
+
         
-        return new Vector<Integer>();
+        return new int[0];
     }
 }
