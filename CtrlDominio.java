@@ -19,8 +19,16 @@ public class CtrlDominio {
         ce.insertarTeclado(nombreTeclado, layout, alf);
         */
 
-        //CtrlEntrada ctrlE = new CtrlEntrada();
-        //CtrlAlgoritmo ctrlA = new CtrlAlgoritmo();
+        CtrlEntrada ctrlE = new CtrlEntrada();
+        CtrlAlgoritmo ctrlA = new CtrlAlgoritmo();
+
+        String alfabeto;
+        Vector<String> textos = new Vector<String>();
+
+        //alfabeto = ctrlE.getInput(nombreAlfabeto);
+        //for (int i = 0; i < nombresTLP.length: ++i) textos.addElement(ctrlE.getInput(nombresTLP.elementAt(i)));
+
+
     }
 
 

@@ -1,14 +1,15 @@
-package ControladorsEntrada;
+//package ControladorsEntrada;
 
 import java.io.*;
 import java.util.*;
 
-import Dades.*;
-import Domini.*;
-import Excepcions.*;
+//import Dades.*;
+//import Domini.*;
+//import Excepcions.*;
 
 public class CtrlEntrada{
 
+	/*
  	private Vector<Teclado> teclados;
  	private Vector<Input> inputs;
 
@@ -56,6 +57,7 @@ public class CtrlEntrada{
 	public Input getInput(String e){
 		return inputs.getInput(e);
 	}
+	*/
 
 //modificar texto?
 //modificar teclado?

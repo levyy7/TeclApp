@@ -73,12 +73,6 @@ public class Main {
             //Instruccion de borrar teclado
             else if (instruccion == 2) {
 
-                String nombre;
-
-                Scanner teclado = new Scanner(System.in);
-                System.out.print("Introduzca su nombre: ");
-                nombre = teclado.nextLine();
-                System.out.println("¡Hola " + nombre + "!");
                 //
             }
 
