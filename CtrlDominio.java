@@ -18,6 +18,9 @@ public class CtrlDominio {
 
         ce.insertarTeclado(nombreTeclado, layout, alf);
         */
+
+        //CtrlEntrada ctrlE = new CtrlEntrada();
+        //CtrlAlgoritmo ctrlA = new CtrlAlgoritmo();
     }
 
 
