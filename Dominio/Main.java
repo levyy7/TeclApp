@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Main {
 
+    private static CtrlDominio ctrlD;
+
 	private static void GuiaInstrucciones() {
 
         System.out.println("Guía de instrucciones");
@@ -14,7 +16,22 @@ public class Main {
 		System.out.println("33 = Salir");
 	}
 
-    private static void crearTeclado(CtrlDominio ctrlD) {
+    private static Vector<String> introducirTextos() {
+
+        Scanner tec = new Scanner(System.in);
+        Scanner tecInt = new Scanner(System.in);
+        Vector<String> textos = new Vector<String>();
+
+        System.out.print("Cuantos textos quieres introducir? ");
+        int numeroDeTextos = tecInt.nextInt();
+
+        System.out.println("Introduce los nombres de los textos:");
+        for (int i = 0; i < numeroDeTextos; ++i) textos.addElement(tec.nextLine());
+    
+        return textos;
+    }
+
+    private static void crearTeclado() {
 
         String algor, alfab, teclado;
         Vector<String> textos = new Vector<String>();
@@ -34,11 +51,7 @@ public class Main {
         System.out.print("Introduce el alfabeto: ");
         alfab = tec.nextLine();
 
-        System.out.print("Cuantos textos quieres introducir? ");
-        int numeroDeTextos = tecInt.nextInt();
-
-        System.out.println("Introduce los nombres de los textos:");
-        for (int i = 0; i < numeroDeTextos; ++i) textos.addElement(tec.nextLine());
+        textos = introducirTextos();
         
         System.out.print("Por ultimo el nombre del teclado: ");
         teclado = tec.nextLine();
@@ -47,9 +60,60 @@ public class Main {
         ctrlD.crearTeclado(teclado, alfab, textos, algor);
     }
 
+    private static void borrarTeclado() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Introduce el nombre del teclado a borrar: ");
+        String nombreTeclado = tec.nextLine();
+
+        ctrlD.borrarTeclado(nombreTeclado);
+    }
+
+    private static void importarAlfabeto() {
+        ctrlD.importarAlfabeto();
+    }
+
+    private static void importarTexto() {
+        ctrlD.importarTexto();
+    }
+
+    private static void modificarTeclado() {
+
+        Scanner tec = new Scanner(System.in);
+        Scanner tecChar = new Scanner(System.in);
+
+        System.out.print("Introduce el nombre del teclado a modificar: ");
+        String nombreTeclado = tec.nextLine();
+
+        Vector<String> textos = introducirTextos();
+
+        System.out.println("Quieres modificar el alfabeto?");
+        System.out.println("Y = Si");
+        System.out.println("N = No");
+        Character modif = tec.next().charAt(0);
+
+        if (modif == 'Y') {
+            System.out.print("Introduce el nombre del nuevo alfabeto: ");
+            String alfabeto = tec.nextLine();
+            ctrlD.modificarTeclado(nombreTeclado, alfabeto, textos);
+        }
+        else ctrlD.modificarTeclado(nombreTeclado, textos);
+    }
+
+    private static void modificarTexto() {
+        
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Introduce el nombre del texto a modificar: ");
+        String nombreTexto = tec.nextLine();
+
+        ctrlD.modificarTexto(nombreTexto);
+    }
+
 	public static void main(String[] args) {
         
-		CtrlDominio ctrlD = new CtrlDominio();
+		ctrlD = new CtrlDominio();
 
 		GuiaInstrucciones();
         
@@ -58,49 +122,21 @@ public class Main {
         int instruccion;
         while (true) {
 
-            instruccion = tec.nextInt();
+            instruccion = tec.nextInt();          
+
+            //Listado de instrucciones
+            if (instruccion == 1) crearTeclado();
             
-            //Instruccion de crear teclado
-            if (instruccion == 1) {
-                
-                crearTeclado(ctrlD);
+            else if (instruccion == 2) borrarTeclado();
+            
+            else if (instruccion == 3) importarAlfabeto();
 
-                //String [] a = new String [5];
-                //Vector<String> nombresTLP = new Vector<String>(2);   
-                //ctrlD.crearTeclado("PrimerTeclado", "Alfabeto", nombresTLP, "Algoritmo");
-            }
+            else if (instruccion == 4) importarTexto();
 
-            //Instruccion de borrar teclado
-            else if (instruccion == 2) {
+            else if (instruccion == 5) modificarTeclado();
 
-                //
-            }
+            else if (instruccion == 6) modificarTexto();
 
-            //Instruccion de importar Alfabeto
-            else if (instruccion == 3) {
-
-            	//
-            }
-
-            //Instruccion de importar texto
-            else if (instruccion == 4) {
-
-            	//
-            }
-
-            //Instruccion de Modificar teclado
-            else if (instruccion == 5) {
-
-            	//
-            }
-
-            //Instruccion de Modificar texto
-            else if (instruccion == 6) {
-
-            	//
-            }
-
-            //Instruccion de Salir del programa
             else if (instruccion == 33) break;
         }
     }
