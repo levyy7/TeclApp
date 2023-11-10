@@ -9,11 +9,17 @@ public class Main {
         System.out.println("Guía de instrucciones");
         System.out.println("1 = Crear teclado");
 		System.out.println("2 = Borrar teclado");
+
 		System.out.println("3 = Importar alfabeto");
 		System.out.println("4 = Importar texto");
-		System.out.println("5 = Modificar teclado");
-		System.out.println("6 = Modificar texto");
-		System.out.println("33 = Salir");
+        System.out.println("5 = Importar lista de palabras");
+
+		System.out.println("6 = Modificar teclado");
+        System.out.println("7 = Modificar alfabeto");
+		System.out.println("8 = Modificar texto");
+        System.out.println("9 = Modificar lista de palabras"); 
+		
+        System.out.println("33 = Salir");
 	}
 
     private static Vector<String> introducirTextos() {
@@ -22,13 +28,48 @@ public class Main {
         Scanner tecInt = new Scanner(System.in);
         Vector<String> textos = new Vector<String>();
 
-        System.out.print("Cuantos textos quieres introducir? ");
+        System.out.print("Cuantos textos/listas quieres introducir? ");
         int numeroDeTextos = tecInt.nextInt();
 
-        System.out.println("Introduce los nombres de los textos:");
+        System.out.println("Introduce los nombres de los textos/listas:");
         for (int i = 0; i < numeroDeTextos; ++i) textos.addElement(tec.nextLine());
     
         return textos;
+    }
+
+    private static Map<String, Integer> introducirLista() {
+
+        Scanner tec = new Scanner(System.in);
+        
+        Map<String, Integer> lista = new HashMap<>();
+        boolean acabado = false;
+
+        String cadena = "";
+        while (acabado == false) {
+            
+            cadena = tec.nextLine();
+
+            String[] palabraConNumero = cadena.split(" ");
+
+            int tam = palabraConNumero.length;
+
+            if (tam != 2) {
+                System.out.println("Fin de la lista");
+                acabado = true;
+            } 
+            else {
+                String palabra = palabraConNumero[0];
+                int numero = Integer.valueOf(palabraConNumero[1]);
+                lista.put(palabra, numero);
+            }
+            
+        }
+
+        //IMPRIME EL MAPA A VER
+        //for (Map.Entry<String, Integer> entry : lista.entrySet())
+        //    System.out.println(entry.getKey()+' '+entry.getValue());
+
+        return lista;
     }
 
     private static void crearTeclado() {
@@ -71,11 +112,44 @@ public class Main {
     }
 
     private static void importarAlfabeto() {
-        ctrlD.importarAlfabeto();
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre del nuevo alfabeto: ");
+        String nombreAlfabeto = tec.nextLine();
+        
+        System.out.print("Escribe el alfabeto en una linea: ");
+        String alfabeto = tec.nextLine();
+        alfabeto.replace(" ", "");
+
+        ctrlD.importarAlfabeto(nombreAlfabeto, alfabeto);
     }
 
     private static void importarTexto() {
-        ctrlD.importarTexto();
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre del nuevo texto: ");
+        String nombreTexto = tec.nextLine();
+        
+        System.out.print("Escribe el texto en una linea: ");
+        String texto = tec.nextLine();
+
+        ctrlD.importarTexto(nombreTexto, texto);
+    }
+
+    private static void importarListaPalabras() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre de la nueva lista: ");
+        String nombreLista = tec.nextLine();
+        
+        System.out.print("Escribe la nueva lista con un nombre y un numero separado por espacios, ");
+        System.out.print("cuando acabes presiona enter: ");
+        Map<String, Integer> lista = introducirLista();
+
+        ctrlD.importarListaPalabras(nombreLista, lista);
     }
 
     private static void modificarTeclado() {
@@ -101,6 +175,19 @@ public class Main {
         else ctrlD.modificarTeclado(nombreTeclado, textos);
     }
 
+    private static void modificarAlfabeto() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre del alfabeto a modificar: ");
+        String nombreAlfabeto = tec.nextLine();
+
+        System.out.print("Escribe el alfabeto nuevo en una linea: ");
+        String alfabetoNuevo = tec.nextLine();
+
+        ctrlD.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);
+    }
+
     private static void modificarTexto() {
         
         Scanner tec = new Scanner(System.in);
@@ -108,36 +195,62 @@ public class Main {
         System.out.print("Introduce el nombre del texto a modificar: ");
         String nombreTexto = tec.nextLine();
 
-        ctrlD.modificarTexto(nombreTexto);
+        System.out.print("Introdce el nuevo texto, cuando acabes presiona enter 2 veces: ");
+        String texto = "";
+        boolean acabado = false;
+        while (acabado == false) {
+            String linea = tec.nextLine();
+            if (Integer.valueOf(linea) == -1) acabado = true;
+            else texto = texto+" "+linea;
+        }
+
+        ctrlD.modificarTexto(nombreTexto, texto);
+    }
+
+    private static void modificarListaPalabras() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre de la lista a modificar: ");
+        String nombreLista = tec.nextLine();
+        
+        System.out.print("Escribe la nueva lista con un nombre y un numero separado por espacios, "); 
+        System.out.print("cuando acabes presiona enter: ");
+        Map<String, Integer> listaNueva = introducirLista();
+
+        ctrlD.modificarListaPalabras(nombreLista, listaNueva);
     }
 
 	public static void main(String[] args) {
         
 		ctrlD = new CtrlDominio();
+        Scanner tec = new Scanner (System.in);
 
 		GuiaInstrucciones();
         
         //Para el cin
-        Scanner tec = new Scanner (System.in);
-        int instruccion;
-        while (true) {
+        boolean salir = false;
+        while (salir == false) {
 
-            instruccion = tec.nextInt();          
+            int instruccion = tec.nextInt();          
 
             //Listado de instrucciones
-            if (instruccion == 1) crearTeclado();
-            
-            else if (instruccion == 2) borrarTeclado();
-            
-            else if (instruccion == 3) importarAlfabeto();
+            switch (instruccion) {
 
-            else if (instruccion == 4) importarTexto();
+                case 1: crearTeclado(); break;
+                case 2: borrarTeclado(); break;
 
-            else if (instruccion == 5) modificarTeclado();
+                case 3: importarAlfabeto(); break;
+                case 4: importarTexto(); break;
+                case 5: importarListaPalabras(); break;
 
-            else if (instruccion == 6) modificarTexto();
+                case 6: modificarTeclado(); break;
+                case 7: modificarAlfabeto(); break;
+                case 8: modificarTexto(); break;
+                case 9: modificarListaPalabras(); break;
 
-            else if (instruccion == 33) break;
+                case 33: salir = true; break;
+            }
         }
     }
 

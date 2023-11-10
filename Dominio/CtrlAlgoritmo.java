@@ -1,7 +1,7 @@
 import java.util.Vector;
 
 public class CtrlAlgoritmo {
-    /*
+    /* ESTO ES DEL ENEKO
     public Vector< Pair< Pair<Double,Double>, Char>> crearLayout(
         Vector<Vector<Double>> tlp,
         Vector<Vector<Pair<String, Integer>>> listaP, 
@@ -18,7 +18,7 @@ public class CtrlAlgoritmo {
                 teclas -> Simetrica respeto a la diagonal.
                 matrixTraf: Cada linea repr un simbolo del alfabeto
 
-        */
+        AQUI SE ACABA LO DEL ENEKO*/
     //    Vector<Integer> sol = algoritmo.usarAlgoritmo(matrixDist, matrixTraf);
 
     //}    
