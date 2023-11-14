@@ -14,9 +14,17 @@ public class TLP extends Input {
     public void setNombre(String nombre){
         super.setNombre(nombre);
     }
-    
-//??????????????? 
-    public void importTLP(){
-        
+    /* 
+    public void readFromFile(String file){
+        String in = "";
+        super.readFromFile(file, in);
+        this.alphabet = in;
     }
+
+    public void readFromType(String in){
+        super.readFromType(in);
+        this.alphabet = in;
+    }*/
 }
+
+//mariona

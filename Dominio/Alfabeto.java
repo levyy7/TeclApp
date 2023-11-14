@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Alfabeto extends Input{
@@ -8,11 +10,18 @@ public class Alfabeto extends Input{
         super(nombre);
         this.alphabet = alphabet;
     }
+
+    //READ FROM FILE AND READ FROM TYPING
     //asumo que asi lo hara bien, puede ser que se tenga que leer varias lineas
-    public void readAlfabeto(){
-        Scanner t = new Scanner(System.in);
-        this.alphabet = t.nextLine();
-        t.close(); //me pedia cerrar el canal
+    public void readFromFile(String file) throws FileNotFoundException{
+        String in = "";
+        super.readFromFile(file, in);
+        this.alphabet = in;
+    }
+
+    public void readFromType(String in){
+        super.readFromType(in);
+        this.alphabet = in;
     }
 
     public String getAlfabeto(){
@@ -39,10 +48,6 @@ public class Alfabeto extends Input{
     public void modify(String newAlphabet){
         this.alphabet = newAlphabet;
     }
-
-/* 
-    public void save(){
-
-    }
-    */
 }
+
+//mariona
