@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Texto extends TLP{
@@ -17,9 +18,20 @@ public class Texto extends TLP{
         return text;
     }
 
+    public void readFromFile(String file) throws FileNotFoundException{
+        String in = "";
+        super.readFromFile(file, in);
+        this.text = in;
+    }
+
+    public void readFromType(String in){
+        super.readFromType(in);
+        this.text = in;
+    }
+
+
     public void modify(String newtext){
         this.text = newtext;
-
         //sha de cridar a fer una nova llista de caracter amb frequencia de caracters?????
     }
 
@@ -28,3 +40,5 @@ public class Texto extends TLP{
     }
     
 }
+
+//mariona
