@@ -1,12 +1,10 @@
-
-
 import java.util.*;
-//import javafx.util.Pair;
+import java.awt.Point;
 
 public interface EstrategiaCreacionLayout {
     
-    public int[] crearLayout(
+    public ArrayList<Point> crearLayout(
         double[][] distLoc,
-        double[][] traficoInst);
+        int[][] traficoInst);
 
 }
