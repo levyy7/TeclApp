@@ -32,7 +32,7 @@ public class CtrlEntrada{
 		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto);
 		teclados.add(nombreTeclado, board);
 		Vector<Pair<double, double>> playout = board.getplayout();
-		return playout
+		return playout;
 	}
 
 	/*rarete
@@ -61,16 +61,18 @@ public class CtrlEntrada{
 		teclados.remove(e);
 	}
 
-	public getAlgoritmo(String nombreTeclado){
-		
+	public String getAlgoritmo(String nombreTeclado){
+		Teclado a = teclados.get(nombreTeclado);
+		return a.algoritmo();
 	}
 
-	public getType(nombreTLP){
-
+	public String getType(String nombreTLP){
+		Input input = inputs.get(nombreTLP);
+		return input.getType();
 	}
 
-	public importarAlfabeto(nombreAlfabeto, alfabeto){
-
+	public  importarAlfabeto(String nombreAlfabeto, String alfabeto){
+		importInput()
 	}
 
 	public importarTexto(nombreTexto, texto){
@@ -93,13 +95,14 @@ public class CtrlEntrada{
 
 	}
 
-	public void setInput(String e){
+	public void importInput(String e, ){
 		Teclado inputs = new Input(e);
 	}
 
 	public Input getInput(String e){
 		return inputs.getInput(e);
-	}
+	} 
+	//cargar datos persistencia?
 
 }
 //classe implementada per POL
