@@ -48,23 +48,22 @@ public class CtrlEntrada{
 
 
 	}
+	/*
 	public Teclado getTeclado(String e){
 		return teclados.getTeclado(e);
 	}
-
-	public void borrarTeclado(String e){
-		teclados.pop(board);
-	}
-
 	public Vector<Teclado> consultarTeclados(){
 		return teclados;
 	}
+	*/
 
-	public getAlgoritmo(nombreTeclado){
-
+	public void borrarTeclado(String e){
+		teclados.remove(e);
 	}
 
-	
+	public getAlgoritmo(String nombreTeclado){
+		
+	}
 
 	public getType(nombreTLP){
 
