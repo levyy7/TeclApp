@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ContarLetras {
+public class UtilesAlgoritmo {
 
 	//Mapa de posiciones de las letras de un alfabeto
 	private Map<Character, Integer> inicializaAlfabeto(String alfabeto) {
@@ -21,8 +21,10 @@ public class ContarLetras {
 		Map<Character, Integer> map = new HashMap<>();
 		map = inicializaAlfabeto(alfabeto);
 
+		//map.forEach((key, value) -> System.out.println(key + ": " + value));
+		
 		int tam_alf = alfabeto.length();
-		int[][] traficoInt = new int[tam_alf][tam_alf+1];
+		int[][] traficoInt = new int[tam_alf][tam_alf];
 
 		for (int i = 0; i < texto.size(); ++i) {
 
@@ -30,11 +32,10 @@ public class ContarLetras {
 			char[] palabra = texto.elementAt(i).toCharArray();
 			int tam = palabra.length;
 			for (int j = 0; j < tam-1; ++j) {
-
 				int posLetra1 = map.get(palabra[j]);
-				int posLetra2 = map.get(palabra[j+1])+1;
+				int posLetra2 = map.get(palabra[j+1]);
 				traficoInt[posLetra1][posLetra2]++;
-
+				traficoInt[posLetra2][posLetra1]++;
 			}
 
 		}

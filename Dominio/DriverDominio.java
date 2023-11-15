@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main {
+public class DriverDominio {
 
     private static CtrlDominio ctrlD;
 
