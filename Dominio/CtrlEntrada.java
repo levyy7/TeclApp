@@ -28,10 +28,13 @@ public class CtrlEntrada{
 	    inputs = new HashMap<String, Input>();
 	}
 
-	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){
-		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto);
+	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ //li paso tambe alphabeto?
+		Teclado board = new Teclado(nombreTeclado);
+
 		teclados.add(nombreTeclado, board);
-		Vector<Pair<double, double>> playout = board.getplayout();
+		Input alfa = inputs.get(nombreAlfabeto);
+		int nombreCaractes = alfa.getSize();
+		Vector<Pair<double, double>> playout = board.getplayout(nombreCaracters);
 		return playout;
 	}
 
@@ -45,17 +48,12 @@ public class CtrlEntrada{
 	}
 	*/
 	public setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout)(){
+		board = teclados.get(nombreTeclado);
+		board.setAlgoritmo(nombreAlgoritmo);
+		board.setLayout(layout);
 
 
 	}
-	/*
-	public Teclado getTeclado(String e){
-		return teclados.getTeclado(e);
-	}
-	public Vector<Teclado> consultarTeclados(){
-		return teclados;
-	}
-	*/
 
 	public void borrarTeclado(String e){
 		teclados.remove(e);
@@ -71,38 +69,44 @@ public class CtrlEntrada{
 		return input.getType();
 	}
 
-	public  importarAlfabeto(String nombreAlfabeto, String alfabeto){
-		importInput()
+	public void importarAlfabeto(String nAlfa, String alfa){
+		importInput(nAlfa, alfa, "Alphabeto")
 	}
 
-	public importarTexto(nombreTexto, texto){
-
+	public void importarTexto(Sting nTexto, String texto){
+		importInput(nTexto, texto, "Texto")
 	}
 
-	public importarListaPalabras(nombreLista, lista){
-
+	public void importarListaPalabras(String nLista, Map<String, Integer> lista){
+		importInput(nLista, lista, "ListaPalabras") //jaja problema
 	}
 
-	public getAlfabeto(nombreTeclado){
-
+	public String getAlfabeto(nombreTeclado){
+		Teclado a = teclados.get(nombreTeclado);
+		return a.alphabeto();
 	}
 
 	public modificarAlfabeto(nombreAlfabeto, alfabetoNuevo){
-
+		inputs.remove(nombreAlfabeto);
+		importarAlfabeto(nombreAlfabeto, alfabetoNuevo);
+	}
+	public modificarListaPalabras(nombreLista, listaNueva){
+		inputs.remove(nombreLista);
+		importarListaPalabras(nombreLista, listaNueva);
+	}
+	public modificarTexto(String nombreTexto, String textoNuevo){
+		inputs.remove(nombreTexto);
+		importarTexto(nombreTexto, textoNuevo);
 	}
 
-	public modificarListaPalabras(noombreLista, listaNueva){
-
-	}
-
-	public void importInput(String e, ){
-		Teclado inputs = new Input(e);
+	private void importInput(String name, String data, String type){
+		Input in = new Input(name,data,type); //al reves que la Mariona
+		inputs.add(name, in);
 	}
 
 	public Input getInput(String e){
 		return inputs.getInput(e);
-	} 
-	//cargar datos persistencia?
+	}
 
 }
 //classe implementada per POL
