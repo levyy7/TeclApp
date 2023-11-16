@@ -28,8 +28,8 @@ public class CtrlEntrada{
 	    inputs = new HashMap<String, Input>();
 	}
 
-	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ //li paso tambe alphabeto?
-		Teclado board = new Teclado(nombreTeclado);
+	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ 
+		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto);
 
 		teclados.add(nombreTeclado, board);
 		Input alfa = inputs.get(nombreAlfabeto);
@@ -38,21 +38,10 @@ public class CtrlEntrada{
 		return playout;
 	}
 
-	/*rarete
-	public Teclado setTeclado(String nom, String alfa, String text){
-		Input a = getInput(alfa);
-		Input t = getInput(text);
-		Teclado board = new Teclado(nom, a, t); 
-		teclados.put(board);
-		return board; 
-	}
-	*/
 	public setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout)(){
 		board = teclados.get(nombreTeclado);
 		board.setAlgoritmo(nombreAlgoritmo);
 		board.setLayout(layout);
-
-
 	}
 
 	public void borrarTeclado(String e){
@@ -100,6 +89,10 @@ public class CtrlEntrada{
 	}
 
 	private void importInput(String name, String data, String type){
+		Input in = new Input(name,data,type); //al reves que la Mariona
+		inputs.add(name, in);
+	}
+	private void importInput(String name, Map<String, Integer> data, String type){
 		Input in = new Input(name,data,type); //al reves que la Mariona
 		inputs.add(name, in);
 	}
