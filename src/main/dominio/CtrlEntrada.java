@@ -30,7 +30,6 @@ public class CtrlEntrada{
 
 	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ 
 		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto);
-
 		teclados.add(nombreTeclado, board);
 		Input alfa = inputs.get(nombreAlfabeto);
 		int nombreCaractes = alfa.getSize();
@@ -38,7 +37,7 @@ public class CtrlEntrada{
 		return playout;
 	}
 
-	public setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout)(){
+	public void setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout)(){
 		board = teclados.get(nombreTeclado);
 		board.setAlgoritmo(nombreAlgoritmo);
 		board.setLayout(layout);
@@ -70,20 +69,20 @@ public class CtrlEntrada{
 		importInput(nLista, lista, "ListaPalabras") //jaja problema
 	}
 
-	public String getAlfabeto(nombreTeclado){
+	public String getAlfabeto(String nombreTeclado){
 		Teclado a = teclados.get(nombreTeclado);
 		return a.alphabeto();
 	}
 
-	public modificarAlfabeto(nombreAlfabeto, alfabetoNuevo){
+	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo){
 		inputs.remove(nombreAlfabeto);
 		importarAlfabeto(nombreAlfabeto, alfabetoNuevo);
 	}
-	public modificarListaPalabras(nombreLista, listaNueva){
+	public void modificarListaPalabras(String nombreLista, String listaNueva){
 		inputs.remove(nombreLista);
 		importarListaPalabras(nombreLista, listaNueva);
 	}
-	public modificarTexto(String nombreTexto, String textoNuevo){
+	public void modificarTexto(String nombreTexto, String textoNuevo){
 		inputs.remove(nombreTexto);
 		importarTexto(nombreTexto, textoNuevo);
 	}

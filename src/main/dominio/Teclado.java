@@ -15,6 +15,7 @@ public class Teclado {
         this.algoritmo = algoritmo;
         this.alfabeto = alfabeto;
         this.distribucion = distribucion;
+        
     }
     
     public String getNombre(){
