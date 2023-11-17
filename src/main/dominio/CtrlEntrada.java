@@ -29,11 +29,12 @@ public class CtrlEntrada{
 	}
 
 	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ 
-		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto);
-		teclados.add(nombreTeclado, board);
+		
 		Input alfa = inputs.get(nombreAlfabeto);
-		int nombreCaractes = alfa.getSize();
-		Vector<Pair<double, double>> playout = board.getplayout(nombreCaracters);
+		int numeroCaractes = alfa.getSize();
+		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto, numeroCaracters);
+		teclados.add(nombreTeclado, board);
+		Vector<Point<double, double>> playout = board.getplayout();
 		return playout;
 	}
 
@@ -66,7 +67,8 @@ public class CtrlEntrada{
 	}
 
 	public void importarListaPalabras(String nLista, Map<String, Integer> lista){
-		importInput(nLista, lista, "ListaPalabras") //jaja problema
+		Input in = new Input(nLista,lista,"ListaPalabras");
+		inputs.add(nLista, in);
 	}
 
 	public String getAlfabeto(String nombreTeclado){
