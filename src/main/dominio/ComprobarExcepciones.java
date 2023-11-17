@@ -1,7 +1,7 @@
 //import java.util.*;
 import java.util.regex.Pattern;
 
-public class algotecladoalpha{
+public class ComprobarExcepciones{
 
 	public static void main(String[] args){ //texto solo caracteres del alfabeto
 		String alfabeto = "asdfeqc ";
