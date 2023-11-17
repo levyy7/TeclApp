@@ -1,4 +1,4 @@
-package main.dominio;
+//package ControladorsEntrada;
 
 import java.io.*;
 import java.util.*;
@@ -89,10 +89,6 @@ public class CtrlEntrada{
 	}
 
 	private void importInput(String name, String data, String type){
-		Input in = new Input(name,data,type); //al reves que la Mariona
-		inputs.add(name, in);
-	}
-	private void importInput(String name, Map<String, Integer> data, String type){
 		Input in = new Input(name,data,type); //al reves que la Mariona
 		inputs.add(name, in);
 	}
