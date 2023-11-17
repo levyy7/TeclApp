@@ -1,3 +1,5 @@
+package main.dominio;
+
 import java.util.*;
 
 public class UtilesAlgoritmo {

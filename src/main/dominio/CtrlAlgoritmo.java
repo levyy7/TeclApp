@@ -1,3 +1,6 @@
+package main.dominio;
+import main.dominio.algoritmos.*;
+
 import java.util.Vector;
 
 public class CtrlAlgoritmo {

@@ -1,3 +1,6 @@
+package drivers;
+import main.dominio.CtrlDominio;
+
 import java.util.*;
 
 public class DriverDominio {

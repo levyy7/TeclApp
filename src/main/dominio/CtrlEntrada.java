@@ -1,4 +1,4 @@
-//package ControladorsEntrada;
+package main.dominio;
 
 import java.io.*;
 import java.util.*;
