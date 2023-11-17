@@ -48,7 +48,7 @@ public class CtrlDominio {
 
         //Vector<Pair<double, double>> playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
 
-        int[] layout = ctrlA.usarAlgoritmo(textos, alfabeto);
+        int[] layout = ctrlA.usarQAP(textos, alfabeto);
 
         //ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
 
