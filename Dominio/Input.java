@@ -34,14 +34,15 @@ public class Input{
         //return in;
     }
 
+    public abstract void setInput();
+
     //aquesta funcio?
-    public void readFromType(String in){
-        //return in;
-    }
+    public abstract void readFromType(String in);
 
     //llegeix input i el classifica segons es TLP o Alfabet
     //type indica tipus de input, st: cadena buida ("") on es guardara l'alfabet, el text..., file: ruta del file, in: input que s'importa escrit
-    public void importInput(String type, String st, String file, String in)throws FileNotFoundException{
+    public void importInput(String type, String file, String name, String in)throws FileNotFoundException{
+        String st = "";
         switch(type){
             case "file":
                 readFromFile(file, st);

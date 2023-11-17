@@ -7,7 +7,12 @@ public class Teclado {
     String alfabeto;
     Map<Character, Point> distribucion = new HashMap<>();
 
+    //creadora buida
+    public Teclado(String nombre){
+        this.nombre = nombre;
+    }
 
+    //creadora
     public Teclado(String nombre, String algoritmo, String alfabeto, Map<Character, Point> distribucion) {
         this.nombre = nombre;
         this.algoritmo = algoritmo;
