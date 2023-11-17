@@ -1,3 +1,6 @@
+package main.dominio;
+import main.dominio.algoritmos.*;
+
 import java.util.Vector;
 
 public class CtrlAlgoritmo {
@@ -23,12 +26,13 @@ public class CtrlAlgoritmo {
 
     //}    
 
-    public int[] usarAlgoritmo(Vector<String> texto, String alfabeto) {
+    public int[] usarQAP(Vector<String> texto, String alfabeto) {
 
         EstrategiaCreacionLayout estC;
-        ContarLetras ctL = new ContarLetras();
+        UtilesAlgoritmo ctL = new UtilesAlgoritmo();
 
         int[][] traficoInt = ctL.contarLetras(texto, alfabeto);
+
         //double[][] distLoc = ctL.distLoc();
 
         //return estC.crearLayout(distLoc, traficoInt);

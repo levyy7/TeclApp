@@ -1,3 +1,5 @@
+package main.dominio.algoritmos;
+
 import java.util.*;
 import java.awt.Point;
 
