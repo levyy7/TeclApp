@@ -7,39 +7,39 @@ import java.awt.Point;
 
 public class QAPOptimized extends QAP {
     
-    //@Override 
-    protected double initialBound(double[][] distLoc, int[][] traficoInst) {
+    @Override 
+    protected Node initialSolution(double[][] distLoc, int[][] traficoInst) {
         return greedySolution(distLoc, traficoInst);
     }
 
-    private double greedySolution(
-        double[][] distLoc,
-        int[][] traficoInst) {
-        
-        //Greedy solution to the QAP pronlem. The result is not optimal!
-        double cost = 0.0;
+    private Node greedySolution(double[][] distLoc, int[][] traficoInst) {
         int n = distLoc.length;
-        
-        //int[] sol = new int[n];
-        double[] sumRowDistLoc = new double[n];
-        int[] sumRowTraficoInst = new int[n];
+        Node u = new Node(0, n, n);
 
         for (int i = 0; i < n; ++i) {
-            sumRowDistLoc[i] = sumArray(distLoc[i]);
-            sumRowTraficoInst[i] = sumArray(traficoInst[i]);
+            Point bestAssig = new Point(-1, -1);
+            double minCost = Double.MAX_VALUE;
+            
+            for (int j = 0; j < n; ++j) {
+                if (!u.usedInst[j]) {
+                    Point assig = new Point(i, j);
+                    double cost = costPlaceInst(distLoc, traficoInst, u.partialSol, assig);
+                    if (cost < minCost) {
+                        bestAssig = assig;
+                        minCost = cost;
+                    }
+                }
+            }
+
+            u.cost += minCost;
+            u.partialSol.add(bestAssig);
+            u.usedInst[bestAssig.y] = true;
         }
-
-        Arrays.sort(sumRowDistLoc);
-        Arrays.sort(sumRowTraficoInst);
-
-        for (int i = 0; i < n; ++i) 
-            cost += sumRowTraficoInst[i]*sumRowDistLoc[n - i - 1];
-
-        System.out.print("Una cota superior para el problema es: " + cost); System.out.println();
-        return cost;
+        
+        return u;
     }
 
-    private int sumArray(int[] array) {
+    /*private int sumArray(int[] array) {
         int sum = 0;
         for (int i = 0; i < array.length; ++i) sum = sum + array[i];
         return sum;
@@ -49,9 +49,9 @@ public class QAPOptimized extends QAP {
         double sum = 0;
         for (int i = 0; i < array.length; ++i) sum = sum + array[i];
         return sum;
-    }
+    }*/
 
-    //@Override
+    @Override
     protected double generateBound(double[][] distLoc, int[][] traficoInst, Node u) {
         return generateGLBound(distLoc, traficoInst, u);
     }
@@ -65,14 +65,11 @@ public class QAPOptimized extends QAP {
         if (notUsedLocIndex.size() == 0) boundC12 = 0;
         else {
             double[][] C1 = generateC1(distLoc, traficoInst, u.partialSol, notUsedLocIndex, notUsedInstIndex);
-            System.out.print("(" + notUsedLocIndex.size() + " " + notUsedInstIndex.size() + ")" + " ");
-            System.out.println();
             double[][] C2 = generateC2(distLoc, traficoInst, notUsedLocIndex, notUsedInstIndex);
 
             double[][] C12 = matrixSum(C1, C2);
-            System.out.print(" M[0][0] = " + C12[0][0] + ") ");
+
             ArrayList<Point> optimalAssignation = hungarianAlgorithm(C12); 
-            System.out.print(" M[0][0] = " + C12[0][0] + ") ");
             boundC12 = sumPointsMatrix(C12, optimalAssignation);
         }
         //System.out.print("(" + u.level + " " + u.bound + " " + u.cost + ")");
@@ -175,41 +172,37 @@ public class QAPOptimized extends QAP {
 
     
 
-    private void printMatrix(double[][] matrix) {
+    /*private void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 System.out.print(matrix[i][j] + "\t");
             }
             System.out.println();
         }
-    }
+    }*/
 
     private ArrayList<Point> hungarianAlgorithm(double[][] taskCostPerWorker) {
         int n = taskCostPerWorker.length;
         double[][] taskCostPerWorkerC = deepCopyMatrix(taskCostPerWorker);
         
-        printMatrix(taskCostPerWorkerC);
         subtractMinimumValueRow(taskCostPerWorkerC);
         subtractMinimumValueCol(taskCostPerWorkerC);
-        printMatrix(taskCostPerWorkerC);
 
         boolean[] rowCover = new boolean[n];
         boolean[] colCover = new boolean[n];
-        System.out.print(" Entro MCL " );
+        //System.out.print(" Entro MCL " );
         int minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-        System.out.print(" Salgo MCL = " + minimumCover + " ");
+        //System.out.print(" Salgo MCL = " + minimumCover + " ");
         while (minimumCover != n) {
-            printMatrix(taskCostPerWorkerC);
             double minNum = minNumNotCovered(taskCostPerWorkerC, rowCover, colCover);
             addNumToCovered(taskCostPerWorkerC, rowCover, colCover, minNum);
             subtractFromMatrix(taskCostPerWorkerC, minNum);
-            printMatrix(taskCostPerWorkerC);
 
             Arrays.fill(rowCover, false);
             Arrays.fill(colCover, false);
-            System.out.print(" Entro MCL ");
+            //System.out.print(" Entro MCL ");
             minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-            System.out.print(" Salgo MCL mc = " + minimumCover + " ");
+            //System.out.print(" Salgo MCL mc = " + minimumCover + " ");
         }
 
         return partialMaximumAssignation(taskCostPerWorkerC);
@@ -231,6 +224,9 @@ public class QAPOptimized extends QAP {
 
         for (int i = 0; i < matrix.length; ++i) {
             double min = Double.MAX_VALUE;
+
+            for (int j = 0; j < matrix[0].length; ++j) 
+                if (matrix[i][j] < min) min = matrix[i][j];
 
             for (int j = 0; j < matrix[0].length; ++j) 
                 matrix[i][j] -= min;
@@ -291,50 +287,46 @@ public class QAPOptimized extends QAP {
         int numLinesCovered = 0;
         printPointList(partialAssignation);
 
+        Arrays.fill(rowCover, true);
+        Arrays.fill(colCover, false);
 
         //Mark rows without an assigment
-        Arrays.fill(rowCover, true);
         for (int i = 0; i < partialAssignation.size(); ++i) {
             int rowA = partialAssignation.get(i).x; 
             rowCover[rowA] = false;
         }
+        
+        boolean hasChanged = true;
+        while (hasChanged) {
+            hasChanged = false;
 
-        //Mark cols where a 0 exists in a marked row
-        Arrays.fill(colCover, false);
-        /*for (int i = 0; i < matrix.length; ++i) {
-            if(rowCover[i]) {
-                for (int j = 0; j < matrix[0].length; ++j) {
-                    if (matrix[i][j] == 0) colCover[j] = true;
-                    ++numLinesCovered;
+            //Mark cols where a 0 exists in a marked row
+            for (int i = 0; i < matrix[0].length; ++i) {
+                for (int j = 0; j < matrix.length && !colCover[i]; ++j) {
+                    if (rowCover[j] && matrix[j][i] == 0) {
+                        colCover[i] = true;
+                        ++numLinesCovered;
+                        hasChanged = true;
+                    }
                 }
             }
-        }*/
-        for (int i = 0; i < matrix[0].length; ++i) {
-            for (int j = 0; j < matrix.length && !colCover[i]; ++j) {
-                if (rowCover[j] && matrix[i][j] == 0) {
-                    colCover[i] = true;
-                    ++numLinesCovered;
+
+            //Mark rows with the assignment in a marked col
+            for (int i = 0; i < partialAssignation.size(); ++i) {
+                int rowA = partialAssignation.get(i).x;
+                int colA = partialAssignation.get(i).y;
+                if (!rowCover[rowA] && colCover[colA]) {
+                    rowCover[rowA] = true;
+                    hasChanged = true;
                 }
             }
-        }
-
-        //Mark rows with the assignment in a marked col
-        for (int i = 0; i < partialAssignation.size(); ++i) {
-            int rowA = partialAssignation.get(i).x;
-            int colA = partialAssignation.get(i).y;
-            if (colCover[colA]) rowCover[rowA] = true;
-        }
+        } 
 
         //Finally, invert the values of the row covering
         for (int i = 0; i < rowCover.length; ++i) {
             rowCover[i] = !rowCover[i];
             if (rowCover[i]) ++numLinesCovered;
         }
-
-        for (int i = 0; i < rowCover.length; ++i) System.out.print("(" + rowCover[i] + " ");
-        System.out.println();
-        for (int i = 0; i < rowCover.length; ++i) System.out.print("(" + colCover[i] + " ");
-        System.out.println();
 
         return numLinesCovered;
     }
@@ -371,16 +363,9 @@ public class QAPOptimized extends QAP {
             else col = col + 1;
             partialAssig2 = partialMaximumAssignationRec(matrix, rowAssigned2, colAssigned2, row, col); //.clone()??
 
-            if (partialAssig1.size() >= partialAssig2.size()) {
-                System.arraycopy(rowAssigned, 0, rowAssigned1, 0, rowAssigned.length);
-                System.arraycopy(colAssigned, 0, colAssigned1, 0, colAssigned.length);
-                return partialAssig1;
-            }
-            else {
-                System.arraycopy(rowAssigned, 0, rowAssigned2, 0, rowAssigned.length);
-                System.arraycopy(colAssigned, 0, colAssigned2, 0, colAssigned.length);
-                return partialAssig2;
-            }
+            if (partialAssig1.size() >= partialAssig2.size()) return partialAssig1;
+            else return partialAssig2;
+    
         }
     }
 
