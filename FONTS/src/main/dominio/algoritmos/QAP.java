@@ -18,8 +18,8 @@ public class QAP implements EstrategiaCreacionLayout {
     protected ArrayList<Point> branchAndBound(double[][] distLoc, int[][] traficoInst) {
         int n = distLoc.length;
         Node bestSol = initialSolution(distLoc, traficoInst);
-        Point e = new Point(-1, -1);
-        bestSol.partialSol.add(e);
+        //Point e = new Point(-1, -1);
+        //bestSol.partialSol.add(e);
         PriorityQueue<Node> pq = //Seguramente priority_queue
           new PriorityQueue<>((a, b) -> Double.compare(b.bound, a.bound));
 
@@ -28,7 +28,7 @@ public class QAP implements EstrategiaCreacionLayout {
 
         while (pq.size() != 0) {
             u = pq.poll(); 
-            //System.out.print("(" + u.level + " " + u.bound + " " + u.cost + ")");
+            System.out.print("(" + u.level + " " + u.bound + " " + u.cost + ")");
             //printPointList(u.partialSol);
 
             //Solution
@@ -56,13 +56,11 @@ public class QAP implements EstrategiaCreacionLayout {
                         v.partialSol.add(newPlacement);
                         v.usedLoc[newPlacement.x] = true;
                         v.usedInst[newPlacement.y] = true;
-                        //System.out.print(" Entro generate bound ");
+                        System.out.print(" Entro generate bound ");
                         v.bound = generateBound(distLoc, traficoInst, v);
-                        //System.out.print(" (" + i + " " + v.cost + " " + v.bound + " " + bestSol.cost + ")");System.out.println();
+                        System.out.print(" (" + i + " " + v.cost + " " + v.bound + " " + bestSol.cost + ")");System.out.println();
 
-                        if (v.bound < bestSol.cost) {
-                            pq.add(v);
-                        } 
+                        if (v.bound < bestSol.cost) pq.add(v); 
                     }
                 }
             }
@@ -76,7 +74,7 @@ public class QAP implements EstrategiaCreacionLayout {
         return (new Node(Double.MAX_VALUE, distLoc.length, distLoc.length));
     }
 
-    
+
     protected double costPlaceInst(double[][] distLoc, int[][] traficoInst, ArrayList<Point> partialSol, Point newPlacement) {
         double sumCosts = 0;
 

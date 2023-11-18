@@ -7,12 +7,77 @@ import java.awt.Point;
 
 public class QAPOptimized extends QAP {
     
+    private static final int MAX_ITERATIONS_GREEDY = 100;
+    private static final double ALPHA = 0.5;
+
     @Override 
     protected Node initialSolution(double[][] distLoc, int[][] traficoInst) {
-        return greedySolution(distLoc, traficoInst);
+        return GRASP(distLoc, traficoInst);
     }
 
-    private Node greedySolution(double[][] distLoc, int[][] traficoInst) {
+    private Node GRASP(double[][] distLoc, int[][] traficoInst) {
+        int n = distLoc.length;
+        Node u = new Node(Double.MAX_VALUE, n, n);
+
+        Random rand = new Random();
+
+        for (int iteration = 0; iteration < MAX_ITERATIONS_GREEDY; iteration++) {
+            ArrayList<Point> currentSolution = constructGreedyRandomizedSolution(rand, n);
+            double currentCost = totalCostSolution(distLoc, traficoInst, currentSolution);
+            printPointList(currentSolution);
+            if (currentCost < u.cost) {
+                u.cost = currentCost;
+                u.partialSol = currentSolution;
+            }
+        }
+
+        return u;
+    }
+
+
+    private ArrayList<Point> constructGreedyRandomizedSolution(Random rand, int size) {
+        ArrayList<Point> solution = new ArrayList<>();
+        boolean[] usedInst = new boolean[size];
+
+        for (int loc = 0; loc < size; loc++) {
+            ArrayList<Integer> notUsedInst = getUsable(usedInst);
+
+            if (!notUsedInst.isEmpty()) {
+                double randomValue = rand.nextDouble();
+                double threshold = ALPHA * randomValue; // Adjusted for GRASP
+
+                int selectedInst = 0;
+                double cumulativeProbability = 0.0;
+
+                while (selectedInst < notUsedInst.size() - 1 &&
+                        cumulativeProbability + 1.0 / notUsedInst.size() < threshold) {
+                    cumulativeProbability += 1.0 / notUsedInst.size();
+                    ++selectedInst;
+                }
+
+                Point p = new Point(loc, notUsedInst.get(selectedInst));
+                solution.add(p);
+                usedInst[p.y] = true;
+            }
+        }
+
+        return solution;
+    }
+
+    private double totalCostSolution(double[][] distLoc, int[][] traficoInst, ArrayList<Point> l) {
+        double sum = 0;
+        for (int i = 0; i < l.size(); ++i) {
+            Point p1 = l.get(i);
+            for (int j = i + 1; j < l.size(); ++j) {
+                Point p2 = l.get(j);
+                sum += costBtw2Assig(distLoc, traficoInst, p1, p2);
+            }
+        }
+        System.out.println(sum);
+        return sum;
+    }
+
+    /* private Node greedySolution(double[][] distLoc, int[][] traficoInst) {
         int n = distLoc.length;
         Node u = new Node(0, n, n);
 
@@ -38,6 +103,7 @@ public class QAPOptimized extends QAP {
         
         return u;
     }
+    */
 
     /*private int sumArray(int[] array) {
         int sum = 0;
@@ -58,8 +124,8 @@ public class QAPOptimized extends QAP {
 
 
     private double generateGLBound(double[][] distLoc, int[][] traficoInst, Node u) {
-        ArrayList<Integer> notUsedLocIndex = getToFalseIndex(u.usedLoc);
-        ArrayList<Integer> notUsedInstIndex = getToFalseIndex(u.usedInst);
+        ArrayList<Integer> notUsedLocIndex = getUsable(u.usedLoc);
+        ArrayList<Integer> notUsedInstIndex = getUsable(u.usedInst);
         double boundC12;
 
         if (notUsedLocIndex.size() == 0) boundC12 = 0;
@@ -77,7 +143,7 @@ public class QAPOptimized extends QAP {
         return u.cost + boundC12;
     }
 
-    private ArrayList<Integer> getToFalseIndex(boolean[] b) {
+    private ArrayList<Integer> getUsable(boolean[] b) {
         ArrayList<Integer> res = new ArrayList<>();
 
         for(int i = 0; i < b.length; ++i) {
@@ -90,8 +156,7 @@ public class QAPOptimized extends QAP {
 
 
     private double[][] generateC1(double[][] distLoc, int[][] traficoInst, ArrayList<Point> partialSol,
-    ArrayList<Integer> notUsedLocIndex, ArrayList<Integer> notUsedInstIndex) {
-
+            ArrayList<Integer> notUsedLocIndex, ArrayList<Integer> notUsedInstIndex) {
         double[][] C1 = new double[notUsedInstIndex.size()][notUsedInstIndex.size()];
 
         for (int i = 0; i < C1.length; ++i) {
@@ -119,16 +184,15 @@ public class QAPOptimized extends QAP {
                 ArrayList<Integer> restInstNotPlaced = new ArrayList<>(notUsedInstIndex);
                 restInstNotPlaced.remove(j);
                 
-                for (int k = 0; k < D.length; ++k) {
-                    //System.out.print("(" + restLocNotPlaced.size() + " " + restInstNotPlaced.size() + ")" + " ");
+                for (int k = 0; k < D.length; ++k) 
                     D[k] = distLoc[notUsedLocIndex.get(i)][restLocNotPlaced.get(k)];
-                }
-                for (int k = 0; k < T.length; ++k) T[k] = traficoInst[notUsedInstIndex.get(j)][restInstNotPlaced.get(k)];
+                for (int k = 0; k < T.length; ++k) 
+                    T[k] = traficoInst[notUsedInstIndex.get(j)][restInstNotPlaced.get(k)];
 
                 Arrays.sort(T);
                 Arrays.sort(D);
                 //Calcula el producto escalar de T y D como si D estuviera ordenado decrecientemente
-                C2[i][j] = inverseScalarProductIntDouble(T, D);
+                C2[i][j] = inverseScalarProduct(T, D);
             }
         }
         
@@ -136,7 +200,7 @@ public class QAPOptimized extends QAP {
     }
 
 
-    private double inverseScalarProductIntDouble(int[] v1, double[] invertedv2) {
+    private double inverseScalarProduct(int[] v1, double[] invertedv2) {
         int sum = 0;
 
         for (int i = 0; i < v1.length; ++i) {
@@ -172,37 +236,45 @@ public class QAPOptimized extends QAP {
 
     
 
-    /*private void printMatrix(double[][] matrix) {
+    private void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 System.out.print(matrix[i][j] + "\t");
             }
             System.out.println();
         }
-    }*/
+    }
 
     private ArrayList<Point> hungarianAlgorithm(double[][] taskCostPerWorker) {
         int n = taskCostPerWorker.length;
         double[][] taskCostPerWorkerC = deepCopyMatrix(taskCostPerWorker);
         
+        printMatrix(taskCostPerWorkerC);
         subtractMinimumValueRow(taskCostPerWorkerC);
         subtractMinimumValueCol(taskCostPerWorkerC);
+        printMatrix(taskCostPerWorkerC);
 
         boolean[] rowCover = new boolean[n];
         boolean[] colCover = new boolean[n];
-        //System.out.print(" Entro MCL " );
+        System.out.print(" Entro MCL " );
         int minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-        //System.out.print(" Salgo MCL = " + minimumCover + " ");
+        System.out.print(" Salgo MCL = " + minimumCover + " ");
         while (minimumCover != n) {
+            System.out.println();
+            printMatrix(taskCostPerWorkerC);
             double minNum = minNumNotCovered(taskCostPerWorkerC, rowCover, colCover);
             addNumToCovered(taskCostPerWorkerC, rowCover, colCover, minNum);
             subtractFromMatrix(taskCostPerWorkerC, minNum);
+            printMatrix(taskCostPerWorkerC);
+            System.out.println();
 
             Arrays.fill(rowCover, false);
             Arrays.fill(colCover, false);
-            //System.out.print(" Entro MCL ");
+            System.out.print(" Entro MCL ");
             minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-            //System.out.print(" Salgo MCL mc = " + minimumCover + " ");
+            System.out.print(" Salgo MCL mc = " + minimumCover + " ");
+            
+            
         }
 
         return partialMaximumAssignation(taskCostPerWorkerC);
@@ -285,7 +357,7 @@ public class QAPOptimized extends QAP {
     private int minimumCoverLines(double[][] matrix, boolean[] rowCover, boolean[] colCover) {
         ArrayList<Point> partialAssignation = partialMaximumAssignation(matrix);
         int numLinesCovered = 0;
-        printPointList(partialAssignation);
+        //printPointList(partialAssignation);
 
         Arrays.fill(rowCover, true);
         Arrays.fill(colCover, false);
@@ -327,6 +399,9 @@ public class QAPOptimized extends QAP {
             rowCover[i] = !rowCover[i];
             if (rowCover[i]) ++numLinesCovered;
         }
+
+        for (int i = 0; i < rowCover.length; ++i) System.out.println(rowCover[i] + " ");
+        for (int i = 0; i < colCover.length; ++i) System.out.println(colCover[i] + " ");
 
         return numLinesCovered;
     }
