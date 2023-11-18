@@ -22,7 +22,7 @@ public class ComprobarExcepciones{
 		return true;
 	}
 
-	public boolean AlfaCorrecto(String alfabeto){
+	public boolean AlfaCorrecto(String alfabeto){ //mirar que no hi ha dos caracters repetits
 		HashSet<Character> caracteresVistos = new HashSet<>();
 
         for (char c : alfabeto.toCharArray()) {
