@@ -1,34 +1,8 @@
 package main.dominio.algoritmos;
 
+import main.dominio.ed.Node;
 import java.util.*;
 import java.awt.Point;
-
-class Node {
-    int level;
-    double cost, bound;
-    ArrayList<Point> partialSol;
-    boolean[] usedLoc, usedInst;
- 
-    Node(double cost, int level, int size) {
-        this.cost = cost;
-        this.level = level;
-        this.bound = 0;
-        this.partialSol = new ArrayList<>();
-        this.usedLoc = new boolean[size]; //can use .fill() to fill values of array
-        this.usedInst = new boolean[size];
-        Arrays.fill(this.usedLoc, false);
-        Arrays.fill(this.usedInst, false);
-    }
-
-    Node(double cost, int level, ArrayList<Point> partialSol, boolean[] usedLoc, boolean[] usedInst) {
-        this.cost = cost;
-        this.level = level;
-        this.bound = 0;
-        this.partialSol = new ArrayList<>(partialSol);
-        this.usedLoc = usedLoc.clone(); //can use .fill() to fill values of array
-        this.usedInst = usedInst.clone();
-    }
-}
 
 public class QAP implements EstrategiaCreacionLayout {
 
@@ -43,7 +17,7 @@ public class QAP implements EstrategiaCreacionLayout {
     
     protected ArrayList<Point> branchAndBound(double[][] distLoc, int[][] traficoInst) {
         int n = distLoc.length;
-        Node bestSol = new Node(initialBound(distLoc, traficoInst), n, n); //greedySolution(distLoc, traficoInst)
+        Node bestSol = initialSolution(distLoc, traficoInst);
         Point e = new Point(-1, -1);
         bestSol.partialSol.add(e);
         PriorityQueue<Node> pq = //Seguramente priority_queue
@@ -54,7 +28,9 @@ public class QAP implements EstrategiaCreacionLayout {
 
         while (pq.size() != 0) {
             u = pq.poll(); 
-            System.out.print("(" + u.level + " " + u.bound + " " + u.cost + ")");
+            //System.out.print("(" + u.level + " " + u.bound + " " + u.cost + ")");
+            //printPointList(u.partialSol);
+
             //Solution
             if (u.level == n) {
                 if (u.cost < bestSol.cost) {
@@ -64,7 +40,7 @@ public class QAP implements EstrategiaCreacionLayout {
             //Branch&Bound
             else {
                 Node v;
-                //System.out.print(" I reach B&B");
+
                 int locIndex = 0;
                 while (u.usedLoc[locIndex]) ++locIndex;
 
@@ -80,9 +56,9 @@ public class QAP implements EstrategiaCreacionLayout {
                         v.partialSol.add(newPlacement);
                         v.usedLoc[newPlacement.x] = true;
                         v.usedInst[newPlacement.y] = true;
-                        System.out.print(" Entro generate bound ");
+                        //System.out.print(" Entro generate bound ");
                         v.bound = generateBound(distLoc, traficoInst, v);
-                        System.out.print(" (" + i + " " + v.cost + " " + v.bound + " " + bestSol.cost + ")");System.out.println();
+                        //System.out.print(" (" + i + " " + v.cost + " " + v.bound + " " + bestSol.cost + ")");System.out.println();
 
                         if (v.bound < bestSol.cost) {
                             pq.add(v);
@@ -96,8 +72,8 @@ public class QAP implements EstrategiaCreacionLayout {
     }
 
 
-    protected double initialBound(double[][] distLoc, int[][] traficoInst) {
-        return 0.0;
+    protected Node initialSolution(double[][] distLoc, int[][] traficoInst) {
+        return (new Node(Double.MAX_VALUE, distLoc.length, distLoc.length));
     }
 
     
@@ -120,5 +96,13 @@ public class QAP implements EstrategiaCreacionLayout {
     protected double generateBound(double[][] distLoc, int[][] traficoInst, Node u) {
         return u.cost;
     }
+
+    /*private static void printPointList(ArrayList<Point> l) {
+        for (int i = 0; i < l.size(); ++i) {
+            Point p = l.get(i);
+            System.out.print("(" + p.x + " " + p.y + ")" + " ");
+        }
+        System.out.println();
+    }*/
 
 }
