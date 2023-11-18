@@ -7,6 +7,7 @@ public class CtrlDominio {
     //private CtrlEntrada ctrlE;
     private CtrlAlgoritmo ctrlA;
     //private CtrlPersistencia ctrlP;
+    //private ComprobarExcepciones compE;
 
     public CtrlDominio() {
         //ctrlE = new CtrlEntrada();
@@ -34,26 +35,41 @@ public class CtrlDominio {
         String alfabeto = "";
         Vector<String> textos = new Vector<String>();
         Vector<Map<String, Integer>> listas = new Vector<>();
-
         /*
         alfabeto = ctrlE.getInput(nombreAlfabeto);
-        for (int i = 0; i < nombresTLP.length: ++i) {
+        
+        for (int i = 0; i < nombresTLP.length; ++i) {
         	
         	String nombreTLP = nombresTLP.elementAt(i);
         	String type = ctrlE.getType(nombreTLP);
 
-        	if (type == "Texto") textos.addElement(ctrlE.getInput(nombreTLP));
-        	else if (type == "ListaPalabras") listas.addElement(ctrlE.getInput(nombreTLP));
+        	if (type == "Texto") {
+                String texto = ctrlE.getInput(nombreTLP);
+                textos.addElement(texto);
+            }
+        	else if (type == "ListaPalabras") {
+                String lista = ctrlE.getInput(nombreTLP);
+                listas.addElement(lista);
+            }
     		else System.out.println("El nombre "+nombreTLP+" no pertenece a ninguna lista ni a ningun texto");
     	}
-		*/
+		
+        if (compE.compruebaTextosAlfabeto(textos, alfabeto) == false || 
+            compE.compruebaListasAlfabeto(listas, alfabeto) == false) {
 
-        //Vector<Pair<double, double>> playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
+            System.out.println("Error: algun texto o lista no corresponde con el alfabeto");
+        }
 
-        int[] layout = ctrlA.usarQAP(textos, alfabeto);
+        else {
 
-        //ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
+            //Vector<Pair<double, double>> playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
 
+            int[] layout = ctrlA.usarQAP(textos, alfabeto);
+
+            //ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
+        }
+
+*/
     }
 
     public void borrarTeclado(String nombreTeclado) {
@@ -61,7 +77,9 @@ public class CtrlDominio {
     }
 
     public void importarAlfabeto(String nombreAlfabeto, String alfabeto) {
-        //ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);
+        //if (compE.compruebaAlfabeto(alfabeto)) 
+        //    System.out.println("Error: el alfabeto esta mal definido");
+        //else ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);
     }
 
     public void importarTexto(String nombreTexto, String texto) {
@@ -69,7 +87,9 @@ public class CtrlDominio {
     }
 
     public void importarListaPalabras(String nombreLista, Map<String, Integer> lista) {
-    	//ctrlE.importarListaPalabras(nombreLista, lista);
+    	//if (compE.compruebaLista(lista) == false)
+        //    System.out.println("Error: la lista esta mal definida");
+        //else ctrlE.importarListaPalabras(nombreLista, lista);
     }
 
     public void modificarTeclado(String nombreTeclado, String alfabeto, Vector<String> textos) {
@@ -85,7 +105,9 @@ public class CtrlDominio {
     }
 
     public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) {
-    	//ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);
+    	//if (ctrlE.compruebaAlfabetoUsado(nombreAlfabeto)) 
+        //    System.out.println("Error: El alfabeto esta siendo usado");
+        // else ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);
     }
 
     public void modificarTexto(String nombreTexto, String textoNuevo) {

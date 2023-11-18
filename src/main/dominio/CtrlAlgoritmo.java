@@ -1,7 +1,7 @@
 package main.dominio;
 import main.dominio.algoritmos.*;
 
-import java.util.Vector;
+import java.util.*;
 
 public class CtrlAlgoritmo {
     /* ESTO ES DEL ENEKO
@@ -31,11 +31,14 @@ public class CtrlAlgoritmo {
         EstrategiaCreacionLayout estC;
         UtilesAlgoritmo ctL = new UtilesAlgoritmo();
 
-        int[][] traficoInt = ctL.contarLetras(texto, alfabeto);
+        int[][] traficoInt = ctL.CalculoTraficoInt(texto, alfabeto);
 
         //double[][] distLoc = ctL.distLoc();
 
         //return estC.crearLayout(distLoc, traficoInt);
         return new int[2]; //Pa k compile
     }
+
+
+
 }

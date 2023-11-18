@@ -46,7 +46,7 @@ public class UtilesAlgoritmo {
 	}
 
 	//Calculo de la matriz de distancias entre posiciones
-	public double[][] distLoc(int[][] posiciones) {
+	public double[][] CalculoDistLoc(int[][] posiciones) {
 
 		int numDeLetras = posiciones.length*posiciones[0].length;
 		double[][] distL = new double[numDeLetras][numDeLetras];
