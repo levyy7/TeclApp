@@ -33,11 +33,11 @@ public class Alfabeto extends Input{
         return super.getNombre();
     }
 
-    public int getSizeAlfabeto(){
+    public int getSize(){
         return alphabet.length();
     }
 
-    public void setAlfabeto(String alphabet){
+    public void setInput(String alphabet){
         this.alphabet = alphabet;
     }
 

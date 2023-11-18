@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class Input{
+public abstract class Input{
 
     private String nombre;
 
@@ -54,6 +54,9 @@ public class Input{
                 break;
         }
     }   
+
+    public abstract int getSize();
+
 }
 
 //mariona
