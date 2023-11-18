@@ -37,8 +37,15 @@ public class Alfabeto extends Input{
         return alphabet.length();
     }
 
-    public void setInput(String alphabet){
-        this.alphabet = alphabet;
+    public String getType(){
+        return "Alfabeto";
+    }
+
+    public void importInput(String name, String alphabet, String type){
+        if(type == "Alphabet") {
+            super.setNombre(name);
+            this.alphabet = alphabet;
+        }
     }
 
     public void setNombre(String nombre) {

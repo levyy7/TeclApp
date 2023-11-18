@@ -9,7 +9,8 @@ public class Teclado {
     private String nombre;
     private String algoritmo;
     private String alfabeto; //nombre alfabeto
-    private HashMap<Character, Point> layout;
+    private char[] layout;
+    //private HashMap<Character, Point> layout;
     private Playout playout;
 
     //creadora
@@ -42,9 +43,13 @@ public class Teclado {
         return this.alfabeto;
     }
 
-    public HashMap<Character, Point> getLayout(){
+    public char[] getLayout(){
         return this.layout;
     } 
+
+    public int getSizeLayout(){
+        return this.layout.length;
+    }
 
     public Point2D[] getPlayout(){
         return this.playout.getTeclas();
@@ -62,11 +67,11 @@ public class Teclado {
         this.alfabeto = newAlfabeto;
     }
 
-    public void setLayout(HashMap<Character, Point> newlayout){
+    public void setLayout(char[] newlayout){
         this.layout = newlayout;
     }
 
-    public void modify(HashMap<Character, Point> newLayout){
+    public void modify(char[] newLayout){
         this.layout = newLayout;
     }
 }

@@ -20,17 +20,20 @@ public class Texto extends TLP{
         return text;
     }
 
-    public void readFromFile(String file) throws FileNotFoundException{
-        String in = "";
-        super.readFromFile(file, in);
-        this.text = in;
+    public String getType(){
+        return "Texto";
     }
 
-    public void readFromType(String in){
-        super.readFromType(in);
-        this.text = in;
+    public void importInput(String name, String in, String type) {
+        if(type == "texto") {
+            super.setNombre(name);
+            this.text = txt;
+        }
     }
 
+    public void setTexto(String txt) {
+        this.text = txt;
+    }
 
     public void modify(String newtext){
         this.text = newtext;

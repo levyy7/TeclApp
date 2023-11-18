@@ -13,27 +13,9 @@ public class ListaPalabras extends TLP{
         this.listaFreq = listaFreq;
     }
 
-    public void readFromFile(String file) throws FileNotFoundException{
-        File doc = new File(file);
-        Scanner t = new Scanner(doc);
-        while(t.hasNextLine()) {
-           this.listaFreq.putIfAbsent(t.next(), t.nextDouble());
-        }
-        t.close();
-    }
-
     //afegir paraules a la llista si no hi son
     public void addPalabra(String p, Double f) {
         listaFreq.putIfAbsent(p, f);
-    }
-
-    public void readFromType(String lp){
-        String[] parts = lp.split("\r?\n");
-        int n = parts.length;
-        for(int i = 0; i<n; ++i){
-            String[] word = parts[i].split(" ");
-            addPalabra(word[0], Double.valueOf(word[1]));
-        }
     }
 
     public String getNombre(){
@@ -46,6 +28,14 @@ public class ListaPalabras extends TLP{
 
     public Double getFrequencia(String palabra) {
         return listaFreq.get(palabra);
+    }
+
+    public String getType(){
+        return "Lista de Palabras";
+    }
+
+    public void setListaFrequencia(Map<String, Double> newlist) {
+        this.listaFreq = newlist;
     }
     
     public void modify(Map<String, Double> newlist) {
