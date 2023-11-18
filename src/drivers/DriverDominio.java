@@ -68,10 +68,6 @@ public class DriverDominio {
             
         }
 
-        //IMPRIME EL MAPA A VER
-        //for (Map.Entry<String, Integer> entry : lista.entrySet())
-        //    System.out.println(entry.getKey()+' '+entry.getValue());
-
         return lista;
     }
 

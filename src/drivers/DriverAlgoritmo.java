@@ -1,9 +1,11 @@
 package drivers;
 import main.dominio.CtrlAlgoritmo;
+import main.dominio.Playout;
 
 import java.util.*;
+import java.awt.Point;
 import java.lang.Object;
-import java.awt.geom.Point2D.Double;
+import java.awt.geom.Point2D;
 
 public class DriverAlgoritmo {
 
@@ -18,6 +20,37 @@ public class DriverAlgoritmo {
 		System.out.println("33 = Salir");
 	}
 
+	private static Map<String, Integer> introducirLista() {
+
+        Scanner tec = new Scanner(System.in);
+        
+        Map<String, Integer> lista = new HashMap<>();
+        boolean acabado = false;
+
+        String cadena = "";
+        while (acabado == false) {
+            
+            cadena = tec.nextLine();
+
+            String[] palabraConNumero = cadena.split(" ");
+
+            int tam = palabraConNumero.length;
+
+            if (tam != 2) {
+                System.out.println("Fin de la lista");
+                acabado = true;
+            } 
+            else {
+                String palabra = palabraConNumero[0];
+                int numero = Integer.valueOf(palabraConNumero[1]);
+                lista.put(palabra, numero);
+            }
+            
+        }
+
+        return lista;
+    }
+
 	private static void usarQAP() {
 
 		Scanner tecInt = new Scanner(System.in);
@@ -28,30 +61,32 @@ public class DriverAlgoritmo {
 		System.out.print("Cuantos textos quieres introducir: ");
 		int numTextos = tecInt.nextInt();
 
-		Vector<String> textos = new Vector<>();
-		System.out.println("Introduce los textos linea por linea:");
-		for (int i = 0; i < numTextos; ++i) textos.addElement(tec.nextLine());
+		if (numTextos != 0) {
+			Vector<String> textos = new Vector<>();
+			System.out.println("Introduce los textos linea por linea:");
+			for (int i = 0; i < numTextos; ++i) textos.addElement(tec.nextLine());
+		}
+
+		System.out.print("Cuantas listas quieres introducir: ");
+		int numListas = tecInt.nextInt();
+
+		Vector<Map<String, Integer>> listas = new Vector<>();
+		if (numListas != 0) {
+			System.out.println("Introduce las listas con enters:");
+			for (int i = 0; i < numListas; ++i) 
+				listas.addElement(introducirLista());
+		}
 
 		System.out.println("Introduce el Alfabeto: ");
 		String alfabeto = tec.nextLine();
-		/*int tam = alfabeto.length();
+		int tam = alfabeto.length();
 
-		int columnas = tam / 2;
-		int filas = 0;
-		if (tam % 2 != 0) filas = tam / 2 + 1;
-		else filas = tam / 2;
+		Playout play = new Playout(tam);
+		Point2D[] playout = play.getTeclas();
 
-		
-		Point2D.Double[] playout = new Point2D.Double[tam];
+		char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
-		for (int i = 0; i < filas; ++i) {
-			for (int j = 0; j < columnas; ++j) {
-				playout[i+j] = Point2D.Double(i, j);
-			}
-		}*/
-
-
-		int[] layout = ctrlA.usarAlgoritmo(textos, alfabeto);
+		for (int i = 0; i < layout.length; ++i) System.out.print(layout[i]+" ");
 	}
 
 	public static void main(String[] args) {

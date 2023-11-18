@@ -1,31 +1,17 @@
 package main.dominio;
 
 import java.util.*;
+import java.awt.geom.Point2D;
 
 public class UtilesAlgoritmo {
 
-	//Mapa de posiciones de las letras de un alfabeto
-	private Map<Character, Integer> inicializaAlfabeto(String alfabeto) {
-
-		Map<Character, Integer> map = new HashMap<>();
-
-		char[] letrasDelAlfabeto = alfabeto.toCharArray();
-
-		for (int i = 0; i < letrasDelAlfabeto.length; ++i) 
-			map.put(letrasDelAlfabeto[i], i);
-		
-		return map;
-	}
 
 	//Calculo de una matriz que tiene las frecuencias de las letras en un texto
-	public int[][] contarLetras(Vector<String> texto, String alfabeto) {
-
-		Map<Character, Integer> map = new HashMap<>();
-		map = inicializaAlfabeto(alfabeto);
+	public int[][] calculoTraficoInt(Vector<String> texto, Vector<Map<String, Integer>> listas, Map<Character, Integer> map) {
 
 		//map.forEach((key, value) -> System.out.println(key + ": " + value));
 		
-		int tam_alf = alfabeto.length();
+		int tam_alf = map.size();
 		int[][] traficoInt = new int[tam_alf][tam_alf];
 
 		for (int i = 0; i < texto.size(); ++i) {
@@ -39,29 +25,49 @@ public class UtilesAlgoritmo {
 				traficoInt[posLetra1][posLetra2]++;
 				traficoInt[posLetra2][posLetra1]++;
 			}
+		}
 
+		for (int i = 0; i < listas.size(); ++i) {
+
+			Map<String, Integer> lista = listas.elementAt(i);
+
+			for (Map.Entry<String, Integer> entry : lista.entrySet()) {
+
+				char[] palabra = entry.getKey().toCharArray();
+				Integer frecuencia = entry.getValue();
+				int tam = palabra.length;
+
+				for (int j = 0; j < tam-1; ++j) {
+					int posLetra1 = map.get(palabra[j]);
+					int posLetra2 = map.get(palabra[j+1]);
+					traficoInt[posLetra1][posLetra2] += frecuencia;
+					traficoInt[posLetra2][posLetra1] += frecuencia;
+				}
+			}
 		}
 
 		return traficoInt;
 	}
 
 	//Calculo de la matriz de distancias entre posiciones
-	public double[][] CalculoDistLoc(int[][] posiciones) {
+	public double[][] calculoDistLoc(Point2D[] playout) {
+	    int tam = playout.length;
+	    double[][] distLoc = new double[tam][tam];
 
-		int numDeLetras = posiciones.length*posiciones[0].length;
-		double[][] distL = new double[numDeLetras][numDeLetras];
+	    for (int i = 0; i < tam; ++i) {
+	        for (int j = i; j < tam; ++j) {
+	        	double x = distanciaEuclidiana(playout[i], playout[j]);
+	            distLoc[i][j] = x;
+	            distLoc[j][i] = x;
+	        }
+	    }
 
-		//Por cada letra miramos la distancia 
-		for (int i = 0; i < posiciones.length; ++i) {
+	    return distLoc;
+	}
 
-			for (int j = 0; j < posiciones.length; ++j) {
-				for (int k = 0; k < posiciones[0].length; ++k) {
-
-				}
-			}
-		}
-
-		return new double[1][1]; //pa k compile
+	private double distanciaEuclidiana(Point2D p1, Point2D p2) {
+	    return Math.sqrt((p1.getX() - p2.getX())*(p1.getX() - p2.getX()) + 
+	    	(p1.getY() - p2.getY())*(p1.getY() - p2.getY()));
 	}
 
 }

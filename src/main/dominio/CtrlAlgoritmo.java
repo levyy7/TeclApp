@@ -2,43 +2,71 @@ package main.dominio;
 import main.dominio.algoritmos.*;
 
 import java.util.*;
+import java.awt.geom.Point2D;
+import java.awt.Point;
 
 public class CtrlAlgoritmo {
-    /* ESTO ES DEL ENEKO
-    public Vector< Pair< Pair<Double,Double>, Char>> crearLayout(
-        Vector<Vector<Double>> tlp,
-        Vector<Vector<Pair<String, Integer>>> listaP, 
-        TipoAlg tipo) {
 
-        EstrategiaCreacionLayout algoritmo;
+    EstrategiaCreacionLayout qapO;
+    //EstrategiaCreacionLayout alg2;
+    UtilesAlgoritmo utA;
 
-        if (tipo == TipoAlg.QAPBB) algoritmo = new QAPBasic();
-        else algoritmo = new Algoritmo2();
+    public CtrlAlgoritmo() {
+        utA = new UtilesAlgoritmo();
+        qapO = new QAPOptimized();
+    }  
 
-        /*
-            Input:
-                matrixDist: Cada linea repr una tecla y dentro de la linea la dist a las otras 
-                teclas -> Simetrica respeto a la diagonal.
-                matrixTraf: Cada linea repr un simbolo del alfabeto
+    //Mapa de posiciones de las letras de un alfabeto
+    private Map<Character, Integer> inicializaAlfabeto(String alfabeto) {
 
-        AQUI SE ACABA LO DEL ENEKO*/
-    //    Vector<Integer> sol = algoritmo.usarAlgoritmo(matrixDist, matrixTraf);
+        Map<Character, Integer> map = new HashMap<>();
 
-    //}    
+        char[] letrasDelAlfabeto = alfabeto.toCharArray();
 
-    public int[] usarQAP(Vector<String> texto, String alfabeto) {
-
-        EstrategiaCreacionLayout estC;
-        UtilesAlgoritmo ctL = new UtilesAlgoritmo();
-
-        int[][] traficoInt = ctL.CalculoTraficoInt(texto, alfabeto);
-
-        //double[][] distLoc = ctL.distLoc();
-
-        //return estC.crearLayout(distLoc, traficoInt);
-        return new int[2]; //Pa k compile
+        for (int i = 0; i < letrasDelAlfabeto.length; ++i) 
+            map.put(letrasDelAlfabeto[i], i);
+        
+        return map;
     }
 
+    //Devuelve la letra en la posicion pos
+    private Character getLetra(Map<Character, Integer> posiciones, int pos) {
 
+        for (Map.Entry<Character, Integer> m : posiciones.entrySet()) 
+            if (m.getValue() == pos) return m.getKey();
+        //Nunca llegará aquí el return
+        return 'a';
+    }
+
+    private char[] calculoLayout(ArrayList<Point> layoutA,
+        Map<Character, Integer> posiciones) {
+
+        char[] layout = new char[posiciones.size()];
+
+        for (Point p : layoutA) {
+
+            int posicion = p.x;
+            char letra = getLetra(posiciones, p.y);
+            layout[posicion] = letra;
+        }
+
+        return layout;
+    }
+
+    public char[] usarQAP(Vector<String> texto, 
+        Vector<Map<String, Integer>> listas, String alfabeto, 
+        Point2D[] playout) {
+
+        Map<Character, Integer> posiciones = new HashMap<>();
+        posiciones = inicializaAlfabeto(alfabeto);
+
+        int[][] traficoInt = utA.calculoTraficoInt(texto, listas, posiciones);
+
+        double[][] distLoc = utA.calculoDistLoc(playout);
+
+        ArrayList<Point> layoutA = qapO.crearLayout(distLoc, traficoInt);
+
+        return calculoLayout(layoutA, posiciones);
+    }
 
 }
