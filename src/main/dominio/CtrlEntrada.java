@@ -1,12 +1,11 @@
-//package ControladorsEntrada;
-
+package Controladors;
 import java.io.*;
 import java.util.*;
-/*
-import Dades.*;
-import Domini.*;
-import Excepcions.*;
-*/
+
+import main.dominio.*;
+import java.util.HashSet;
+
+
 public class CtrlEntrada{
 
  	private HashMap<String, Teclado> teclados;
@@ -38,7 +37,7 @@ public class CtrlEntrada{
 		return playout;
 	}
 
-	public void setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout)(){
+	public void setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout){
 		board = teclados.get(nombreTeclado);
 		board.setAlgoritmo(nombreAlgoritmo);
 		board.setLayout(layout);
@@ -59,11 +58,11 @@ public class CtrlEntrada{
 	}
 
 	public void importarAlfabeto(String nAlfa, String alfa){
-		importInput(nAlfa, alfa, "Alphabeto")
+		importInput(nAlfa, alfa, "Alphabeto");
 	}
 
 	public void importarTexto(Sting nTexto, String texto){
-		importInput(nTexto, texto, "Texto")
+		importInput(nTexto, texto, "Texto");
 	}
 
 	public void importarListaPalabras(String nLista, Map<String, Integer> lista){
