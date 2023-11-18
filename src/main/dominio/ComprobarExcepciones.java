@@ -3,19 +3,29 @@ import java.util.regex.Pattern;
 
 public class ComprobarExcepciones{
 
-	public boolean TextoCorrecto(Vector<String> texto, String alfabeto) {//texto solo caracteres del alfabeto
-		String regex = "[" + Pattern.quote(alfabeto) + "]+";
-		return texto.matches(regex);
+	public boolean TextoCorrecto(Vector<String> textos, String alfabeto) {//texto solo caracteres del alfabeto
+		for (String texto:textos){
+			String regex = "[" + Pattern.quote(alfabeto) + "]+";
+			if(!texto.matches(regex)) return false;
+		}
+		return true;
 	}
 
-	public boolean ListaCorrecto(){
+	public boolean ListaCorrecto(Vector<String> lista, String alfabeto){
 
 	}
 
-	public boolean AlfaCorrecto(){
-		boolean[] caracteresVistos = new boolean[1920];
+	public boolean AlfaCorrecto(String alfabeto){
+		HashSet<Character> caracteresVistos = new HashSet<>();
 
-	}
+        for (char c : alfabeto.toCharArray()) {
+            if (caracteresVistos.contains(c)) {
+                return false; // Se encontró un carácter repetido
+            }
+            caracteresVistos.add(c); // Agrega el carácter al conjunto
+        }
+        return true; // No se encontraron caracteres repetidos
+    }
 
 }
 
