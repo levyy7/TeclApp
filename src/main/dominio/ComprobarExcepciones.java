@@ -11,8 +11,15 @@ public class ComprobarExcepciones{
 		return true;
 	}
 
-	public boolean ListaCorrecto(Vector<String> lista, String alfabeto){
-
+	public boolean ListaCorrecto(Vector<Map<String, Integer>> lista, String alfabeto){
+		for (Map<String, Integer> llista:llistas){
+			for(String paraula : llista){
+				String regex = "[" + Pattern.quote(alfabeto) + "]+";
+				if(!paraula.matches(regex)) return false;
+			}
+				
+		}
+		return true;
 	}
 
 	public boolean AlfaCorrecto(String alfabeto){
@@ -20,11 +27,11 @@ public class ComprobarExcepciones{
 
         for (char c : alfabeto.toCharArray()) {
             if (caracteresVistos.contains(c)) {
-                return false; // Se encontró un carácter repetido
+                return false; 
             }
-            caracteresVistos.add(c); // Agrega el carácter al conjunto
+            caracteresVistos.add(c); 
         }
-        return true; // No se encontraron caracteres repetidos
+        return true;
     }
 
 }
@@ -34,13 +41,3 @@ public class ComprobarExcepciones{
 //texto no relacionado con el alphabeto
 //borrar teclado no existente
 //canviar alphaveto
-
-
-/*
-lista:
-String Int
-palabra 3
-
-
-sadhjkbdaskdb dahshdiags
-çdadyasbd dajkbda
