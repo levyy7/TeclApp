@@ -10,7 +10,7 @@ public class Node {
     public ArrayList<Point> partialSol;
     public boolean[] usedLoc, usedInst;
  
-    Node(double cost, int level, int size) {
+    public Node(double cost, int level, int size) {
         this.cost = cost;
         this.level = level;
         this.bound = 0;
@@ -21,7 +21,7 @@ public class Node {
         Arrays.fill(this.usedInst, false);
     }
 
-    Node(double cost, int level, ArrayList<Point> partialSol, boolean[] usedLoc, boolean[] usedInst) {
+    public Node(double cost, int level, ArrayList<Point> partialSol, boolean[] usedLoc, boolean[] usedInst) {
         this.cost = cost;
         this.level = level;
         this.bound = 0;
