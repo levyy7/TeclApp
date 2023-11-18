@@ -2,22 +2,22 @@ package main.dominio;
 
 import java.util.*;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
-//import Playout; no es necesario porque estan en el mismo paquete
 
 public class Teclado {
     private String nombre;
     private String algoritmo;
     private String alfabeto; //nombre alfabeto
     private HashMap<Character, Point> layout;
-    private Playout playout;
+    private Point2D[] playout;
 
     //creadora
     public Teclado(String nombre, String alfabeto, int numchar){
         this.nombre = nombre;
         this.alfabeto = alfabeto;
-
-        this.playout = new Playout(numchar);
+        Playout p = new Playout(numchar);
+        this.playout = p.getTeclas();
     }
 
     /* 
@@ -47,7 +47,7 @@ public class Teclado {
         return this.layout;
     } 
 
-    public Playout getPlayout(){
+    public Point2D[] getPlayout(){
         return this.playout;
     }
 
@@ -67,7 +67,7 @@ public class Teclado {
         this.layout = newlayout;
     }
 
-    public void setPlayout(Playout newPlayout) {
+    public void setPlayout(Point2D[] newPlayout) {
         this.playout = newPlayout;
     }
 
