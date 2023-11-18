@@ -3,13 +3,16 @@ import java.io.*;
 import java.util.*;
 
 import main.dominio.*;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 
 
 public class CtrlEntrada{
 
  	private HashMap<String, Teclado> teclados;
  	private HashMap<String, Input> inputs;
+ 	private static CtrlEntrada singletonObject;
 
     public CtrlEntrada(){  
         inicialitzar();
@@ -27,18 +30,18 @@ public class CtrlEntrada{
 	    inputs = new HashMap<String, Input>();
 	}
 
-	public Vector<Pair<double, double>> crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ 
+	public Point2D[] crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ 
 		
 		Input alfa = inputs.get(nombreAlfabeto);
-		int numeroCaractes = alfa.getSize();
+		int numeroCaracters = alfa.getSize();
 		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto, numeroCaracters);
-		teclados.add(nombreTeclado, board);
-		Vector<Point<double, double>> playout = board.getplayout();
+		teclados.put(nombreTeclado, board);
+		Point2D[] playout = board.getPlayout();
 		return playout;
 	}
 
-	public void setLayout(String nombreTeclado, String nombreAlgoritmo, Vector<Integer> layout){
-		board = teclados.get(nombreTeclado);
+	public void setLayout(String nombreTeclado, String nombreAlgoritmo, HashMap<Character, Point> layout){
+		Teclado board = teclados.get(nombreTeclado);
 		board.setAlgoritmo(nombreAlgoritmo);
 		board.setLayout(layout);
 	}
@@ -49,37 +52,38 @@ public class CtrlEntrada{
 
 	public String getAlgoritmo(String nombreTeclado){
 		Teclado a = teclados.get(nombreTeclado);
-		return a.algoritmo();
+		return a.getAlgoritmo();
 	}
 
 	public String getType(String nombreTLP){
 		Input input = inputs.get(nombreTLP);
-		return input.getType();
+		//return input.getType();
+		return "descomentar";
 	}
 
 	public void importarAlfabeto(String nAlfa, String alfa){
 		importInput(nAlfa, alfa, "Alphabeto");
 	}
 
-	public void importarTexto(Sting nTexto, String texto){
+	public void importarTexto(String nTexto, String texto){
 		importInput(nTexto, texto, "Texto");
 	}
 
 	public void importarListaPalabras(String nLista, Map<String, Integer> lista){
-		Input in = new Input(nLista,lista,"ListaPalabras");
-		inputs.add(nLista, in);
+		//Input in = new Input(nLista,lista,"ListaPalabras");
+		//inputs.put(nLista, in);
 	}
 
 	public String getAlfabeto(String nombreTeclado){
 		Teclado a = teclados.get(nombreTeclado);
-		return a.alphabeto();
+		return a.getAlfabeto();
 	}
 
 	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo){
 		inputs.remove(nombreAlfabeto);
 		importarAlfabeto(nombreAlfabeto, alfabetoNuevo);
 	}
-	public void modificarListaPalabras(String nombreLista, String listaNueva){
+	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva){
 		inputs.remove(nombreLista);
 		importarListaPalabras(nombreLista, listaNueva);
 	}
@@ -89,12 +93,12 @@ public class CtrlEntrada{
 	}
 
 	private void importInput(String name, String data, String type){
-		Input in = new Input(name,data,type); //al reves que la Mariona
-		inputs.add(name, in);
+		//Input in = new Input(name,data,type); //al reves que la Mariona
+		//inputs.put(name, in);
 	}
 
-	public Input getInput(String e){
-		return inputs.getInput(e);
+	public Input getInput(String e){ //esta mal!!!
+		return inputs.get(e);
 	}
 
 }
