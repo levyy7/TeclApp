@@ -1,14 +1,15 @@
-
+package main.dominio.algoritmos;
 
 import java.util.*;
+import java.awt.Point;
 
 public class Algoritmo2 implements EstrategiaCreacionLayout {
 
-    public int[] crearLayout(
+    public ArrayList<Point> crearLayout(
         double[][] distLoc,
-        double[][] traficoInst) {
+        int[][] traficoInst) {
 
         
-        return new int[0];
+        return new ArrayList<>();
     }
 }
