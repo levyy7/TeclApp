@@ -24,6 +24,10 @@ public class Texto extends TLP{
         return "Texto";
     }
 
+    public int getSize(){
+        return text.length();
+    }
+
     public void importInput(String name, String in, String type) {
         if(type == "texto") {
             super.setNombre(name);
