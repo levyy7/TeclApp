@@ -27,7 +27,7 @@ public class Texto extends TLP{
     public void importInput(String name, String in, String type) {
         if(type == "texto") {
             super.setNombre(name);
-            this.text = txt;
+            this.text = in;
         }
     }
 
@@ -38,11 +38,6 @@ public class Texto extends TLP{
     public void modify(String newtext){
         this.text = newtext;
     }
-
-    public void print(){
-        System.out.println(text + "\n");
-    }
-    
 }
 
 //mariona

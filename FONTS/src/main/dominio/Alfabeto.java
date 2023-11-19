@@ -30,7 +30,7 @@ public class Alfabeto extends Input{
     }
 
     public void importInput(String name, String alphabet, String type){
-        if(type == "Alphabet") {
+        if(type == "Alfabeto") {
             super.setNombre(name);
             this.alphabet = alphabet;
         }
@@ -38,11 +38,6 @@ public class Alfabeto extends Input{
 
     public void setNombre(String nombre) {
         super.setNombre(nombre);
-    }
-
-    public void print(){
-        int n = alphabet.length();
-        for(int i = 0; i<n; ++i) System.out.println(alphabet.charAt(i) + " ");
     }
 
     public void modify(String newAlphabet){
