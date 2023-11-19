@@ -4,37 +4,69 @@ import main.dominio.ed.Node;
 import java.util.*;
 import java.awt.Point;
 
-
+/** 
+ * Clase de la optimización del algoritmo <code>QAP</code>
+ * Hace más eficiente el cálculo del QAP mediante una generación de lower
+ * bounds más precisa
+ * @author Eneko Sabaté Iturgaiz 
+*/
 public class QAPOptimized extends QAP {
-    
-    private static final int MAX_ITERATIONS_GREEDY = 100;
+    /** Número de iteraciones que ejecutará el algoritmo greedy GRASP */
+    private static final int ITERATIONS_GREEDY = 100;
+    /** Número de iteraciones que ejecutará el algoritmo greedy GRASP */
     private static final double ALPHA = 0.5;
 
     @Override 
-    protected Node initialSolution(double[][] distLoc, int[][] traficoInst) {
-        return GRASP(distLoc, traficoInst);
-    }
-
-    private Node GRASP(double[][] distLoc, int[][] traficoInst) {
-        int n = distLoc.length;
-        Node u = new Node(Double.MAX_VALUE, n, n);
-
-        Random rand = new Random();
-
-        for (int iteration = 0; iteration < MAX_ITERATIONS_GREEDY; iteration++) {
-            ArrayList<Point> currentSolution = constructGreedyRandomizedSolution(rand, n);
-            double currentCost = totalCostSolution(distLoc, traficoInst, currentSolution);
-            printPointList(currentSolution);
-            if (currentCost < u.cost) {
-                u.cost = currentCost;
-                u.partialSol = currentSolution;
-            }
-        }
-
+    protected Node initialSolutionBB(double[][] distLoc, int[][] traficoInst) {
+        ArrayList<Point> initialSol = GRASP(distLoc, traficoInst);
+        Node u = new Node(totalCostSolution(distLoc, traficoInst, initialSol), distLoc.length);
+        u.partialSol = initialSol;
         return u;
     }
 
 
+    /** 
+     * Calcula una solución no óptima para el problema QAP
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @return double: Devuelve una solución final, cerca a la óptima, para el problema QAP. 
+     *                  Cada punto de la lista representa una instalación emplazada, tal que 
+     *                  el atributo "x" del punto representará una localización y el atributo 
+     *                  "y" una instalación 
+    */
+    private ArrayList<Point> GRASP(double[][] distLoc, int[][] traficoInst) {
+        int n = distLoc.length;
+        ArrayList<Point> bestSol = new ArrayList<>();
+        double bestCost = Double.MAX_VALUE;
+
+        Random rand = new Random();
+
+        for (int iteration = 0; iteration < ITERATIONS_GREEDY; iteration++) {
+            ArrayList<Point> currentSolution = constructGreedyRandomizedSolution(rand, n);
+            double currentCost = totalCostSolution(distLoc, traficoInst, currentSolution);
+
+            if (currentCost < bestCost) {
+                bestCost = currentCost;
+                bestSol = currentSolution;
+            }
+        }
+
+        return bestSol;
+    }
+
+    /** 
+     * Calcula una solución greedy usando elementos random para QAP
+     * @param rand : Generador de números random 
+     * @param size : Tamaño del problema QAP para el que se aplica
+     * @return double: Devuelve una solución para el problema QAP. 
+     *                  Cada punto de la lista representa una instalación emplazada, tal que 
+     *                  el atributo "x" del punto representará una localización y el atributo 
+     *                  "y" una instalación 
+    */
     private ArrayList<Point> constructGreedyRandomizedSolution(Random rand, int size) {
         ArrayList<Point> solution = new ArrayList<>();
         boolean[] usedInst = new boolean[size];
@@ -44,7 +76,7 @@ public class QAPOptimized extends QAP {
 
             if (!notUsedInst.isEmpty()) {
                 double randomValue = rand.nextDouble();
-                double threshold = ALPHA * randomValue; // Adjusted for GRASP
+                double threshold = ALPHA * randomValue;
 
                 int selectedInst = 0;
                 double cumulativeProbability = 0.0;
@@ -64,6 +96,20 @@ public class QAPOptimized extends QAP {
         return solution;
     }
 
+    /** 
+     * Calcula el coste de una asignación dada
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @param l : Asignación sobre la que se quiere calcular el coste Cada punto de la lista 
+     *                  representa una instalación emplazada, tal que el atributo "x" del 
+     *                  punto representará una localización y el atributo "y" una instalación 
+     * @return double: Devuelve el coste de la asignación "l", basada en las matrices
+     *                  "distLoc" y "traficoInst"
+    */
     private double totalCostSolution(double[][] distLoc, int[][] traficoInst, ArrayList<Point> l) {
         double sum = 0;
         for (int i = 0; i < l.size(); ++i) {
@@ -73,7 +119,7 @@ public class QAPOptimized extends QAP {
                 sum += costBtw2Assig(distLoc, traficoInst, p1, p2);
             }
         }
-        System.out.println(sum);
+
         return sum;
     }
 
@@ -123,6 +169,18 @@ public class QAPOptimized extends QAP {
     }
 
 
+    /** 
+     * Genera la Gilmore-Lawler Bound, para una solución parcial de un nodo dada. 
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @param u : Node del árbol de soluciones factibles
+     * @return double: Devuelve la Gilmore-Lawler bound basada en la solución parcial 
+     *                  especificada por "u"
+    */
     private double generateGLBound(double[][] distLoc, int[][] traficoInst, Node u) {
         ArrayList<Integer> notUsedLocIndex = getUsable(u.usedLoc);
         ArrayList<Integer> notUsedInstIndex = getUsable(u.usedInst);
@@ -143,6 +201,13 @@ public class QAPOptimized extends QAP {
         return u.cost + boundC12;
     }
 
+
+    /** 
+     * Retorna todas las localizaciones/instalaciones usables
+     * @param b : Array de booleanos que representan las localizaciones/instalaciones usables
+     * @return ArrayList<Integer> : Devuelve un ArrayList con todas las posiciones de "b" 
+     *                  a false
+    */
     private ArrayList<Integer> getUsable(boolean[] b) {
         ArrayList<Integer> res = new ArrayList<>();
 
@@ -154,14 +219,31 @@ public class QAPOptimized extends QAP {
         return res;
     }
 
-
+    /** 
+     * Genera la matriz C1 usada para calcular la Gilmore-Lawler bound 
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @param partialSol : Solución parcial con los emplazamientos actuales, donde cada 
+     *                  punto de la lista representa una instalación emplazada, tal que 
+     *                  el atributo "x" del punto representará una localización y el atributo 
+     *                  "y" una instalación 
+     * @param notUsedLoc : ArrayList con las localizaciones no usadas
+     * @param notUsedInst : ArrayList con las instalaciones no usadas
+     * @return double[][] : el elemento (i, j) de la matriz devuelta representa el coste 
+     *                  de colocar la iésima instalación no emplazada en la jésima ubicación,
+     *                  con respecto a las instalaciones de "partialSol"
+    */
     private double[][] generateC1(double[][] distLoc, int[][] traficoInst, ArrayList<Point> partialSol,
-            ArrayList<Integer> notUsedLocIndex, ArrayList<Integer> notUsedInstIndex) {
-        double[][] C1 = new double[notUsedInstIndex.size()][notUsedInstIndex.size()];
+            ArrayList<Integer> notUsedLoc, ArrayList<Integer> notUsedInst) {
+        double[][] C1 = new double[notUsedInst.size()][notUsedInst.size()];
 
         for (int i = 0; i < C1.length; ++i) {
             for (int j = 0; j < C1[0].length; ++j) {
-                Point newPlacement = new Point(notUsedLocIndex.get(i), notUsedInstIndex.get(j));
+                Point newPlacement = new Point(notUsedLoc.get(i), notUsedInst.get(j));
                 C1[i][j] = costPlaceInst(distLoc, traficoInst, partialSol, newPlacement);
             }
         }
@@ -170,6 +252,21 @@ public class QAPOptimized extends QAP {
     }
 
 
+    /** 
+     * Genera la matriz C2 usada para calcular la Gilmore-Lawler bound 
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @param notUsedLoc : ArrayList con las localizaciones no usadas
+     * @param notUsedInst : ArrayList con las instalaciones no usadas
+     * @return double[][] : el elemento (i, j) de la matriz devuelta representa una cota 
+     *                  inferior del coste de colocar la iésima instalación no emplazada en 
+     *                  la jésima ubicación, con respecto al resto de instalaciones no 
+     *                  emplazadas
+    */
     private double[][] generateC2(double[][] distLoc, int[][] traficoInst, ArrayList<Integer> notUsedLocIndex, ArrayList<Integer> notUsedInstIndex) {
         double[][] C2 = new double[notUsedInstIndex.size()][notUsedInstIndex.size()];
         //Vector distancias
@@ -199,7 +296,14 @@ public class QAPOptimized extends QAP {
         return C2;
     }
 
-
+    /** 
+     * Calcula el producto escalar entre dos vectores, donde el segundo vector está invertido 
+     * @param v1 : Array de ints
+     * @param invertedv2 : Array de doubles. Este vector será invertido antes de realizar el
+     *                  producto
+     * @return double[][] : El producto escalar entre "v1" y "invertedv2", donde "invertedv2"
+     *                  es invertido antes de realizar el producto
+    */
     private double inverseScalarProduct(int[] v1, double[] invertedv2) {
         int sum = 0;
 
@@ -210,7 +314,14 @@ public class QAPOptimized extends QAP {
         return sum;
     }
 
+    /** 
+     * Suma entre dos matrices
+     * @param m1 : Matriz de doubles
+     * @param m2 : Matriz de doubles
+     * @return double[][] : el elemento (i, j) de la matriz devuelta es la suma del 
+     *                      elemento (i, j) de la matriz m1 y del elemento (i, j) de m2
 
+    */
     private double[][] matrixSum(double[][] m1, double[][] m2) {
         double[][] res = new double[m1.length][m1[0].length];
 
@@ -223,6 +334,14 @@ public class QAPOptimized extends QAP {
         return res;
     }
 
+    /** 
+     * Suma las posiciones de las matrices especificadas por un conjunto de puntos
+     * @param m : Matriz de doubles
+     * @param points : ArrayList de Points donde el atributo "x" especifica la línea de
+     *                  la matriz m y "y" la columna
+     * @return double[][] : Devuelve la suma de todas las posiciones de "m" 
+     *                  especificadas por los puntos de "points"
+    */
     private double sumPointsMatrix(double[][] m, ArrayList<Point> points) {
         double sum = 0;
 
@@ -235,7 +354,7 @@ public class QAPOptimized extends QAP {
     }
 
     
-
+/*
     private void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
@@ -244,35 +363,38 @@ public class QAPOptimized extends QAP {
             System.out.println();
         }
     }
-
+*/
+    /** 
+     * Resuelve instancias de Linear Assignment Problems
+     * @param taskCostPerWorker : Matriz donde las filas representan a trabajadores y las 
+     *                  columnas trabajos. Los elementos (i, j) de las matrices especifican 
+     *                  el coste que resulta asignarle un trabajo j a un trabajador i.
+     * @return ArrayList<Point> : Devuelve la asignación óptima, es decir, la forma de 
+     *                  asignar n instalaciones a n ubicaciones de manera que el coste total
+     *                  sea mínimo
+    */
     private ArrayList<Point> hungarianAlgorithm(double[][] taskCostPerWorker) {
         int n = taskCostPerWorker.length;
         double[][] taskCostPerWorkerC = deepCopyMatrix(taskCostPerWorker);
         
-        printMatrix(taskCostPerWorkerC);
         subtractMinimumValueRow(taskCostPerWorkerC);
         subtractMinimumValueCol(taskCostPerWorkerC);
-        printMatrix(taskCostPerWorkerC);
 
         boolean[] rowCover = new boolean[n];
         boolean[] colCover = new boolean[n];
-        System.out.print(" Entro MCL " );
+        //System.out.print(" Entro MCL " );
         int minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-        System.out.print(" Salgo MCL = " + minimumCover + " ");
+        //System.out.print(" Salgo MCL = " + minimumCover + " ");
         while (minimumCover != n) {
-            System.out.println();
-            printMatrix(taskCostPerWorkerC);
             double minNum = minNumNotCovered(taskCostPerWorkerC, rowCover, colCover);
             addNumToCovered(taskCostPerWorkerC, rowCover, colCover, minNum);
             subtractFromMatrix(taskCostPerWorkerC, minNum);
-            printMatrix(taskCostPerWorkerC);
-            System.out.println();
 
             Arrays.fill(rowCover, false);
             Arrays.fill(colCover, false);
-            System.out.print(" Entro MCL ");
+            //System.out.print(" Entro MCL ");
             minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-            System.out.print(" Salgo MCL mc = " + minimumCover + " ");
+            //System.out.print(" Salgo MCL mc = " + minimumCover + " ");
             
             
         }
@@ -280,6 +402,12 @@ public class QAPOptimized extends QAP {
         return partialMaximumAssignation(taskCostPerWorkerC);
     }
 
+    /** 
+     * Realiza una copia en profundidad de una matriz
+     * @param mOriginal : Matriz de doubles
+     * @return double[][] : Devuelve una copia de "mOriginal", totalmente desvinculada de esta
+     *                      (sin ninguna referencia)
+    */
     private double[][] deepCopyMatrix(double[][] mOriginal) {
         double[][] mNew = new double[mOriginal.length][mOriginal[0].length];
 
@@ -292,6 +420,12 @@ public class QAPOptimized extends QAP {
         return mNew;
     }
 
+    /** 
+     * Resta el valor mínimo de una fila a la totalidad de la fila, por cada fila
+     * @param matrix : Matriz de doubles
+     * @return double[][] : Devuelve "matrix" despúes de haber restado el valor mínimo de
+     *                  cada fila a su propia fila
+    */
     private void subtractMinimumValueRow(double[][] matrix) {
 
         for (int i = 0; i < matrix.length; ++i) {
@@ -305,6 +439,12 @@ public class QAPOptimized extends QAP {
         }
     }
 
+    /** 
+     * Resta el valor mínimo de una columna a la totalidad de la columna, por cada columna
+     * @param matrix : Matriz de doubles
+     * @return double[][] : Devuelve "matrix" despúes de haber restado el valor mínimo de
+     *                  cada columna a su propia columna
+    */
     private void subtractMinimumValueCol(double[][] matrix) {
 
         for (int i = 0; i < matrix[0].length; ++i) {
@@ -317,7 +457,14 @@ public class QAPOptimized extends QAP {
         }
     }
 
-
+    /** 
+     * Devuelve el número mínimo no cubierto de la matriz
+     * @param matrix : Matriz sobre la que se resta el mínimo numero no cubierto
+     * @param rowCover : Indica que filas están cubiertas
+     * @param colCover : Indica que columnas están cubiertas
+     * @return double : Devuelve el numero mínimo de "matrix" que no este cubierto por las
+     *                  líneas especificadas por "rowCover" y "colCover"
+    */
     private double minNumNotCovered(double[][] matrix, boolean[] rowCover, boolean[] colCover) {
         double min = Double.MAX_VALUE;
 
@@ -332,6 +479,14 @@ public class QAPOptimized extends QAP {
         return min;
     }
 
+    /** 
+     * Suma un valor a una matriz solo en las líneas cubiertas 
+     * Si una posición de la matriz está cubierta por dos líneas, se suma el valor dos veces
+     * @param matrix : Matriz sobre la que se suma el valor en las líneas cubiertas
+     * @param rowCover : Indica que filas están cubiertas
+     * @param colCover : Indica que columnas están cubiertas
+     * @param num : Es el valor que se quiere sumar a las líneas cubiertas de la matriz
+    */
     private void addNumToCovered(double[][] matrix, boolean[] rowCover, boolean[] colCover, double num) {
         for (int i = 0; i < rowCover.length; ++i) {
             if (rowCover[i]) {
@@ -346,6 +501,12 @@ public class QAPOptimized extends QAP {
         }
     }
 
+
+    /** 
+     * Resta un valor a la totalidad de la matriz
+     * @param matrix : Matriz sobre la que se quiere restar el valor
+     * @param num : Es el valor que se quiere usar para restarlo en la matriz
+    */
     private void subtractFromMatrix(double[][] matrix, double num) {
         for (int i = 0; i < matrix.length; ++i) {
             for (int j = 0; j < matrix[0].length; ++j)
@@ -353,7 +514,17 @@ public class QAPOptimized extends QAP {
         }
     }
 
-
+    /** 
+     * Calcula el minimo número de líneas (y las propias líneas) que se necesitan para 
+     * recubrir los 0s de una matriz
+     * @param matrix : Matriz sobre la que se realiza el calculo
+     * @param rowCover : Array sobre la que se especifican las filas usadas para recubrir
+     *                  los 0s de "matrix"
+     * @param colCover : Array sobre la que se especifican las columnas usadas para recubrir
+     *                  los 0s de "matrix"
+     * @return double : Devuelve el mínimo número de líneas necesarias para recubrir los 0s
+     *                  de "matrix"
+    */
     private int minimumCoverLines(double[][] matrix, boolean[] rowCover, boolean[] colCover) {
         ArrayList<Point> partialAssignation = partialMaximumAssignation(matrix);
         int numLinesCovered = 0;
@@ -400,13 +571,17 @@ public class QAPOptimized extends QAP {
             if (rowCover[i]) ++numLinesCovered;
         }
 
-        for (int i = 0; i < rowCover.length; ++i) System.out.println(rowCover[i] + " ");
-        for (int i = 0; i < colCover.length; ++i) System.out.println(colCover[i] + " ");
-
         return numLinesCovered;
     }
 
 
+    /** 
+     * Calcula el la asignación con el mayo número posible de filas con un zero asignado
+     * @param matrix : Matriz sobre la que se realiza el calculo
+     * @return Array<Point> : Devuelve las posiciones de la asignación más completa calculada,
+     *                  donde cada punto del array representa un cero que forma parte de la 
+     *                  asignación
+    */
     private ArrayList<Point> partialMaximumAssignation(double[][] matrix) {
         boolean[] partialAsigRows = new boolean[matrix.length];
         boolean[] partialAsigCols = new boolean[matrix[0].length];
@@ -414,6 +589,17 @@ public class QAPOptimized extends QAP {
     }
 
 
+    /** 
+     * Calcula la asignación con el mayo número posible de filas con un zero asignado
+     * @param matrix : Matriz sobre la que se realiza el calculo
+     * @param rowAssigned : Filas en las que ya se ha realizado una asignación
+     * @param colAssigned : Columnas en las que ya se ha realizado una asignación
+     * @param row : Fila de la matriz desde donde se quiere empezar a realizar el cálculo
+     * @param col : Columna de la matriz desde donde se quiere empezar a realizar el cálculo
+     * @return Array<Point> : Devuelve las posiciones de la asignación más completa calculada 
+     *                  empezando desde la fila "row" y la columna "col", donde cada punto 
+     *                  del array representa un cero que forma parte de la asignación          
+    */
     private ArrayList<Point> partialMaximumAssignationRec(double[][] matrix, boolean[] rowAssigned, boolean[] colAssigned, int row, int col) {
         if (row >= rowAssigned.length) return new ArrayList<Point>();
         else {
@@ -444,8 +630,8 @@ public class QAPOptimized extends QAP {
         }
     }
 
-    
-
+}    
+/* 
     private static void printPointList(ArrayList<Point> l) {
         for (int i = 0; i < l.size(); ++i) {
             Point p = l.get(i);
@@ -456,4 +642,4 @@ public class QAPOptimized extends QAP {
 
     
 
-}
+}*/
