@@ -31,10 +31,12 @@ public class CtrlEntrada{
 	    inputs = new HashMap<String, Input>();
 	}
 
-	public Point2D[] crearTecladoVacio(String nombreTeclado, String nombreAlfabeto){ 
-		
+	public Point2D[] crearTecladoVacio (String nombreTeclado, String nombreAlfabeto) throws NGrande,TecladoYaExiste, { 
+
 		Input alfa = inputs.get(nombreAlfabeto);
 		int numeroCaracters = alfa.getSize();
+		if(numeroCaracters>10) throw new NGrande();
+		if() 
 		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto, numeroCaracters);
 		teclados.put(nombreTeclado, board);
 		Point2D[] playout = board.getPlayout();
