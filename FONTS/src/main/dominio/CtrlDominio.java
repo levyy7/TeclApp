@@ -23,10 +23,11 @@ public class CtrlDominio {
 
     }
 
-    private void asignarTextosYListas(Vector<String> textos, 
-            Vector<Map<String, Integer>> listas, String nombresTLP) {
+    private boolean asignarTextosYListas(Vector<String> textos, 
+            Vector<Map<String, Integer>> listas, String nombresTLP,
+            String alfabeto) {
 
-        for (int i = 0; i < nombresTLP.length; ++i) {
+        for (int i = 0; i < nombresTLP.length(); ++i) {
             
             String nombreTLP = nombresTLP.elementAt(i);
             String type = "";
@@ -44,28 +45,47 @@ public class CtrlDominio {
                 listas.addElement(lista);
             }
         }
+
+        try {
+            compruebaTextos(textos, alfabeto);
+            compruebaListas(listas, alfabeto);
+        }
+        catch (TextoNoValido e) 
+            {System.out.println("Error: "+e.getMessage()); return false;}
+        catch (ListaNoValida e)
+            {System.out.println("Error: "+e.getMessage()); return false;}
+        return true;
     }
 
     public void crearTeclado(String nombreTeclado, String nombreAlfabeto, 
            Vector<String> nombresTLP, String nombreAlgoritmo) {
         
         
-        String alfabeto = "";
-        try {alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);}
-        catch (AlfabetoNoExiste e) 
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreAlfabeto);}
+        catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        String alfabeto = "";
+        if (tipo == "Alfabeto") alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);
+        else {System.out.println("El alfabeto no existe"); return;}
 
         Vector<String> textos = new Vector<String>();
         Vector<Map<String, Integer>> listas = new Vector<>();
-        asignarTextosYListas(textos, listas, nombresTLP);
+        if (asignarTextosYListas(textos, listas, nombresTLP, alfabeto) == false)
+            return;
 
         if (nombreAlgoritmo == "QAP") {
             try {
                 
-                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, alfabeto.length());
-                char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
+                try {
+                    Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, alfabeto.length());
+                    char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
-                ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
+                    ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
+                }
+                catch (NGrande e)
+                    {System.out.println("Error: "+e.getMessage()); return;}
             }
             catch (TecladoYaExistente e) 
                 {System.out.println("Error: "+e.getMessage()); return;}
@@ -86,6 +106,8 @@ public class CtrlDominio {
         try {ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);}
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (AlfabetoInvalido e)
+            {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     public void importarTexto(String nombreTexto, String texto) {
@@ -101,20 +123,25 @@ public class CtrlDominio {
     }
 
     public void modificarTeclado(String nombreTeclado, String nombreAlfabeto, Vector<String> nombresTLP) {
-    	String algoritmo = "";
-    	try {algoritmo = ctrlE.getAlgoritmo(nombreTeclado);}
+    	String nombreAlgoritmo = "";
+    	try {nombreAlgoritmo = ctrlE.getAlgoritmo(nombreTeclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
-
     	
-        String alfabeto = "";
-        try {alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);}
-        catch (AlfabetoNoExiste e) 
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreAlfabeto);}
+        catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        String alfabeto = "";
+        if (tipo == "Alfabeto") alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);
+        else {System.out.println("El alfabeto no existe"); return;}
 
         Vector<String> textos = new Vector<String>();
         Vector<Map<String, Integer>> listas = new Vector<>();
-        asignarTextosYListas(textos, listas, nombresTLP);
+        asignarTextosYListas(textos, listas, nombresTLP, alfabeto);
+        if (asignarTextosYListas(textos, listas, nombresTLP, alfabeto) == false)
+            return;
 
         if (nombreAlgoritmo == "QAP") {
 
@@ -130,8 +157,8 @@ public class CtrlDominio {
 
     public void modificarTeclado(String nombreTeclado, Vector<String> textos) {
     	String alfabeto = "";
-    	try {alfabeto = ctrlE.getAlfabeto(nombreTeclado);}
-    	catch (InputInexistente e)
+    	try {alfabeto = ctrlE.getAlfabetoTeclado(nombreTeclado);}
+    	catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
 
         modificarTeclado(nombreTeclado, alfabeto, textos);
@@ -140,6 +167,8 @@ public class CtrlDominio {
     public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) {
         try {ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);}
         catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
