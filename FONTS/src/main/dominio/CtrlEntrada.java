@@ -43,12 +43,6 @@ public class CtrlEntrada{
 		return playout;
 	}
 
-	public Point2D[] getPlayout (String nombreTeclado){
-		Teclado board = teclados.get(nombreTeclado);
-		Point2D[] playout = board.getPlayout();
-		return playout;
-	}
-
 	public void setLayout(String nombreTeclado, String nombreAlgoritmo, HashMap<Character, Point> layout){ //no cal
 		Teclado board = teclados.get(nombreTeclado);
 		board.setAlgoritmo(nombreAlgoritmo);
