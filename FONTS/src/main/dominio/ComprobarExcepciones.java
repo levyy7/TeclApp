@@ -8,7 +8,7 @@ public class ComprobarExcepciones{
 	public boolean TextoCorrecto(Vector<String> textos, String alfabeto) {//texto solo caracteres del alfabeto
 		for (String texto:textos){
 			String regex = "[" + Pattern.quote(alfabeto) + "]+";
-			if(!texto.matches(regex)) return false;
+			if(texto.matches(regex) == false) return false;
 		}
 		return true;
 	}
@@ -17,7 +17,7 @@ public class ComprobarExcepciones{
 		for (Map<String, Integer> llista:llistas){
 			for(String paraula : llista){
 				String regex = "[" + Pattern.quote(alfabeto) + "]+";
-				if(!paraula.matches(regex)) return false;
+				if(paraula.matches(regex) == false) return false;
 			}
 				
 		}
@@ -37,9 +37,4 @@ public class ComprobarExcepciones{
     }
 
 }
-
-
-//exepciones, input incorrecto
-//texto no relacionado con el alphabeto
-//borrar teclado no existente
-//canviar alphaveto
+//classe implementada per POL
