@@ -43,7 +43,13 @@ public class CtrlEntrada{
 		return playout;
 	}
 
-	public void setLayout(String nombreTeclado, String nombreAlgoritmo, HashMap<Character, Point> layout){
+	public Point2D[] getPlayout (String nombreTeclado){
+		Teclado board = teclados.get(nombreTeclado);
+		Point2D[] playout = board.getPlayout();
+		return playout;
+	}
+
+	public void setLayout(String nombreTeclado, String nombreAlgoritmo, HashMap<Character, Point> layout){ //no cal
 		Teclado board = teclados.get(nombreTeclado);
 		board.setAlgoritmo(nombreAlgoritmo);
 		board.setLayout(layout);
@@ -96,7 +102,11 @@ public class CtrlEntrada{
 	}
 
 
-	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) throws InputInexistente{
+	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) throws InputInexistente, AlfabetoUsandose{
+		for (Map.Entry<String, Teclado> texplorado : mapa.entrySet()) {
+			Teclado board = texplorado.getValue();
+			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose();
+		}
 		if(inputs.contains(nombreAlfabeto) == false) new throw InputInexistente(nombreAlfabeto);
 		inputs.remove(nombreAlfabeto);
 		importarAlfabeto(nombreAlfabeto, alfabetoNuevo);
@@ -112,8 +122,11 @@ public class CtrlEntrada{
 		importarTexto(nombreTexto, textoNuevo);
 	}
 
-
-	public void borrarAlfabeto(String nombreAlfabeto) throws InputInexistente{
+	public void borrarAlfabeto(String nombreAlfabeto) throws InputInexistente, AlfabetoUsandose{
+		for (Map.Entry<String, Teclado> texplorado : mapa.entrySet()) {
+			Teclado board = texplorado.getValue();
+			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose();
+		}
 		if(inputs.contains(nombreAlfabeto) == false) new throw InputInexistente(nombreAlfabeto);
      	inputs.remove(nombreAlfabeto);
     }
@@ -139,6 +152,14 @@ public class CtrlEntrada{
 	public Map<String, Integer> getListaPalabras(String e){
 		Input in = inputs.get(e);
 		return in.getListaFreq();
+	}
+
+	public void compruebaTextos(Vector<String> textos, String alfabeto) throws TextoNoValido{
+		if(comproE.TextoCorrecto(textos, alfabeto) == false) new throw TextoNoValido;
+	}
+
+	public void compruebaListas(Vector<Map<String, Integer>> listas, String alfabeto) throws ListaNoValida{
+		if(comproE.ListaCorrecto(lista, alfabeto) == false) new throw ListaNoValida;
 	}
 
 }

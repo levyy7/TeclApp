@@ -7,7 +7,7 @@ public class InputInexistente extends ExcepcionsCentral{
     }
 
     public InputInexistente() {
-        super("Imput incorrecte tontito");
+        super("El input seleccionado no existe");
     }
     
     

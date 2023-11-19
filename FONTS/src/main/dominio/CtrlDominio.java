@@ -1,4 +1,5 @@
 package main.dominio;
+import java.util.ArrayList;
 import Exceptions.*;
 
 import java.util.*;

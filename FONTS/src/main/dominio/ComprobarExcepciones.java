@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class ComprobarExcepciones{
 
-	public boolean TextoCorrecto(Vector<String> textos, String alfabeto) {//texto solo caracteres del alfabeto
+	public boolean TextoCorrecto(Vector<String> textos, String alfabeto) { //texto solo caracteres del alfabeto
 		for (String texto:textos){
 			String regex = "[" + Pattern.quote(alfabeto) + "]+";
 			if(texto.matches(regex) == false) return false;
