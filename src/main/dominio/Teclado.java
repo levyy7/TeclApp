@@ -65,10 +65,6 @@ public class Teclado {
     public void setLayout(HashMap<Character, Point> newlayout){
         this.layout = newlayout;
     }
-
-    public void modify(HashMap<Character, Point> newLayout){
-        this.layout = newLayout;
-    }
 }
 
 //mariona
