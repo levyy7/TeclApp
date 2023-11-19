@@ -10,7 +10,7 @@ public abstract class ExcepcionsCentral extends Exception{
         super();
     }
 
-    public ExcepcionsCentral(String s) {
+    public ExcepcionsCentral(String s) { //aquesta funcio no cal crec
         super(s);
     }
 }
