@@ -40,7 +40,7 @@ public class Alfabeto extends Input{
         super.setNombre(nombre);
     }
 
-    public void modify(String newAlphabet){
+    public void setAlfabeto(String newAlphabet){
         this.alphabet = newAlphabet;
     }
 }
