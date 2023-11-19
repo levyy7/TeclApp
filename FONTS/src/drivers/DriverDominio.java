@@ -20,8 +20,12 @@ public class DriverDominio {
 		System.out.println("6 = Modificar teclado");
         System.out.println("7 = Modificar alfabeto");
 		System.out.println("8 = Modificar texto");
-        System.out.println("9 = Modificar lista de palabras"); 
-		
+        System.out.println("9 = Modificar lista de palabras");
+
+        System.out.println("10 = Borrar alfabeto");
+        System.out.println("11 = Borrar texto");
+        System.out.println("12 = Borrar alfabeto");
+
         System.out.println("33 = Salir");
 	}
 
@@ -220,6 +224,36 @@ public class DriverDominio {
         ctrlD.modificarListaPalabras(nombreLista, listaNueva);
     }
 
+    private static void borrarAlfabeto() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre del alfabeto a borrar: ");
+        String nombreAlfabeto = tec.nextLine();
+        
+        ctrlD.borrarAlfabeto(nombreAlfabeto);
+    }
+
+    private static void borrarTexto() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre del texto a borrar: ");
+        String nombreTexto = tec.nextLine();
+        
+        ctrlD.borrarAlfabeto(nombreTexto);
+    }
+
+    private static void borrarListaPalabras() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el nombre de la lista a borrar: ");
+        String nombreLista = tec.nextLine();
+
+        ctrlD.borrarListaPalabras(nombreLista);
+    }
+
 	public static void main(String[] args) {
         
 		ctrlD = new CtrlDominio();
@@ -247,6 +281,10 @@ public class DriverDominio {
                 case 7: modificarAlfabeto(); break;
                 case 8: modificarTexto(); break;
                 case 9: modificarListaPalabras(); break;
+
+                case 10: borrarAlfabeto(); break;
+                case 11: borrarTexto(); break;
+                case 12: borrarListaPalabras(); break;
 
                 case 33: salir = true; break;
             }
