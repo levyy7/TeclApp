@@ -70,10 +70,6 @@ public class Teclado {
     public void setLayout(char[] newlayout){
         this.layout = newlayout;
     }
-
-    public void modify(char[] newLayout){
-        this.layout = newLayout;
-    }
 }
 
 //mariona

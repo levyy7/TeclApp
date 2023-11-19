@@ -37,7 +37,6 @@ public class Texto extends TLP{
 
     public void modify(String newtext){
         this.text = newtext;
-        //sha de cridar a fer una nova llista de caracter amb frequencia de caracters?????
     }
 
     public void print(){

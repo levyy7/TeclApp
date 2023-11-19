@@ -29,7 +29,6 @@ public class ListaPalabras extends TLP{
     public Double getFrequencia(String palabra) {
         return listaFreq.get(palabra);
     }
-
     public String getType(){
         return "Lista de Palabras";
     }
