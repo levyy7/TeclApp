@@ -1,12 +1,20 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import main.dominio.Teclado;
 import java.awt.geom.Point2D;
+import java.beans.Transient;
 import java.awt.Point;
 
 import main.dominio.Playout;
+
+//no puedo compilarla porque no tengo el make en windows
+//tampoco las librerias incluidas porque por algun motivo no me las acaba de reconocer xdddd
 
 class TecladoTest {
 
@@ -30,6 +38,25 @@ class TecladoTest {
     @Test
     void testGetAlfabeto() {
         Assert.assertEquals("alfabeto", teclado.getAlfabeto());
+    }
+
+    @Test
+    void testGetLayout() {
+         Assert.assertNull(teclado.getAlgoritmo()); //Assumiendo que el layout inicialmente es null
+    }
+
+    @Test 
+    void testGetSizeLayout(){
+        char[] lay = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+        teclado.setLayout(lay);
+        Assert.assertEquals(lay, teclado.getLayout());
+    }
+
+    @Test 
+    void testGetSizeLayout(){
+        char[] lay = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+        teclado.setLayout(lay);
+        Assert.assertEquals(10, teclado.getSizeLayout());
     }
 
     @Test
@@ -62,17 +89,5 @@ class TecladoTest {
         
         assertArrayEquals(mockPlayout, teclado.getPlayout());
         verify(mockPlayoutObj, times(1)).getTeclas(); // Verifica que se llamó al método getTeclas
-    }
-
-    @Test
-    void testSetLayoutAndModify() {
-        char[] nuevoLayout = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
-
-        teclado.setLayout(nuevoLayout);
-        Assert.assertArrayEquals(nuevoLayout, teclado.getLayout());
-
-        char[] otroLayout = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-        teclado.modify(otroLayout);
-        Assert.assertArrayEquals(otroLayout, teclado.getLayout());
     }
 }

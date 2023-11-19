@@ -7,10 +7,9 @@ import java.awt.geom.Point2D;
 
 public class Teclado {
     private String nombre;
-    private String algoritmo;
+    private String algoritmo; //nombre algoritmo
     private String alfabeto; //nombre alfabeto
     private char[] layout;
-    //private HashMap<Character, Point> layout;
     private Playout playout;
 
     //creadora
@@ -18,18 +17,8 @@ public class Teclado {
         this.nombre = nombre;
         this.alfabeto = alfabeto;
         this.playout = new Playout(numchar);
+        this.layout = null;
     }
-
-    /* 
-    public Teclado(String nombre, String algoritmo, String alfabeto, Map<Character, Point> layout) {
-        this.nombre = nombre;
-        this.algoritmo = algoritmo;
-        this.alfabeto = alfabeto;
-        this.layout = layout;
-        this.playout = new Playout(0);
-        //cridar funcions epr fer playout
-    }
-    */
 
     public String getNombre(){
         return this.nombre;
