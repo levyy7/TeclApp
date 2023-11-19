@@ -98,8 +98,17 @@ public class CtrlEntrada{
 		//inputs.put(name, in);
 	}
 
-	public Input getInput(String e){ //esta mal!!!
-		return inputs.get(e);
+	public String getAlfabeto(String e){
+		Input in = inputs.get(e);
+		return in.getDato();
+	}
+	public String getTexto(String e){ //esta mal!!!
+		Input in = inputs.get(e);
+		return in.getDato();
+	}
+	public Map<String, Integer> getLista(String e){ //esta mal!!!
+		Input in = inputs.get(e);
+		return in.getDato();
 	}
 
 }
