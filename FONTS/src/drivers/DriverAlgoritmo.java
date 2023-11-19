@@ -55,14 +55,12 @@ public class DriverAlgoritmo {
 
 		Scanner tecInt = new Scanner(System.in);
 		Scanner tec = new Scanner(System.in);
-
-		System.out.println("Introduce un phisical layout:");
 		
 		System.out.print("Cuantos textos quieres introducir: ");
 		int numTextos = tecInt.nextInt();
 
+		Vector<String> textos = new Vector<>();
 		if (numTextos != 0) {
-			Vector<String> textos = new Vector<>();
 			System.out.println("Introduce los textos linea por linea:");
 			for (int i = 0; i < numTextos; ++i) textos.addElement(tec.nextLine());
 		}
@@ -86,7 +84,9 @@ public class DriverAlgoritmo {
 
 		char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
+		System.out.println("\n\n\nEl layout es");
 		for (int i = 0; i < layout.length; ++i) System.out.print(layout[i]+" ");
+		System.out.println("\nEl tamaño del layout es: "+layout.length);
 	}
 
 	public static void main(String[] args) {

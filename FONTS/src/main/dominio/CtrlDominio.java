@@ -62,7 +62,7 @@ public class CtrlDominio {
         if (nombreAlgoritmo == "QAP") {
             try {
                 
-                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
+                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, alfabeto.length());
                 char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
                 ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
@@ -117,7 +117,9 @@ public class CtrlDominio {
         asignarTextosYListas(textos, listas, nombresTLP);
 
         if (nombreAlgoritmo == "QAP") {
-                
+
+            ctrlE.modificaAlfabetoTeclado(nombreTeclado, nombreAlfabeto, alfabeto.length());
+
             Point2D[] playout = ctrlE.getPlayout(nombreTeclado);
             char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
