@@ -13,7 +13,7 @@ import java.awt.Point;
 public class QAPOptimized extends QAP {
     /** Número de iteraciones que ejecutará el algoritmo greedy GRASP */
     private static final int ITERATIONS_GREEDY = 100;
-    /** Número de iteraciones que ejecutará el algoritmo greedy GRASP */
+    /** Control del randomizado sobre el algoritmo greedy GRASP */
     private static final double ALPHA = 0.5;
 
     @Override 
@@ -267,24 +267,24 @@ public class QAPOptimized extends QAP {
      *                  la jésima ubicación, con respecto al resto de instalaciones no 
      *                  emplazadas
     */
-    private double[][] generateC2(double[][] distLoc, int[][] traficoInst, ArrayList<Integer> notUsedLocIndex, ArrayList<Integer> notUsedInstIndex) {
-        double[][] C2 = new double[notUsedInstIndex.size()][notUsedInstIndex.size()];
+    private double[][] generateC2(double[][] distLoc, int[][] traficoInst, ArrayList<Integer> notUsedLoc, ArrayList<Integer> notUsedInst) {
+        double[][] C2 = new double[notUsedInst.size()][notUsedInst.size()];
         //Vector distancias
-        double[] D = new double[notUsedInstIndex.size() - 1];
+        double[] D = new double[notUsedInst.size() - 1];
         //Vector trafico
-        int[] T = new int[notUsedInstIndex.size() - 1];
+        int[] T = new int[notUsedInst.size() - 1];
 
         for (int i = 0; i < C2.length; ++i) {
             for (int j = 0; j < C2[0].length; ++j) {
-                ArrayList<Integer> restLocNotPlaced = new ArrayList<>(notUsedLocIndex);
+                ArrayList<Integer> restLocNotPlaced = new ArrayList<>(notUsedLoc);
                 restLocNotPlaced.remove(i);
-                ArrayList<Integer> restInstNotPlaced = new ArrayList<>(notUsedInstIndex);
+                ArrayList<Integer> restInstNotPlaced = new ArrayList<>(notUsedInst);
                 restInstNotPlaced.remove(j);
                 
                 for (int k = 0; k < D.length; ++k) 
-                    D[k] = distLoc[notUsedLocIndex.get(i)][restLocNotPlaced.get(k)];
+                    D[k] = distLoc[notUsedLoc.get(i)][restLocNotPlaced.get(k)];
                 for (int k = 0; k < T.length; ++k) 
-                    T[k] = traficoInst[notUsedInstIndex.get(j)][restInstNotPlaced.get(k)];
+                    T[k] = traficoInst[notUsedInst.get(j)][restInstNotPlaced.get(k)];
 
                 Arrays.sort(T);
                 Arrays.sort(D);
@@ -354,16 +354,7 @@ public class QAPOptimized extends QAP {
     }
 
     
-/*
-    private void printMatrix(double[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print(matrix[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-*/
+
     /** 
      * Resuelve instancias de Linear Assignment Problems
      * @param taskCostPerWorker : Matriz donde las filas representan a trabajadores y las 
@@ -382,9 +373,8 @@ public class QAPOptimized extends QAP {
 
         boolean[] rowCover = new boolean[n];
         boolean[] colCover = new boolean[n];
-        //System.out.print(" Entro MCL " );
+
         int minimumCover = minimumCoverLines(taskCostPerWorkerC, rowCover, colCover);
-        //System.out.print(" Salgo MCL = " + minimumCover + " ");
         while (minimumCover != n) {
             double minNum = minNumNotCovered(taskCostPerWorkerC, rowCover, colCover);
             addNumToCovered(taskCostPerWorkerC, rowCover, colCover, minNum);
@@ -522,7 +512,7 @@ public class QAPOptimized extends QAP {
      *                  los 0s de "matrix"
      * @param colCover : Array sobre la que se especifican las columnas usadas para recubrir
      *                  los 0s de "matrix"
-     * @return double : Devuelve el mínimo número de líneas necesarias para recubrir los 0s
+     * @return int : Devuelve el mínimo número de líneas necesarias para recubrir los 0s
      *                  de "matrix"
     */
     private int minimumCoverLines(double[][] matrix, boolean[] rowCover, boolean[] colCover) {
@@ -631,15 +621,3 @@ public class QAPOptimized extends QAP {
     }
 
 }    
-/* 
-    private static void printPointList(ArrayList<Point> l) {
-        for (int i = 0; i < l.size(); ++i) {
-            Point p = l.get(i);
-            System.out.print("(" + p.x + " " + p.y + ")" + " ");
-        }
-        System.out.println();
-    }
-
-    
-
-}*/

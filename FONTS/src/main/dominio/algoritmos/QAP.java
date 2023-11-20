@@ -36,9 +36,8 @@ public class QAP implements EstrategiaCreacionLayout {
     protected ArrayList<Point> branchAndBound(double[][] distLoc, int[][] traficoInst) {
         int n = distLoc.length;
         Node bestSol = initialSolutionBB(distLoc, traficoInst);
-        //Point e = new Point(-1, -1);
-        //bestSol.partialSol.add(e);
-        PriorityQueue<Node> pq = //Seguramente priority_queue
+
+        PriorityQueue<Node> pq = 
           new PriorityQueue<>((a, b) -> Double.compare(b.bound, a.bound));
 
         Node u = new Node(0.0, n);
@@ -47,7 +46,7 @@ public class QAP implements EstrategiaCreacionLayout {
         while (pq.size() != 0) {
             u = pq.poll(); 
             System.out.print("(" + u.bound + " " + u.cost + ")");
-            //printPointList(u.partialSol);
+
 
             //Solution
             if (u.partialSol.size() == n) {
@@ -162,13 +161,4 @@ public class QAP implements EstrategiaCreacionLayout {
     protected double generateBound(double[][] distLoc, int[][] traficoInst, Node u) {
         return u.cost;
     }
-
-    /*private static void printPointList(ArrayList<Point> l) {
-        for (int i = 0; i < l.size(); ++i) {
-            Point p = l.get(i);
-            System.out.print("(" + p.x + " " + p.y + ")" + " ");
-        }
-        System.out.println();
-    }*/
-
 }
