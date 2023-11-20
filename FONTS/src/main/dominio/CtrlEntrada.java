@@ -57,7 +57,7 @@ public class CtrlEntrada{
 	}
 
 	public String getAlgoritmo(String nombreTeclado) throws TecladoInexistente{
-		if(teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(e);
+		if(teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(nombreTeclado);
 		Teclado a = teclados.get(nombreTeclado);
 		return a.getAlgoritmo();
 	}
@@ -122,7 +122,7 @@ public class CtrlEntrada{
 		inputs.put(nombreTexto, in);
 	}
 
-	public void borrarAlfabeto(String nombreAlfabeto)AlfabetoUsandose{
+	public void borrarAlfabeto(String nombreAlfabeto) throws AlfabetoUsandose{
 		for (Map.Entry<String, Teclado> texplorado : teclados.entrySet()) {
 			Teclado board = texplorado.getValue();
 			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
