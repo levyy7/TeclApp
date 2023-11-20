@@ -100,27 +100,25 @@ public class CtrlEntrada{
 		return a.getAlfabeto();
 	}
 
-	
-
-
-	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) throws InputInexistente, AlfabetoUsandose, InputJaCreat, AlfabetoInvalido{
+	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) throws AlfabetoUsandose, AlfabetoInvalido{
 		for (Map.Entry<String, Teclado> texplorado : teclados.entrySet()) {
 			Teclado board = texplorado.getValue();
 			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
 		}
-		if(inputs.containsKey(nombreAlfabeto) == false) throw new InputInexistente();
+		if(comproE.AlfaCorrecto(alfabetoNuevo) == false) throw new AlfabetoInvalido(nombreAlfabeto);
 		inputs.remove(nombreAlfabeto);
-		importarAlfabeto(nombreAlfabeto, alfabetoNuevo);
+		Input in = new Alfabeto(nombreAlfabeto, alfabetoNuevo);
+		inputs.put(nombreAlfabeto, in);
 	}
-	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) throws InputInexistente, InputJaCreat{
-		if(inputs.containsKey(nombreLista) == false) throw new InputInexistente();
+	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva){
 		inputs.remove(nombreLista);
-		importarListaPalabras(nombreLista, listaNueva);
+		Input in = new ListaPalabras(nombreLista,listaNueva); //problema double mariona
+		inputs.put(nombreLista, in);
 	}
-	public void modificarTexto(String nombreTexto, String textoNuevo) throws InputInexistente, InputJaCreat{
-		if(inputs.containsKey(nombreTexto) == false) throw new InputInexistente(); //que liada, puedes borrar una cosa que no sea texto (miguel) i mirar lo de les exepcions i posar lo del remove be
+	public void modificarTexto(String nombreTexto, String textoNuevo){
 		inputs.remove(nombreTexto);
-		importarTexto(nombreTexto, textoNuevo);
+		Input in = new Texto(nombreTexto, textoNuevo);
+		inputs.put(nombreTexto, in);
 	}
 
 	public void borrarAlfabeto(String nombreAlfabeto) throws InputInexistente, AlfabetoUsandose{
