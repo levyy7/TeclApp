@@ -122,22 +122,19 @@ public class CtrlEntrada{
 		inputs.put(nombreTexto, in);
 	}
 
-	public void borrarAlfabeto(String nombreAlfabeto) throws InputInexistente, AlfabetoUsandose{
+	public void borrarAlfabeto(String nombreAlfabeto)AlfabetoUsandose{
 		for (Map.Entry<String, Teclado> texplorado : teclados.entrySet()) {
 			Teclado board = texplorado.getValue();
 			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
 		}
-		if(inputs.containsKey(nombreAlfabeto) == false) throw new InputInexistente();
      	inputs.remove(nombreAlfabeto);
     }
 
-    public void borrarTexto(String nombreTexto) throws InputInexistente{
-    	if(inputs.containsKey(nombreTexto) == false) throw new InputInexistente();
+    public void borrarTexto(String nombreTexto){
         inputs.remove(nombreTexto);
     }
 
-    public void borrarListaPalabras(String lista) throws InputInexistente{
-    	if(inputs.containsKey(lista) == false) throw new InputInexistente();
+    public void borrarListaPalabras(String lista) {
         inputs.remove(lista);
     }
 
