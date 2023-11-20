@@ -46,7 +46,11 @@ public class CtrlDominio {
     }
 
     public String consultarAlfabeto(String nombreAlfabeto) {
-        return ctrlE.getAlfabeto(nombreAlfabeto);
+        String alfabeto = "";
+        try {ctrlE.getAlfabeto(nombreAlfabeto);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return "";}
+        return alfabeto;
     }
 
     public String consultarTexto(String nombreTexto) {
@@ -100,7 +104,11 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
 
         String alfabeto = "";
-        if (tipo == "Alfabeto") alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);
+        if (tipo == "Alfabeto") {
+            try {alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);}
+            catch (InputInexistente e)
+                {System.out.println("Error: "+e.getMessage()); return;}
+        }
         else {System.out.println("El alfabeto no existe"); return;}
 
         Vector<String> textos = new Vector<String>();
@@ -164,7 +172,11 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
 
         String alfabeto = "";
-        if (tipo == "Alfabeto") alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);
+        if (tipo == "Alfabeto") {
+            try{alfabeto = ctrlE.getAlfabeto(nombreAlfabeto);}
+            catch (InputInexistente e)
+                {System.out.println("Error: "+e.getMessage()); return;}
+        }
         else {System.out.println("El alfabeto no existe"); return;}
 
         Vector<String> textos = new Vector<String>();

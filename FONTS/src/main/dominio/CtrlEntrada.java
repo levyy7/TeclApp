@@ -17,6 +17,7 @@ public class CtrlEntrada{
  	private HashMap<String, Input> inputs;
  	private static CtrlEntrada singletonObject;
  	private static ComprobarExcepciones comproE;
+ 	
     public CtrlEntrada(){  
         inicialitzar();
     }
@@ -31,6 +32,7 @@ public class CtrlEntrada{
 	public void inicialitzar(){
 	    teclados = new HashMap<String, Teclado>();
 	    inputs = new HashMap<String, Input>();
+	    comproE = new ComprobarExcepciones();
 	}
 
 	public Point2D[] crearTecladoVacio (String nombreTeclado, String nombreAlfabeto) throws NGrande,TecladoYaExiste { 
