@@ -181,10 +181,6 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (AlfabetoInvalido e)
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (InputInexistente e) //Aqui nunca entrara
-            {return;}
-        catch (InputJaCreat e) //Aqui nunca entrara
-            {return;}
     }
 
     public void modificarTexto(String nombreTexto, String textoNuevo) {
@@ -196,11 +192,7 @@ public class CtrlDominio {
         if (tipo != "Texto")
             {System.out.println("Error: "+"el texto no existe"); return;}
         
-        try {ctrlE.modificarTexto(nombreTexto, textoNuevo);}
-        catch (InputInexistente e) //Aqui nunca entrara
-            {return;}
-        catch (InputJaCreat e) //Idem
-            {return;}
+        ctrlE.modificarTexto(nombreTexto, textoNuevo);
     }
 
     public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) {
@@ -212,11 +204,7 @@ public class CtrlDominio {
         if (tipo != "Lista de Palabras")
             {System.out.println("Error: "+"la lista no existe"); return;}
 
-        try {ctrlE.modificarListaPalabras(nombreLista, listaNueva);}
-        catch (InputInexistente e) //Aqui nunca entrara
-            {return;}
-        catch (InputJaCreat e) //Idem
-            {return;}
+        ctrlE.modificarListaPalabras(nombreLista, listaNueva);
     }
 
     public void borrarAlfabeto(String nombreAlfabeto) {
