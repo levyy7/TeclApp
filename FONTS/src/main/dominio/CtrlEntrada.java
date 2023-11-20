@@ -71,27 +71,19 @@ public class CtrlEntrada{
 	public void importarAlfabeto(String nAlfa, String alfa) throws InputJaCreat, AlfabetoInvalido {
 		if(inputs.containsKey(nAlfa)) throw new InputJaCreat(nAlfa);
 		if(comproE.AlfaCorrecto(alfa) == false) throw new AlfabetoInvalido(nAlfa);
-		//importInput(nAlfa, alfa, "Alfabeto");
 		Input in = new Alfabeto(nAlfa, alfa);
 		inputs.put(nAlfa, in);
 	}
 
 	public void importarTexto(String nTexto, String texto) throws InputJaCreat {
 		if(inputs.containsKey(nTexto)) throw new InputJaCreat(nTexto);
-		//importInput(nTexto, texto, "Texto");
 		Input in = new Texto(nTexto, texto);
 		inputs.put(nTexto, in);
 	}
 
-	/*private void importInput(String name, String data, String type){
-		Input in = new Input(name,data,type); 
-		inputs.put(name, in);
-	}*/
-
 	public void importarListaPalabras(String nLista, Map<String, Integer> lista) throws InputJaCreat{
 		if(inputs.containsKey(nLista)) throw new InputJaCreat(nLista);
-		//Input in = new Input(nLista,"","ListaPalabras"); in.setListaFrecuencia(lista);
-		Input in = new ListaPalabras(nLista,lista); //problema double mariona
+		Input in = new ListaPalabras(nLista,lista); 
 		inputs.put(nLista, in);
 	}
 
@@ -113,7 +105,7 @@ public class CtrlEntrada{
 	}
 	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva){
 		inputs.remove(nombreLista);
-		Input in = new ListaPalabras(nombreLista,listaNueva); //problema double mariona
+		Input in = new ListaPalabras(nombreLista,listaNueva); 
 		inputs.put(nombreLista, in);
 	}
 	public void modificarTexto(String nombreTexto, String textoNuevo){
@@ -138,18 +130,18 @@ public class CtrlEntrada{
         inputs.remove(lista);
     }
 
-	public String getAlfabeto(String e){
-		Input in = inputs.get(e);
-		return in.getAlfabeto();
+	public String getAlfabeto(String e) throws InputInexistente{
+		Input in = inputs.get(e);			
+		return ((Alfabeto)in).getAlfabeto();
 	}
 	public String getTexto(String e){
 		Input in = inputs.get(e);
-		return in.getTexto();
+		return ((Texto)in).getTexto();
 	}
 	public Map<String, Integer> getListaPalabras(String e){
 		Input in = inputs.get(e);
-		return in.getListaFreq();
-	} //arrglar amb mariona
+		return ((ListaPalabras)in).getListaFreq();
+	} 
 
 	public void compruebaTextos(Vector<String> textos, String alfabeto) throws TextoNoValido{
 		if(comproE.TextoCorrecto(textos, alfabeto) == false) throw new TextoNoValido();
