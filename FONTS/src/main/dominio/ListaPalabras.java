@@ -1,20 +1,18 @@
 package main.dominio;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
+
 
 public class ListaPalabras extends TLP{
 
-    private Map<String, Double> listaFreq = new HashMap<String, Double>();
+    private Map<String, Integer> listaFreq = new HashMap<String, Integer>();
 
-    public ListaPalabras(String nombre, Map<String, Double> listaFreq){
+    public ListaPalabras(String nombre, Map<String, Integer> listaFreq){
         super(nombre);
         this.listaFreq = listaFreq;
     }
 
     //afegir paraules a la llista si no hi son
-    public void addPalabra(String p, Double f) {
+    public void addPalabra(String p, Integer f) {
         listaFreq.putIfAbsent(p, f);
     }
 
@@ -22,11 +20,11 @@ public class ListaPalabras extends TLP{
         return super.getNombre();
     }
 
-    public Map<String, Double> getListaFreq(){
+    public Map<String, Integer> getListaFreq(){
         return listaFreq;
     }
 
-    public Double getFrequencia(String palabra) {
+    public Integer getFrequencia(String palabra) {
         return listaFreq.get(palabra);
     }
     public String getType(){
@@ -43,7 +41,7 @@ public class ListaPalabras extends TLP{
         }
     }
 
-    public void setListaFrequencia(Map<String, Double> newlist) {
+    public void setListaFrequencia(Map<String, Integer> newlist) {
         this.listaFreq = newlist;
     }     
 }
