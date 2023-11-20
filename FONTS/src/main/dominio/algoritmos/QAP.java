@@ -45,8 +45,6 @@ public class QAP implements EstrategiaCreacionLayout {
 
         while (pq.size() != 0) {
             u = pq.poll(); 
-            System.out.print("(" + u.bound + " " + u.cost + ")");
-
 
             //Solution
             if (u.partialSol.size() == n) {
@@ -73,9 +71,7 @@ public class QAP implements EstrategiaCreacionLayout {
                         v.partialSol.add(newPlacement);
                         v.usedLoc[newPlacement.x] = true;
                         v.usedInst[newPlacement.y] = true;
-                        System.out.print(" Entro generate bound ");
                         v.bound = generateBound(distLoc, traficoInst, v);
-                        System.out.print(" (" + i + " " + v.cost + " " + v.bound + " " + bestSol.cost + ")");System.out.println();
 
                         if (v.bound < bestSol.cost) pq.add(v); 
                     }
