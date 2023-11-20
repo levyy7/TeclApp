@@ -78,7 +78,7 @@ public class CtrlDominio {
 
         if (nombreAlgoritmo == "QAP") {
             try {
-                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, alfabeto.length());
+                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
                 char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
                 ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);   
@@ -145,13 +145,15 @@ public class CtrlDominio {
             try {
                 borrarTeclado(nombreTeclado);
 
-                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, alfabeto.length());
+                Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
                 char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
                 ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);   
             }
             catch (NGrande e)
                 {System.out.println("Error: "+e.getMessage()); return;}
+            catch (TecladoYaExiste e) //Aqui nunca entrara
+                {return;}
         }
              
     }
@@ -177,6 +179,12 @@ public class CtrlDominio {
         try {ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);}
         catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (AlfabetoInvalido e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e) //Aqui nunca entrara
+            {return;}
+        catch (InputJaCreat e) //Aqui nunca entrara
+            {return;}
     }
 
     public void modificarTexto(String nombreTexto, String textoNuevo) {
@@ -188,7 +196,11 @@ public class CtrlDominio {
         if (tipo != "Texto")
             {System.out.println("Error: "+"el texto no existe"); return;}
         
-        ctrlE.modificarTexto(nombreTexto, textoNuevo);
+        try {ctrlE.modificarTexto(nombreTexto, textoNuevo);}
+        catch (InputInexistente e) //Aqui nunca entrara
+            {return;}
+        catch (InputJaCreat e) //Idem
+            {return;}
     }
 
     public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) {
@@ -200,7 +212,11 @@ public class CtrlDominio {
         if (tipo != "Lista de Palabras")
             {System.out.println("Error: "+"la lista no existe"); return;}
 
-        ctrlE.modificarListaPalabras(nombreLista, listaNueva);
+        try {ctrlE.modificarListaPalabras(nombreLista, listaNueva);}
+        catch (InputInexistente e) //Aqui nunca entrara
+            {return;}
+        catch (InputJaCreat e) //Idem
+            {return;}
     }
 
     public void borrarAlfabeto(String nombreAlfabeto) {
