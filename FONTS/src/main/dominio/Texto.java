@@ -39,8 +39,8 @@ public class Texto extends TLP{
         this.text = txt;
     }
 
-    public void modify(String newtext){
-        this.text = newtext;
+    public void setNombre(String newName){
+        super.setNombre(newName);
     }
 }
 

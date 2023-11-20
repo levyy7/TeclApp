@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ListaPalabras extends TLP{
 
-    private Map<String, Integer> listaFreq = new HashMap<String, Integer>();
+    private Map<String, Integer> listaFreq;
 
     public ListaPalabras(String nombre, Map<String, Integer> listaFreq){
         super(nombre);
