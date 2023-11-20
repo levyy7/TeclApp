@@ -84,7 +84,7 @@ public class DriverAlgoritmo {
 
 		char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
-		System.out.println("\n\n\nEl layout es");
+		System.out.println("\nEl layout es\n");
 		for (int i = 0; i < layout.length; ++i) System.out.print(layout[i]+" ");
 		System.out.println("\nEl tamaño del layout es: "+layout.length);
 	}
