@@ -24,10 +24,14 @@ public class Texto extends TLP{
         return "Texto";
     }
 
+    public int getSize(){
+        return text.length();
+    }
+
     public void importInput(String name, String in, String type) {
         if(type == "texto") {
             super.setNombre(name);
-            this.text = txt;
+            this.text = in;
         }
     }
 
@@ -37,13 +41,7 @@ public class Texto extends TLP{
 
     public void modify(String newtext){
         this.text = newtext;
-        //sha de cridar a fer una nova llista de caracter amb frequencia de caracters?????
     }
-
-    public void print(){
-        System.out.println(text + "\n");
-    }
-    
 }
 
 //mariona

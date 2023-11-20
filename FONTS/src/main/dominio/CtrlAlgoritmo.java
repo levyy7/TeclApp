@@ -70,3 +70,4 @@ public class CtrlAlgoritmo {
     }
 
 }
+//autor Miguel

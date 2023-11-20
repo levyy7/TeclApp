@@ -29,27 +29,23 @@ public class ListaPalabras extends TLP{
     public Double getFrequencia(String palabra) {
         return listaFreq.get(palabra);
     }
-
     public String getType(){
         return "Lista de Palabras";
     }
 
+    public int getSize(){
+        return listaFreq.size();
+    }
+
+    public void importInput(String name, String in, String type){
+        if(type == "Lista"){
+            super.setNombre(name);
+        }
+    }
+
     public void setListaFrequencia(Map<String, Double> newlist) {
         this.listaFreq = newlist;
-    }
-    
-    public void modify(Map<String, Double> newlist) {
-        this.listaFreq = newlist;
-    }
-
-    public void printSingle(String p, Double f){
-        System.out.println("Palabra: " + p + " Frequencia: " + f + "\n");
-    }
-
-    public void print(){
-        listaFreq.forEach((key, value) -> printSingle(key, value));;       
-    }
-       
+    }     
 }
 
 //mariona

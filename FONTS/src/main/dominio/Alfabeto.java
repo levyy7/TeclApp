@@ -12,19 +12,7 @@ public class Alfabeto extends Input{
         super(nombre);
         this.alphabet = alphabet;
     }
-    /*
-    //READ FROM FILE AND READ FROM TYPING
-    //asumo que asi lo hara bien, puede ser que se tenga que leer varias lineas
-    public void readFromFile(String file) throws FileNotFoundException{
-        String in = "";
-        super.readFromFile(file, in);
-        this.alphabet = in;
-    }
 
-    public void readFromType(String in){
-        this.alphabet = in;
-    }
-*/
     public String getAlfabeto(){
         return alphabet;
     }
@@ -42,7 +30,7 @@ public class Alfabeto extends Input{
     }
 
     public void importInput(String name, String alphabet, String type){
-        if(type == "Alphabet") {
+        if(type == "Alfabeto") {
             super.setNombre(name);
             this.alphabet = alphabet;
         }
@@ -52,12 +40,7 @@ public class Alfabeto extends Input{
         super.setNombre(nombre);
     }
 
-    public void print(){
-        int n = alphabet.length();
-        for(int i = 0; i<n; ++i) System.out.println(alphabet.charAt(i) + " ");
-    }
-
-    public void modify(String newAlphabet){
+    public void setAlfabeto(String newAlphabet){
         this.alphabet = newAlphabet;
     }
 }
