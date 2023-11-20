@@ -1,6 +1,7 @@
 package main.dominio;
 
-//import java.util.*;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class ComprobarExcepciones{
@@ -13,10 +14,11 @@ public class ComprobarExcepciones{
 		return true;
 	}
 
-	public boolean ListaCorrecto(Vector<Map<String, Integer>> lista, String alfabeto){
+	public boolean ListaCorrecto(Vector<Map<String, Integer>> llistas, String alfabeto){
 		for (Map<String, Integer> llista:llistas){
-			for(String paraula : llista){
+			for(Map.Entry<String, Integer> fila : llista.entrySet()){
 				String regex = "[" + Pattern.quote(alfabeto) + "]+";
+				String paraula = fila.getKey();
 				if(paraula.matches(regex) == false) return false;
 			}
 				

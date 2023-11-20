@@ -7,7 +7,7 @@ public class NGrande extends ExcepcionsCentral{
     }
 
     public NGrande() {
-        super("la n ha de ser menor que x");
+        super("el tamany de l'alfabet ha de ser menor que 20");
     }
     
 }

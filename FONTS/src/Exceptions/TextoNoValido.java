@@ -1,13 +1,13 @@
 package Excepcions;
 
-public class TecladoNoValido extends ExcepcionsCentral{
+public class TextoNoValido extends ExcepcionsCentral{
 
     public String getTipus() {
-        return "TecladoNoValido";
+        return "TextoNoValido";
     }
 
-    public TecladoNoValido(String s, String a) {
-        super("el text"+s+"te caracters fora del alfabet"+a);
+    public TextoNoValido() {
+        super("un text te caracters fora del alfabet");
     }
     
 }

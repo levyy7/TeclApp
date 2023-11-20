@@ -6,8 +6,8 @@ public class ListaNoValida extends ExcepcionsCentral{
         return "ListaNoValida";
     }
 
-    public ListaNoValida(String s, String a) {
-        super("la llista "+s+"te caracters fora del alfabet"+a);
+    public ListaNoValida() {
+        super("hay una llista que te caracters fora del alfabet");
     }
     
 }
