@@ -151,5 +151,19 @@ public class CtrlEntrada{
 		if(comproE.ListaCorrecto(listas, alfabeto) == false) throw new ListaNoValida();
 	}
 
+	//meter en el UML:
+	public HashMap<String, Teclado> getTeclados(){
+		return teclados;
+	}
+
+	public Teclado getTeclado(String nombreTeclado){
+		Teclado board = teclados.get(nombreTeclado);
+		return board;
+	}
+
+	public Input getInput(String nInput){
+		Input in = inputs.get(nInput);
+		return in;
+	}
 }
 //classe implementada per POL
