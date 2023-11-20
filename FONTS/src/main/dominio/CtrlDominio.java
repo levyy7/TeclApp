@@ -1,7 +1,8 @@
 package main.dominio;
-import java.util.ArrayList;
-import Exceptions.*;
+import Excepcions.*;
+import main.dominio.*;
 
+import java.util.ArrayList;
 import java.util.*;
 import java.awt.geom.Point2D;
 
@@ -25,31 +26,31 @@ public class CtrlDominio {
     }
 
     private boolean asignarTextosYListas(Vector<String> textos, 
-            Vector<Map<String, Integer>> listas, String nombresTLP,
+            Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
             String alfabeto) {
 
-        for (int i = 0; i < nombresTLP.length(); ++i) {
+        for (int i = 0; i < nombresTLP.size(); ++i) {
             
             String nombreTLP = nombresTLP.elementAt(i);
             String type = "";
 
             try {type = ctrlE.getType(nombreTLP);}
-            catch (InputIncorrecte e) 
-                {System.out.println("Error: "+e.getMessage()); return;}
+            catch (InputInexistente e) 
+                {System.out.println("Error: "+e.getMessage()); return false;}
 
             if (type == "Texto") {
                 String texto = ctrlE.getTexto(nombreTLP);
                 textos.addElement(texto);
             }
             else if (type == "Lista de Palabras") {
-                String lista = ctrlE.getListaPalabras(nombreTLP);
+                Map<String, Integer> lista = ctrlE.getListaPalabras(nombreTLP);
                 listas.addElement(lista);
             }
         }
 
         try {
-            compruebaTextos(textos, alfabeto);
-            compruebaListas(listas, alfabeto);
+            ctrlE.compruebaTextos(textos, alfabeto);
+            ctrlE.compruebaListas(listas, alfabeto);
         }
         catch (TextoNoValido e) 
             {System.out.println("Error: "+e.getMessage()); return false;}
@@ -84,7 +85,7 @@ public class CtrlDominio {
             }
             catch (NGrande e)
                 {System.out.println("Error: "+e.getMessage()); return;}
-            catch (TecladoYaExistente e) 
+            catch (TecladoYaExiste e) 
                 {System.out.println("Error: "+e.getMessage()); return;}
         }
 
@@ -165,41 +166,79 @@ public class CtrlDominio {
     }
 
     public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) {
-        try {ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);}
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreAlfabeto);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Alfabeto")
+            {System.out.println("Error: "+"el alfabeto no existe"); return;}
+
+        try {ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);}
         catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     public void modificarTexto(String nombreTexto, String textoNuevo) {
-    	try {ctrlE.modificarTexto(nombreTexto, textoNuevo);}
+    	String tipo = "";
+        try {tipo = ctrlE.getType(nombreTexto);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Texto")
+            {System.out.println("Error: "+"el texto no existe"); return;}
+        
+        ctrlE.modificarTexto(nombreTexto, textoNuevo);
     }
 
     public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) {
-    	try {ctrlE.modificarListaPalabras(noombreLista, listaNueva);}
+    	String tipo = "";
+        try {tipo = ctrlE.getType(nombreLista);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Lista de Palabras")
+            {System.out.println("Error: "+"la lista no existe"); return;}
+
+        ctrlE.modificarListaPalabras(nombreLista, listaNueva);
     }
 
     public void borrarAlfabeto(String nombreAlfabeto) {
-        try {ctrlE.borrarAlfabeto(nombreAlfabeto);}
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreAlfabeto);}
         catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Alfabeto")
+            {System.out.println("Error: "+"el alfabeto no existe"); return;}
+
+        try {ctrlE.borrarAlfabeto(nombreAlfabeto);}
+        catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     public void borrarTexto(String nombreTexto) {
-        try {ctrlE.borrarTexto(nombreTexto);}
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreTexto);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Texto")
+            {System.out.println("Error: "+"el texto no existe"); return;}
+
+        ctrlE.borrarTexto(nombreTexto);
     }
 
-    public void borrarListaPalabras(String lista) {
-        try {ctrlE.borrarListaPalabras(lista);}
+    public void borrarListaPalabras(String nombreLista) {
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreLista);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Lista de Palabras")
+            {System.out.println("Error: "+"la lista no existe"); return;}
+
+        ctrlE.borrarListaPalabras(nombreLista);
     }
 
 }
