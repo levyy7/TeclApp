@@ -45,16 +45,16 @@ public class CtrlDominio {
         return ctrlE.getListas();
     }
 
-    public Input consultarAlfabeto(String nombreAlfabeto) {
+    public String consultarAlfabeto(String nombreAlfabeto) {
         return ctrlE.getAlfabeto(nombreAlfabeto);
     }
 
-    public Input consultarTexto(String nombreTexto) {
+    public String consultarTexto(String nombreTexto) {
         return ctrlE.getTexto(nombreTexto);
     }
 
-    public Input consultarLista(String nombreLista) {
-        return ctrlE.getLista(nombreLista);
+    public Map<String, Integer> consultarLista(String nombreLista) {
+        return ctrlE.getListaPalabras(nombreLista);
     }
 
     private boolean asignarTextosYListas(Vector<String> textos, 

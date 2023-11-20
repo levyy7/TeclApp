@@ -85,11 +85,11 @@ public class DriverDominio {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del alfabeto a consultar: ");
         String nomAlf = tec.nextLine();
-        Input alf = ctrlD.consultarAlfabeto(nomAlf);
+        String alf = ctrlD.consultarAlfabeto(nomAlf);
 
-        System.out.println("Nombre: "+alf.getNombre());
+        System.out.println("Nombre: "+nomAlf);
         System.out.println("Alfabeto:");
-        char[] alfabeto = alf.getAlfabeto().toCharArray();
+        char[] alfabeto = alf.toCharArray();
         for (int i = 0; i < alfabeto.length; ++i)
             System.out.print(" "+alfabeto[i]);
         System.out.println();
@@ -108,10 +108,10 @@ public class DriverDominio {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
         String nomText = tec.nextLine();
+        String text = ctrlD.consultarTexto(nomText);
 
-        Input text = ctrlD.consultarAlfabeto(nomText);
-        System.out.println("Nombre: "+text.getNombre());
-        System.out.println("Texto:\n"+text.getTexto()+"\n");
+        System.out.println("Nombre: "+nomText);
+        System.out.println("Texto:\n"+text+"\n");
     }
 
     private static void consultarListas() {
@@ -126,12 +126,12 @@ public class DriverDominio {
     private static void consultarLista() {
         Scanner tec = new Scanner(System.in);
         
-        System.out.print("Nombre del alfabeto a consultar: ");
+        System.out.print("Nombre de la lista a consultar: ");
         String nomList = tec.nextLine();
-        Input list = ctrlD.consultarAlfabeto(nomList);
-        System.out.println("Nombre: "+list.getNombre());
+        Map<String, Integer> list = ctrlD.consultarLista(nomList);
+
+        System.out.println("Nombre: "+nomList);
         System.out.println("Lista:");
-        Map<String, Integer> listaFreq = list.getListaFreq();
         for (String key : list.keySet()) {
             System.out.println(key+" "+list.get(key));
         }
