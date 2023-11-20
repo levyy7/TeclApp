@@ -56,7 +56,8 @@ public class CtrlEntrada{
 		teclados.remove(e);
 	}
 
-	public String getAlgoritmo(String nombreTeclado){
+	public String getAlgoritmo(String nombreTeclado) throws TecladoInexistente{
+		if(teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(e);
 		Teclado a = teclados.get(nombreTeclado);
 		return a.getAlgoritmo();
 	}
