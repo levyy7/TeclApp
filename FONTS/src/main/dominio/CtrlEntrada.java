@@ -151,7 +151,6 @@ public class CtrlEntrada{
 		if(comproE.ListaCorrecto(listas, alfabeto) == false) throw new ListaNoValida();
 	}
 
-	//meter en el UML:
 	public HashMap<String, Teclado> getTeclados(){
 		return teclados;
 	}
@@ -161,9 +160,29 @@ public class CtrlEntrada{
 		return board;
 	}
 
-	public Input getInput(String nInput){
-		Input in = inputs.get(nInput);
-		return in;
-	}
+	public HashMap<String, Input> getAlfabetos() {
+		HashMap<String, Input> a  = new HashMap<String, Input>();
+		for (Map.Entry<String, Input> actual: inputs.entrySet()){
+        	if (actual instanceof Alfabeto) a.put(actual.getKey(),actual.getValue());
+        }
+        return a;
+    }
+
+    public HashMap<String, Input> getTextos() {
+    	HashMap<String, Input> a  = new HashMap<String, Input>();
+		for (Map.Entry<String, Input> actual: inputs.entrySet()){
+        	if (actual instanceof Texto) a.put(actual.getKey(),actual.getValue());
+        }
+        return a;
+    }
+
+    public HashMap<String, Input> getListas() {
+    	HashMap<String, Input> a  = new HashMap<String, Input>();
+		for (Map.Entry<String, Input> actual: inputs.entrySet()){
+        	if (actual instanceof ListaPalabras) a.put(actual.getKey(),actual.getValue());
+        }
+        return a;
+    }
+
 }
 //classe implementada per POL
