@@ -25,6 +25,38 @@ public class CtrlDominio {
 
     }
 
+    public HashMap<String, Teclado> consultarTeclados() {
+        return ctrlE.getTeclados();
+    }
+
+    public Teclado consultarTeclado(String nombreTeclado) {
+        return ctrlE.getTeclado(nombreTeclado);
+    }
+
+    public HashMap<String, Input> consultarAlfabetos() {
+        return ctrlE.getAlfabetos();
+    }
+
+    public HashMap<String, Input> consultarTextos() {
+        return ctrlE.getTextos();
+    }
+
+    public HashMap<String, Input> consultarListas() {
+        return ctrlE.getListas();
+    }
+
+    public Input consultarAlfabeto(String nombreAlfabeto) {
+        return ctrlE.getAlfabeto(nombreAlfabeto);
+    }
+
+    public Input consultarTexto(String nombreTexto) {
+        return ctrlE.getTexto(nombreTexto);
+    }
+
+    public Input consultarLista(String nombreLista) {
+        return ctrlE.getLista(nombreLista);
+    }
+
     private boolean asignarTextosYListas(Vector<String> textos, 
             Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
             String alfabeto) {
