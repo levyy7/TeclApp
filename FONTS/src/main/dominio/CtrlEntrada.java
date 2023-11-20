@@ -90,7 +90,7 @@ public class CtrlEntrada{
 	}
 
 	public String getAlfabetoTeclado(String nombreTeclado) throws TecladoInexistente{
-		if(teclados.containsKey(nombreTeclado)) throw new TecladoInexistente(nombreTeclado);
+		if(teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(nombreTeclado);
 		Teclado a = teclados.get(nombreTeclado);
 		return a.getAlfabeto();
 	}

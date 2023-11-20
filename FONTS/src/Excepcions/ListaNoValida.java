@@ -7,7 +7,7 @@ public class ListaNoValida extends ExcepcionsCentral{
     }
 
     public ListaNoValida() {
-        super("hay una llista que te caracters fora del alfabet");
+        super("hay una llista que te caracters fora de l'alfabet");
     }
     
 }

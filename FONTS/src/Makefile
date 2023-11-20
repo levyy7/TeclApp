@@ -1,6 +1,6 @@
-CLASS_INPUT =	./main/dominio/*.java \
-				./main/domain/algoritmos/*.java \
-				./main/domain/ed/*.java 
+CLASS_INPUT =	main/dominio/*.java \
+				main/domain/algoritmos/*.java \
+				main/domain/ed/*.java 
 
 CLASS_OUTPUT =	../../EXE/out/
 

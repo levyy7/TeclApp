@@ -7,7 +7,7 @@ public class InputJaCreat extends ExcepcionsCentral{
     }
 
     public InputJaCreat(String s) {
-        super("ja existeix un imput amb el nom:"+s);
+        super("ja existeix un imput amb el nom: "+s);
     }
     
 }

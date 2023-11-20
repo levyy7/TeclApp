@@ -48,7 +48,7 @@ public class Teclado {
     }
 
     public void setAlgoritmo(String newAlgoritmo){
-        this.nombre = newAlgoritmo;
+        this.algoritmo = newAlgoritmo;
     }
 
     public void setAlfabeto(String newAlfabeto) {
