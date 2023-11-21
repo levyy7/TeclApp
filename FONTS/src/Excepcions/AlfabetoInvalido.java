@@ -7,7 +7,7 @@ public class AlfabetoInvalido extends ExcepcionsCentral{
     }
 
     public AlfabetoInvalido(String s) {
-        super("l'alfabet" +s+ "te caràcters repetits");
+        super("l'alfabet " +s+ " te caracters repetits");
     }
     
 }

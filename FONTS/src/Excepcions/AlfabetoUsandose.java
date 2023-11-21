@@ -7,7 +7,7 @@ public class AlfabetoUsandose extends ExcepcionsCentral{
     }
 
     public AlfabetoUsandose(String s) {
-        super("l'alfabet"+s+"no es pot modificar perquè s'està utilitzant a un teclat");
+        super("l'alfabet "+s+" no es pot modificar perquè s'està utilitzant a un teclat");
     }
     
 }

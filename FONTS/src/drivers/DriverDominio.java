@@ -48,7 +48,7 @@ public class DriverDominio {
         System.out.println("Los teclados guardados son\n");
         for (String key : teclados.keySet())
             System.out.println(key);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void consultarTeclado() {
@@ -63,13 +63,12 @@ public class DriverDominio {
         System.out.println("Alfabeto: "+t.getAlfabeto());
         System.out.print("Layout:");
         char[] lay = t.getLayout();
-        for (int i = 0; i < lay.length; ++i) 
-            System.out.print(" "+lay[i]);
+        for (int i = 0; i < lay.length; ++i) System.out.print(" "+lay[i]);
         System.out.println("\nPlayout:");
         Point2D[] playout = t.getPlayout();
         for (int i = 0; i < playout.length; ++i) 
             System.out.print(" "+playout[i]);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void consultarAlfabetos() {
@@ -78,7 +77,7 @@ public class DriverDominio {
         System.out.println("Los alfabetos guardado son");
         for (String key : alf.keySet())
             System.out.println(key);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void consultarAlfabeto() {
@@ -92,7 +91,7 @@ public class DriverDominio {
         char[] alfabeto = alf.toCharArray();
         for (int i = 0; i < alfabeto.length; ++i)
             System.out.print(" "+alfabeto[i]);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void consultarTextos() {
@@ -101,7 +100,7 @@ public class DriverDominio {
         System.out.println("Los textos guardado son");
         for (String key : textos.keySet())
             System.out.println(key);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void consultarTexto() {
@@ -111,7 +110,7 @@ public class DriverDominio {
         String text = ctrlD.consultarTexto(nomText);
 
         System.out.println("Nombre: "+nomText);
-        System.out.println("Texto:\n"+text+"\n");
+        System.out.println("Texto:\n"+text+"\n\n");
     }
 
     private static void consultarListas() {
@@ -120,7 +119,7 @@ public class DriverDominio {
         System.out.println("Las listas guardadas son");
         for (String key : listas.keySet())
             System.out.println(key);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void consultarLista() {
@@ -135,7 +134,7 @@ public class DriverDominio {
         for (String key : list.keySet()) {
             System.out.println(key+" "+list.get(key));
         }
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static Vector<String> introducirTextos() {
@@ -144,7 +143,7 @@ public class DriverDominio {
         Scanner tecInt = new Scanner(System.in);
         Vector<String> textos = new Vector<String>();
 
-        System.out.print("Cuantos textos/listas quieres introducir? ");
+        System.out.print("Cuantos textos/listas quieres introducir: ");
         int numeroDeTextos = tecInt.nextInt();
 
         System.out.println("Introduce los nombres de los textos/listas:");
@@ -276,9 +275,9 @@ public class DriverDominio {
         System.out.println("Quieres modificar el alfabeto?");
         System.out.println("Y = Si");
         System.out.println("N = No");
-        Character modif = tec.next().charAt(0);
+        String modif = tec.nextLine();
 
-        if (modif == 'Y') {
+        if (modif == "Y") {
             System.out.print("Introduce el nombre del nuevo alfabeto: ");
             String alfabeto = tec.nextLine();
             ctrlD.modificarTeclado(nombreTeclado, alfabeto, textos);

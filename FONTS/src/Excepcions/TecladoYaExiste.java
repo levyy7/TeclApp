@@ -7,7 +7,7 @@ public class TecladoYaExiste extends ExcepcionsCentral{
     }
 
     public TecladoYaExiste(String s) {
-        super("el teclat amb nom"+ s + "ja existeix");
+        super("el teclat amb nom "+ s + " ja existeix");
     }
     
 }
