@@ -1,6 +1,7 @@
 # Directorio src
 
-Este directorio contiene todo el código del proyecto.
+Este directorio contiene todo el código del proyecto. En cada carpeta
+se encuentra una explicación de todas las clases corresponientes.
 
 ## Elementos del directorio
 
@@ -10,7 +11,8 @@ en el programe no siga la ruta que debería (*especificado en los casos
 de uso*)
 - **drivers:**
 Contiene los drivers (.java) de todos los controladores del dominio,
-que sirven para probar el programa.
+que sirven para probar el programa. Si se precisa de una explicación
+para utilizarlos, consultar la carpeta *drivers/*.
 - **main:**
 Contiene los archivos de las clases del dominio.
 - **tests:**
