@@ -23,13 +23,10 @@ Para usar cualquiera de las opciones (menos make all) de abajo,
 primero se tiene que usar make all para generar los ejecutables.
 
 - `make all`
-
-	Se Crean todos los ejecutables de los drivers (.jar) en el
-	directorio EXE.
+	Se crean todos los ejecutables del proyecto en la carpeta *EXE/*.
 
 - `testAlfabeto`
-
-	Se ejectua el testAlfabeto.
+	Se ejectua el testAlfabeto
 
 - `testPlayout`
 	Se ejecuta el testPlayout
