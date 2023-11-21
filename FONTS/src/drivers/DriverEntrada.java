@@ -81,7 +81,7 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre del alfabeto: ");
 		String name = tec.nextLine();
 
-		System.out.print("Introduce el alfabeto en una linea: ");
+		System.out.println("Introduce el alfabeto en una linea: ");
 		String alfabeto = tec.nextLine();
         alfabeto.replace(" ", "");
 
@@ -132,9 +132,9 @@ public class DriverEntrada {
         alfabeto.replace(" ", "");
 
 		try {ctrlE.modificarAlfabeto(name, alfabeto);}
-        catch (AlfabetoUsandose e)
+		catch (AlfabetoInvalido e)
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (AlfabetoInvalido e)
+        catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 

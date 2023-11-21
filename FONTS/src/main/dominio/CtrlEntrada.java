@@ -165,7 +165,7 @@ public class CtrlEntrada{
 	public HashMap<String, Input> getAlfabetos() {
 		HashMap<String, Input> a  = new HashMap<String, Input>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
-        	if (actual instanceof Alfabeto) a.put(actual.getKey(),actual.getValue());
+        	if (actual.getValue() instanceof Alfabeto) a.put(actual.getKey(),actual.getValue());
         }
         return a;
     }
@@ -173,7 +173,7 @@ public class CtrlEntrada{
     public HashMap<String, Input> getTextos() {
     	HashMap<String, Input> a  = new HashMap<String, Input>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
-        	if (actual instanceof Texto) a.put(actual.getKey(),actual.getValue());
+        	if (actual.getValue() instanceof Texto) a.put(actual.getKey(),actual.getValue());
         }
         return a;
     }
@@ -181,7 +181,7 @@ public class CtrlEntrada{
     public HashMap<String, Input> getListas() {
     	HashMap<String, Input> a  = new HashMap<String, Input>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
-        	if (actual instanceof ListaPalabras) a.put(actual.getKey(),actual.getValue());
+        	if (actual.getValue() instanceof ListaPalabras) a.put(actual.getKey(),actual.getValue());
         }
         return a;
     }
