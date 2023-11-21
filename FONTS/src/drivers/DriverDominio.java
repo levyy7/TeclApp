@@ -26,7 +26,7 @@ public class DriverDominio {
 
         System.out.println("10 = Borrar alfabeto");
         System.out.println("11 = Borrar texto");
-        System.out.println("12 = Borrar alfabeto");
+        System.out.println("12 = Borrar lista de palabras");
 
         System.out.println("13 = Consultar teclados");
         System.out.println("14 = Consultar teclado");
@@ -194,7 +194,7 @@ public class DriverDominio {
 
         System.out.println("Introduce tipo de algoritmo:");
         System.out.println("1 = QAP");
-        System.out.println("2 = a");
+        System.out.println("2 = porImplementar");
         entrada = tecInt.nextInt();
         if (entrada == 1) algor = "QAP";
         else if (entrada == 2) algor = "a";
@@ -305,7 +305,7 @@ public class DriverDominio {
         System.out.print("Introduce el nombre del texto a modificar: ");
         String nombreTexto = tec.nextLine();
 
-        System.out.print("Introdce el nuevo texto, cuando acabes presiona enter 2 veces: ");
+        System.out.print("Introduce el nuevo texto, cuando acabes presiona enter 2 veces: ");
         String texto = "";
         boolean acabado = false;
         while (acabado == false) {
