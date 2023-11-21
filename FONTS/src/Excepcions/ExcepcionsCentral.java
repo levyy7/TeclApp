@@ -1,6 +1,6 @@
 package Excepcions;
 
-@SuppressWarnings("serial") //La classe RunTimeException té un atribut que aquesta classe no te sentit que l'usi 
+@SuppressWarnings("serial")
 
 public abstract class ExcepcionsCentral extends Exception{
 
@@ -10,7 +10,8 @@ public abstract class ExcepcionsCentral extends Exception{
         super();
     }
 
-    public ExcepcionsCentral(String s) { //aquesta funcio no cal crec
+    public ExcepcionsCentral(String s) { 
         super(s);
     }
 }
+//autor POL
