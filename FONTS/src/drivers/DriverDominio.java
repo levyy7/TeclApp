@@ -303,15 +303,9 @@ public class DriverDominio {
 
         System.out.print("Introduce el nombre del texto a modificar: ");
         String nombreTexto = tec.nextLine();
-
-        System.out.print("Introduce el nuevo texto, cuando acabes presiona enter 2 veces: ");
-        String texto = "";
-        boolean acabado = false;
-        while (acabado == false) {
-            String linea = tec.nextLine();
-            if (Integer.valueOf(linea) == -1) acabado = true;
-            else texto = texto+" "+linea;
-        }
+        
+        System.out.print("Escribe el texto en una linea: ");
+        String texto = tec.nextLine();
 
         ctrlD.modificarTexto(nombreTexto, texto);
     }
