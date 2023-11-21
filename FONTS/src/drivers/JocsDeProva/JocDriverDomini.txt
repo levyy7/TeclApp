@@ -1,0 +1,48 @@
+
+3
+primer_alfabeto
+pol :)
+4
+primer_texto
+pol lol ploooo o) 
+4 
+segundo_texto
+loop : plo polp oll ):
+4
+texto_mal
+lop poll ko
+1 
+1
+primer_alfabeto
+2
+primer_texto
+segundo_texto
+primer_teclado
+1
+1
+primer_alfabeto
+2
+segundo_texto
+texto_mal
+teclado_no_se_creara
+1 
+1
+primer_alfabeto
+1
+primer_texto
+primer_teclado
+13
+3
+primer_texto
+pro
+7
+primer_alfabeto
+qap
+15
+2
+primer_teclado
+10
+primer_alfabeto
+3
+primer_alfabeto
+33

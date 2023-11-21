@@ -28,19 +28,15 @@ public class DriverEntrada {
 		System.out.println("7 = Borrar Alfabeto");
 		System.out.println("8 = Borrar Texto");
 		System.out.println("9 = Borrar Lista de palabras con frecuencia");
-		System.out.println("10 = Borrar Teclado");
 
-		System.out.println("11 = Consultar alfabetos");
-        System.out.println("12 = Consultar alfabeto");
+		System.out.println("10 = Consultar alfabetos");
+        System.out.println("11 = Consultar alfabeto");
 
-        System.out.println("13 = Consultar textos");
-        System.out.println("14 = Consultar texto");
+        System.out.println("12 = Consultar textos");
+        System.out.println("13 = Consultar texto");
 
-        System.out.println("15 = Consultar listas");
-        System.out.println("16 = Consultar lista");
-
-		System.out.println("17 = Consultar teclados");
-		System.out.println("18 = Consultar teclado");
+        System.out.println("14 = Consultar listas");
+        System.out.println("15 = Consultar lista");
 
 		System.out.println("33 = Salir");
 	}
@@ -127,15 +123,22 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre del alfabeto a modificar: ");
 		String name = tec.nextLine();
 
-		System.out.print("Introduce el alfabeto nuevo en una linea: ");
-		String alfabeto = tec.nextLine();
-        alfabeto.replace(" ", "");
+        String type = "";
+        try {type = ctrlE.getType(name);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
+        if(type == "Alfabeto") {
+            System.out.print("Introduce el alfabeto nuevo en una linea: ");
+            String alfabeto = tec.nextLine();
+            alfabeto.replace(" ", "");
 
-		try {ctrlE.modificarAlfabeto(name, alfabeto);}
-		catch (AlfabetoInvalido e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-        catch (AlfabetoUsandose e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            try {ctrlE.modificarAlfabeto(name, alfabeto);}
+            catch (AlfabetoInvalido e)
+                {System.out.println("Error: "+e.getMessage()); return;}
+            catch (AlfabetoUsandose e)
+                {System.out.println("Error: "+e.getMessage()); return;}
+        }
+        else System.out.println("No es un alfabeto");
 	}
 
 	private static void modificarTexto(){
@@ -143,11 +146,18 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre del texto a modificar: ");
 		String name = tec.nextLine();
 
-		String texto = "";
-		System.out.print("Introduce el texto en una linea: ");
-		texto += tec.nextLine();
+        String type = "";
+        try {type = ctrlE.getType(name);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
+        if(type == "Texto") {
+            String texto = "";
+            System.out.print("Introduce el texto en una linea: ");
+            texto += tec.nextLine();
 
-		ctrlE.modificarTexto(name, texto);
+            ctrlE.modificarTexto(name, texto);
+        }
+        else System.out.println("No es un texto");
 	}
 
 	private static void modificarListaPalabras(){
@@ -155,17 +165,25 @@ public class DriverEntrada {
 
         System.out.print("Escribe el nombre de la nueva lista: ");
         String name = tec.nextLine();
+
+        String type = "";
+        try {type = ctrlE.getType(name);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
         
-        System.out.print("Escribe la nueva lista con un nombre y un numero separado por espacios, ");
-        System.out.print("cuando acabes presiona enter: ");
-        Map<String, Integer> lista = introducirLista();
+        if(type == "Lista") {
+            System.out.print("Escribe la nueva lista con un nombre y un numero separado por espacios, ");
+            System.out.println("cuando acabes presiona enter: ");
+            Map<String, Integer> lista = introducirLista();
 
-		
-		try {ctrlE.importarListaPalabras(name, lista);}
-        catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            
+            try {ctrlE.importarListaPalabras(name, lista);}
+            catch (InputJaCreat e)
+                {System.out.println("Error: "+e.getMessage()); return;}
 
-		ctrlE.modificarListaPalabras(name, lista);
+            ctrlE.modificarListaPalabras(name, lista);
+        }
+        else System.out.println("No es una lista de palabras con frecuencia");
 	}
 
 	private static void borrarAlfabeto(){
@@ -173,9 +191,17 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre del alfabeto a borrar: ");
 		String name = tec.nextLine();	
 
-		try {ctrlE.borrarAlfabeto(name);}
-        catch (AlfabetoUsandose e)
+        String type = "";
+        try {type = ctrlE.getType(name);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
+
+        if(type == "Alfabeto") {
+            try {ctrlE.borrarAlfabeto(name);}
+            catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        }
+        else System.out.println("No es un alfabeto");
 	}
 
 	private static void borrarTexto(){
@@ -183,7 +209,13 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre del texto a borrar: ");
 		String name = tec.nextLine();	
 
-		ctrlE.borrarTexto(name);	
+        String type = "";
+        try {type = ctrlE.getType(name);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
+
+		if(type == "Texto") ctrlE.borrarTexto(name);	
+        else System.out.println("No es un texto");
 	}
 
 	private static void borrarListaPalabras(){
@@ -191,18 +223,13 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre de la lista de palabras con frecuencia a borrar: ");
 		String name = tec.nextLine();	
 
-		ctrlE.borrarListaPalabras(name);	
-	}
+        String type = "";
+        try {type = ctrlE.getType(name);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
 
-	private static void borrarTeclado(){
-		Scanner tec = new Scanner(System.in);
-		System.out.print("Introduce el nombre del teclado a borrar: ");
-		String name = tec.nextLine();	
-
-		try {ctrlE.borrarTeclado(name);}
-        catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-
+		if(type == "Lista")ctrlE.borrarListaPalabras(name);
+        else System.out.println("No es una lista de palabras con frecuencia");	
 	}
 
 	private static void consultarAlfabetos() {
@@ -217,18 +244,27 @@ public class DriverEntrada {
 	private static void consultarAlfabeto() {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del alfabeto a consultar: ");
-        String nomAlf = tec.nextLine();
-        String alf = "";
-		try {alf=ctrlE.getAlfabeto(nomAlf);}
-        catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage());return;}
-		
-        System.out.println("Nombre: "+ nomAlf);
-        System.out.println("Alfabeto:");
-        char[] alfabeto = alf.toCharArray();
-        for (int i = 0; i < alfabeto.length; ++i)
-            System.out.print(" "+alfabeto[i]);
-        System.out.println("\n");
+        String nomAlf = tec.next();
+
+        String type = "";
+        try {type = ctrlE.getType(nomAlf);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
+
+        if(type == "Alfabeto") {
+            String alf = "";
+            try {alf=ctrlE.getAlfabeto(nomAlf);}
+            catch (InputInexistente e)
+                {System.out.println("Error: "+e.getMessage());return;}
+            
+            System.out.println("Nombre: "+ nomAlf);
+            System.out.println("Alfabeto:");
+            char[] alfabeto = alf.toCharArray();
+            for (int i = 0; i < alfabeto.length; ++i)
+                System.out.print(" "+alfabeto[i]);
+            System.out.println("\n");
+        }
+        else System.out.println("No es un alfabeto");
     }
 
 	private static void consultarTextos() {
@@ -244,10 +280,17 @@ public class DriverEntrada {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
         String nomText = tec.nextLine();
-        String text = ctrlE.getTexto(nomText);
+        String type = "";
+        try {type = ctrlE.getType(nomText);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
 
-        System.out.println("Nombre: "+nomText);
-        System.out.println("Texto:\n"+text+"\n\n");
+        if(type == "Texto") {
+            String text = ctrlE.getTexto(nomText);
+            System.out.println("Nombre: "+nomText);
+            System.out.println("Texto:\n"+text+"\n\n");
+        }
+        else System.out.println("No es un texto");
     }
 
 	private static void consultarListas() {
@@ -264,44 +307,21 @@ public class DriverEntrada {
         
         System.out.print("Nombre de la lista a consultar: ");
         String nomList = tec.nextLine();
-        Map<String, Integer> list = ctrlE.getListaPalabras(nomList);
-
-        System.out.println("Nombre: "+nomList);
-        System.out.println("Lista:");
-        for (String key : list.keySet()) {
-            System.out.println(key+" "+list.get(key));
+        String type = "";
+        try {type = ctrlE.getType(nomList);} 
+        catch (InputInexistente e) {
+            System.out.println("Error: "+e.getMessage()); return;}
+        if(type == "Lista") {
+            Map<String, Integer> list = ctrlE.getListaPalabras(nomList);
+            System.out.println("Nombre: "+nomList);
+            System.out.println("Lista:");
+            for (String key : list.keySet()) {
+                System.out.println(key+" "+list.get(key));
+            }
+            System.out.println("\n");
         }
-        System.out.println("\n");
+        else System.out.println("No es una lista de palabras");
     }
-
-	private static void consultarTeclados() {
-        HashMap<String, Teclado> teclados = ctrlE.getTeclados();
-        System.out.println("Los teclados guardados son\n");
-        for (String key : teclados.keySet())
-            System.out.println(key);
-        System.out.println("\n");
-    }
-
-    private static void consultarTeclado() {
-        Scanner tec = new Scanner(System.in);      
-        System.out.print("Nombre del teclado a consultar: ");
-        String teclado = tec.nextLine();
-        Teclado t = ctrlE.getTeclado(teclado);
-
-        System.out.println("El Teclado se compone de\n");
-        System.out.println("Nombre: "+t.getNombre());
-        System.out.println("Algoritmo: "+t.getAlgoritmo());
-        System.out.println("Alfabeto: "+t.getAlfabeto());
-        System.out.print("Layout:");
-        char[] lay = t.getLayout();
-        for (int i = 0; i < lay.length; ++i) System.out.print(" "+lay[i]);
-        System.out.println("\nPlayout:");
-        Point2D[] playout = t.getPlayout();
-        for (int i = 0; i < playout.length; ++i) 
-            System.out.print(" "+playout[i]);
-        System.out.println("\n");
-    }
-
 
 	public static void main(String[] args) {
 		ctrlE = new CtrlEntrada();
@@ -329,19 +349,15 @@ public class DriverEntrada {
                 case 7: borrarAlfabeto(); break;
                 case 8: borrarTexto(); break;
                 case 9: borrarListaPalabras(); break;
-				case 10: borrarTeclado(); break;
 
-                case 11: consultarAlfabetos(); break;
-                case 12: consultarAlfabeto(); break;
+                case 10: consultarAlfabetos(); break;
+                case 11: consultarAlfabeto(); break;
 
-                case 13: consultarTextos(); break;
-                case 14: consultarTexto(); break;
+                case 12: consultarTextos(); break;
+                case 13: consultarTexto(); break;
 
-                case 15: consultarListas(); break;
-                case 16: consultarLista(); break;
-
-                case 17: consultarTeclados(); break;
-                case 18: consultarTeclado(); break;
+                case 14: consultarListas(); break;
+                case 15: consultarLista(); break;
 
                 case 33: salir = true; break;
             }

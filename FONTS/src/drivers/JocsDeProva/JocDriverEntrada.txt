@@ -1,0 +1,79 @@
+1
+alfa
+alfebotu
+1
+beta
+betauqw
+1
+alfa
+a
+11
+beta
+1
+gamma
+g
+13
+gamma
+12
+4
+alfa
+modif
+11
+alfa
+7
+beta
+11
+beta
+11
+1
+zeta
+zzuaqed
+2
+alfa
+este texto no se podra crear
+2
+t1
+aquest es el primer text creat. 
+2
+t2
+m'agraden les maduixes amb xocolata
+12
+13
+t1
+5
+t1
+aquest es el primer text modificat
+2
+t2
+no m'agrada el broquil, prefereixo la mongeta
+13
+8
+t2
+12
+2
+t1
+es de nit es tot fosc
+5
+t3
+13
+t1
+3
+lista1
+xocolata 10
+melo 7
+aigua 4
+1
+lista1
+juqip
+15
+lista1
+13
+lista1
+6
+lista1
+juca 3
+9
+alfa
+9
+lista1
+33

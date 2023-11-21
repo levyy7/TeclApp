@@ -9,6 +9,10 @@ no existe.
 
 Elementos del directorio
 
+- JocsDeProva: 
+    Contiene los juegos de prueba de los drivers.
+
+
 - DriverDominio.java:
     Contiene todas las pruebas necesarias para utilizar todas las
     funciones principales del controlador del dominio. Este es
