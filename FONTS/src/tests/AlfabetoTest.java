@@ -56,8 +56,6 @@ public class AlfabetoTest {
         a.setAlfabeto("help");
         assertEquals("help", a.getAlfabeto());
     }
-
-
 }
 
 //Mariona

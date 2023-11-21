@@ -44,7 +44,7 @@ public class PlayoutTest {
         assertEquals(1.0, teclas[0].getY(), 0.0001);
 
         assertEquals(2.0, teclas[9].getX(), 0.0001);
-        assertEquals(1.0, teclas[9].getY(), 0.0001);        
+        assertEquals(2.0, teclas[9].getY(), 0.0001);        
 
         assertEquals(3.0, teclas[12].getX(), 0.0001);
         assertEquals(0.0, teclas[12].getY(), 0.0001);
