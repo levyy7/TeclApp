@@ -7,10 +7,10 @@
 - Montero Flores, Miguel Ángel
 - Ribera Moreno, Pol
 
-[eneko.sabate@estudiantat.upc.edu]()
-[mariona.aguilera@estudiantat.upc.edu]()
-[miguel.angel.montero@estudiantat.upc.edu]()
-[pol.ribera@estudiantat.upc.edu]()
+- [eneko.sabate@estudiantat.upc.edu]()
+- [mariona.aguilera@estudiantat.upc.edu]()
+- [miguel.angel.montero@estudiantat.upc.edu]()
+- [pol.ribera@estudiantat.upc.edu]()
 
 ## Profesor: 
 
