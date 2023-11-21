@@ -24,13 +24,20 @@ testListaPalabras:
 testPlayout:
 	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.PlayoutTest
 
+testQAP: 
+	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.QAPTest
+
 testTeclado: 
 	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.TecladoTest
 
 testTexto: 
 	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.TextoTest
 
-testAll: testAlfabeto testListaPalabras testPlayout testTeclado testTexto
+testUtilesAlgoritmo: 
+	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.UtilesAlgoritmoTest
+
+
+testAll: testAlfabeto testListaPalabras testPlayout testTeclado testTexto testQAP testUtilesAlgoritmo
 
 driverAlgoritmo:
 	java -cp $(CLASS_OUTPUT) drivers.DriverAlgoritmo
