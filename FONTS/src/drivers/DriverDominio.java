@@ -230,7 +230,6 @@ public class DriverDominio {
         
         System.out.print("Escribe el alfabeto en una linea: ");
         String alfabeto = tec.nextLine();
-        alfabeto.replace(" ", "");
 
         ctrlD.importarAlfabeto(nombreAlfabeto, alfabeto);
     }

@@ -2,14 +2,19 @@
 
 ## Miembros del grupo:
 
-- Eneko Sabaté
-- Mariona Aguilera
-- Pol Ribera
-- Miguel Ángel Montero
+- Sabaté Iturgaiz, Eneko 
+- Aguilera Folqué, Mariona
+- Montero Flores, Miguel Ángel
+- Ribera Moreno, Pol
+
+[eneko.sabate@estudiantat.upc.edu]()
+[mariona.aguilera@estudiantat.upc.edu]()
+[miguel.angel.montero@estudiantat.upc.edu]()
+[pol.ribera@estudiantat.upc.edu]()
 
 ## Profesor: 
 
-- Ricardo Fernández Domenech
+- Ricardo Fernández Domenech ([ricardo.fernandez.domenech@upc.edu]())
 
 
 ## Elementos del directorio
@@ -45,3 +50,12 @@ los archivos .java.
 
 Contiene las bibliotecas externas necesarias (JARs) para utilizar los
 tests de los JUnit.
+
+## Nota
+
+El algoritmo implementado en QAP optimized, no da la solución óptima
+aunque estuviese programada para que fuese así. El cálculo de la
+lower bound durante el branch and bound es erróneo, ya que la mejor
+solución que encuentra nuestro algoritmo es la solución dada por
+el algoritmo greedy. Somos conscientes de ello y es un fallo que no 
+hemos podido resolver.
