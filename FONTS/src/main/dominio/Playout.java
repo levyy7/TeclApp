@@ -45,9 +45,10 @@ public class Playout {
 
         //rellenar las teclas sobrantes
         int s = caracteres -  n*n;
-        for(double t = 0; t<=s; ++t){
-            if(t<=n) pos[x[(int)t%n]][0] = new Point2D.Double(t%n, 0);
-            else pos[0][x[(int)t%n]] = new Point2D.Double(0, (t)%n + 1);
+        for(double t = 0; t<s; ++t){
+            if((int)t<n) pos[x[(int)t%n]][0] = new Point2D.Double(x[(int)t%n], 0);
+            else pos[0][x[(int)t%n]] = new Point2D.Double(0, x[(int)t%n]);
+
         }
 
         int c = 0;
@@ -59,17 +60,19 @@ public class Playout {
                 }
             }
         }
+
+        System.out.print(c);
     }        
 
-/*
-    public static void main(String[] args) {
+
+    /*public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         System.out.print("Ingresa un número de caracteres: ");
         int n = s.nextInt();
 
         Playout p = new Playout(n);
         Point2D[] v = p.getTeclas();
-
+        System.out.println("número de teclas: " + v.length);
         for(int i = 0; i<n; ++i) System.out.println(" " + v[i].getX() + ", " + v[i].getY() + " // ");
     }*/
 

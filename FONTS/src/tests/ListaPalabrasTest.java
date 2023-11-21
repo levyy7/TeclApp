@@ -44,11 +44,10 @@ public class ListaPalabrasTest {
         lp.addPalabra("carpeta", 2);
         lp.addPalabra("paraula", 6);
 
-        int f = lp.getFrequencia("carpeta");
-        assertEquals(2, f);
+        int f = lp.getFrequencia("paraula");
+        assertEquals(6, f);
 
-        f = lp.getFrequencia("aigua");
-        assertNull(f);
+        assertNull(lp.getFrequencia("aigua"));
     }
 
     @Test
@@ -69,8 +68,8 @@ public class ListaPalabrasTest {
         assertEquals(3, lp.getSize());
         int f = lp.getFrequencia("peix");
         assertEquals(7, f);
-        f = lp.getFrequencia("carpeta");
-        assertNull(f);
+        
+        assertNull(lp.getFrequencia("paraula"));
     }
 
     @Test

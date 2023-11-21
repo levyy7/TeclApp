@@ -38,6 +38,8 @@ public class CtrlAlgoritmo {
         return 'a';
     }
 
+    //Calcula el layout resultante mirando las posiciones de las letras
+    //con el mapa y la lista
     private char[] calculoLayout(ArrayList<Point> layoutA,
         Map<Character, Integer> posiciones) {
 
