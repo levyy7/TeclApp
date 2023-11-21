@@ -1,0 +1,10 @@
+# Directorio EXE
+
+Este directorio contiene la carpeta out que contiene todos los
+ejecutables del proyecto. Para más información, consulta la carpeta
+FONTS/src/.
+
+## Elementos del directorio
+
+- **out/:**
+Carpeta que contiene todos los ejecutables de FONTS/src/.

@@ -1,0 +1,9 @@
+# Directorio main
+
+Este directorio contiene las capas del proyecto. De momento solo
+tenemos la capa de dominio para la primera entrega.
+
+## Elementos del directorio
+
+- **domain/**
+Contiene el código de las clases del dominio

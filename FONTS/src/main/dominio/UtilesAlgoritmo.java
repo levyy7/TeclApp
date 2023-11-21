@@ -8,8 +8,6 @@ public class UtilesAlgoritmo {
 
 	//Calculo de una matriz que tiene las frecuencias de las letras en un texto
 	public int[][] calculoTraficoInt(Vector<String> texto, Vector<Map<String, Integer>> listas, Map<Character, Integer> map) {
-
-		//map.forEach((key, value) -> System.out.println(key + ": " + value));
 		
 		int tam_alf = map.size();
 		int[][] traficoInt = new int[tam_alf][tam_alf];
