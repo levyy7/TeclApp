@@ -56,13 +56,6 @@ public class DriverAlgoritmo {
 		Scanner tecInt = new Scanner(System.in);
 		Scanner tec = new Scanner(System.in);
 		
-		System.out.println("Introduce el Alfabeto: ");
-		String alfabeto = tec.nextLine();
-		int tam = alfabeto.length();
-
-		Playout play = new Playout(tam);
-		Point2D[] playout = play.getTeclas();
-		
 		System.out.print("Cuantos textos quieres introducir: ");
 		int numTextos = tecInt.nextInt();
 
@@ -82,6 +75,12 @@ public class DriverAlgoritmo {
 				listas.addElement(introducirLista());
 		}
 
+		System.out.println("Introduce el Alfabeto: ");
+		String alfabeto = tec.nextLine();
+		int tam = alfabeto.length();
+
+		Playout play = new Playout(tam);
+		Point2D[] playout = play.getTeclas();
 
 		char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
@@ -99,7 +98,6 @@ public class DriverAlgoritmo {
 		boolean finalizar = false;
 		while (finalizar == false) {
 
-			System.out.print("Introduce una nueva instruccion: ");
 			int instruccion = tec.nextInt();
 
 			switch(instruccion) {

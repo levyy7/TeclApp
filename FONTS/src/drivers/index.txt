@@ -3,6 +3,10 @@
 Este directorio contiene los drivers de todos los controladores que
 proporcionan las funcionalidades principales del sistema.
 
+NOTA: las operaciones de consulta de los drivers de dominio y de
+entrada individuales dan error si el nombre del objeto en cuestion
+no existe.
+
 Elementos del directorio
 
 - DriverDominio.java:
