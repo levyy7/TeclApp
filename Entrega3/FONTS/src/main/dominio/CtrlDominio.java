@@ -1,6 +1,7 @@
 package main.dominio;
 import Excepcions.*;
 import main.dominio.*;
+import main.persistencia.CtrlPersistencia;
 
 import java.util.ArrayList;
 import java.util.*;
@@ -10,11 +11,17 @@ public class CtrlDominio {
 
     private static CtrlEntrada ctrlE;
     private static CtrlAlgoritmo ctrlA;
+    private static CtrlPersistencia ctrlP;
 
     public CtrlDominio() {
-        ctrlE = new CtrlEntrada();
-        ctrlA = new CtrlAlgoritmo();
+        ctrlP = new CtrlPersistencia();
+        String[][] teclados = ctrlP.cargarTeclados();
+        String[][] alfabetos = ctrlP.cargarAlfabetos();
+        String[][] textos = ctrlP.cargarTextos();
+        String[][] listas = ctrlP.cargarListas();
 
+        ctrlE = new CtrlEntrada(teclados, alfabetos, textos, listas);
+        ctrlA = new CtrlAlgoritmo();
     }
 
     //Consulta de todos los nombres de los teclados

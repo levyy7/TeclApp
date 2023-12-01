@@ -12,6 +12,11 @@ public class Texto extends TLP{
         this.text = text;
     }
 
+    public Texto(String[] tex) {
+        nombre = tex[0];
+        text = tex[1];
+    }
+
     public String getNombre(){
         return super.getNombre();
     }
@@ -41,6 +46,14 @@ public class Texto extends TLP{
 
     public void setNombre(String newName){
         super.setNombre(newName);
+    }
+
+    @Override
+    public String[] toStringArray() {
+        String[] info = new String[2];
+        info[0] = nombre;
+        info[1] = text;
+        return info;
     }
 }
 

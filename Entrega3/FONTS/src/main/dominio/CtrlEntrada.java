@@ -22,6 +22,45 @@ public class CtrlEntrada{
         inicialitzar();
     }
 
+    public CtrlEntrada(String[][] iniTec, String[][] iniAlf, String[][] iniTex, String[][] iniLis){  
+        teclados = new HashMap<String, Teclado>();
+	    inputs = new HashMap<String, Input>();
+	    comproE = new ComprobarExcepciones();
+
+		inicializarTec(iniTec);
+		inicializarAlf(iniAlf);
+		inicializarTex(iniTex);
+		inicializarLis(iniLis);
+    }
+
+    private void inicializarTec(String[][] iniTec) {
+		for (int i = 0; i < iniTec.length; ++i) {
+			String[] t = iniTec[i];
+			teclados.put(t[0], new Teclado(t));
+		}
+	}
+
+	private void inicializarAlf(String[][] iniAlf) {
+		for (int i = 0; i < iniAlf.length; ++i) {
+			String[] a = iniAlf[i];
+			inputs.put(a[0], new Alfabeto(a));
+		}
+	}
+
+	private void inicializarTex(String[][] iniTex) {
+		for (int i = 0; i < iniTex.length; ++i) {
+			String[] t = iniTex[i];
+			inputs.put(t[0], new Texto(t));
+		}
+	}
+
+	private void inicializarLis(String[][] iniLis) {
+		for (int i = 0; i < iniLis.length; ++i) {
+			String[] l = iniLis[i];
+			inputs.put(l[0], new ListaPalabras(l));
+		}
+	}
+
 	public static CtrlEntrada getInstance(){
     	if(singletonObject == null){
         	singletonObject = new CtrlEntrada();
