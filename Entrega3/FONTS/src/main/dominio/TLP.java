@@ -9,6 +9,10 @@ public abstract class TLP extends Input {
         super(nombre);
     }
 
+    public TLP() {
+        
+    }
+
     public String getNombre(){
         return super.getNombre();
     }
@@ -16,6 +20,8 @@ public abstract class TLP extends Input {
     public void setNombre(String nombre){
         super.setNombre(nombre);
     }
+
+    public abstract String[] toStringArray();
 }
 
 //mariona

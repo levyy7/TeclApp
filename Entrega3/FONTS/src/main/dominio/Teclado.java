@@ -19,6 +19,14 @@ public class Teclado {
         this.layout = null;
     }
 
+    public Teclado(String[] tec) {
+        nombre = tec[0];
+        algoritmo = tec[1];
+        alfabeto = tec[2];
+        layout = tec[3].toCharArray();
+        playout = new Playout(layout.length);
+    }
+
     public String getNombre(){
         return this.nombre;
     }
@@ -57,6 +65,16 @@ public class Teclado {
 
     public void setLayout(char[] newlayout){
         this.layout = newlayout;
+    }
+
+    public String[] toStringArray() {
+        String[] info = new String[4];
+        info[0] = nombre;
+        info[1] = algoritmo;
+        info[2] = alfabeto;
+        info[3] = new String(layout).trim();
+        
+        return info;
     }
 }
 

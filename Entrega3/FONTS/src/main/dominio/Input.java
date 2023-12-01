@@ -4,10 +4,14 @@ import java.util.*;
 
 public abstract class Input{
 
-    private String nombre;
+    protected String nombre;
 
     public Input(String nombre){
         this.nombre = nombre; 
+    }
+
+    public Input() {
+        
     }
 
     public void setNombre(String nombre) {
@@ -26,6 +30,7 @@ public abstract class Input{
 
     public abstract int getSize();
 
+    public abstract String[] toStringArray();
 }
 
 //mariona

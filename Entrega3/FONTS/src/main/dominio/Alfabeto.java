@@ -13,6 +13,11 @@ public class Alfabeto extends Input{
         this.alphabet = alphabet;
     }
 
+    public Alfabeto(String[] alf) {
+        nombre = alf[0];
+        alphabet = alf[1];
+    }
+
     public String getAlfabeto(){
         return alphabet;
     }
@@ -42,6 +47,14 @@ public class Alfabeto extends Input{
 
     public void setAlfabeto(String newAlphabet){
         this.alphabet = newAlphabet;
+    }
+
+    @Override
+    public String[] toStringArray() {
+        String[] info = new String[2];
+        info[0] = nombre;
+        info[1] = alphabet;
+        return info;
     }
 }
 
