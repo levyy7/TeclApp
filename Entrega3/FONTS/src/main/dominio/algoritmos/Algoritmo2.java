@@ -31,7 +31,7 @@ public class Algoritmo2 extends EstrategiaCreacionLayout {
          	ArrayList<Point> fill = mezclarSolucions(solucions.get(i), solucions.get(r));
          	if(rand.nextInt(2) == 1){
                
-         		aplicarMutacio(fill,solucions);
+         		aplicarMutacio(fill);
                
          	}
          	solucions2.add(fill);
@@ -44,7 +44,7 @@ public class Algoritmo2 extends EstrategiaCreacionLayout {
 
 	}
 
-	public void aplicarMutacio(ArrayList<Point> a, ArrayList<ArrayList<Point>> solucions){
+	public void aplicarMutacio(ArrayList<Point> a){
 
 		Random rand = new Random();
 		int tecla1 = rand.nextInt(a.size());
