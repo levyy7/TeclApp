@@ -10,7 +10,7 @@ import java.awt.Point;
  * de crear un layout para un teclado
  * @author Eneko Sabaté Iturgaiz 
 */
-public class QAP implements EstrategiaCreacionLayout {
+public class QAP extends EstrategiaCreacionLayout {
 
     public ArrayList<Point> crearLayout(double[][] distTeclas, int[][] freqSimbolos) {
 
@@ -122,24 +122,6 @@ public class QAP implements EstrategiaCreacionLayout {
         }
 
         return sumCosts;
-    }
-
-    /** 
-     * Calcula el coste entre dos emplazamientos.
-     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
-     *                  distLoc[i][j] es la distancia entre la localización i 
-     *                  y la localización j
-     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
-     *                  traficoInst[i][j] es el tráfico entre la instalación i 
-     *                  y la instalación j 
-     * @param a : Representación de un emplazamiento, tal que el atributo "x" del punto 
-     *                  representará una localización y el atribto "y" una instalación           
-     * @param a : Representación de un emplazamiento, tal que el atributo "x" del punto 
-     *                  representará una localización y el atribto "y" una instalación 
-     * @return double : Devuelve el coste entre los emplazamientos "a" y "b"
-    */
-    protected double costBtw2Assig(double[][] distLoc, int[][] traficoInst, Point a, Point b) {
-        return (distLoc[a.x][b.x]*traficoInst[a.y][b.y]);
     }
 
     /** 
