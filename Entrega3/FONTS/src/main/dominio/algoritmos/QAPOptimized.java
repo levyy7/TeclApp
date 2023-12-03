@@ -67,101 +67,8 @@ public class QAPOptimized extends QAP {
      *                  el atributo "x" del punto representará una localización y el atributo 
      *                  "y" una instalación 
     */
-    private ArrayList<Point> constructGreedyRandomizedSolution(Random rand, int size) {
-        ArrayList<Point> solution = new ArrayList<>();
-        boolean[] usedInst = new boolean[size];
 
-        for (int loc = 0; loc < size; loc++) {
-            ArrayList<Integer> notUsedInst = getUsable(usedInst);
 
-            if (!notUsedInst.isEmpty()) {
-                double randomValue = rand.nextDouble();
-                double threshold = ALPHA * randomValue;
-
-                int selectedInst = 0;
-                double cumulativeProbability = 0.0;
-
-                while (selectedInst < notUsedInst.size() - 1 &&
-                        cumulativeProbability + 1.0 / notUsedInst.size() < threshold) {
-                    cumulativeProbability += 1.0 / notUsedInst.size();
-                    ++selectedInst;
-                }
-
-                Point p = new Point(loc, notUsedInst.get(selectedInst));
-                solution.add(p);
-                usedInst[p.y] = true;
-            }
-        }
-
-        return solution;
-    }
-
-    /** 
-     * Calcula el coste de una asignación dada
-     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
-     *                  distLoc[i][j] es la distancia entre la localización i 
-     *                  y la localización j
-     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
-     *                  traficoInst[i][j] es el tráfico entre la instalación i 
-     *                  y la instalación j 
-     * @param l : Asignación sobre la que se quiere calcular el coste Cada punto de la lista 
-     *                  representa una instalación emplazada, tal que el atributo "x" del 
-     *                  punto representará una localización y el atributo "y" una instalación 
-     * @return double: Devuelve el coste de la asignación "l", basada en las matrices
-     *                  "distLoc" y "traficoInst"
-    */
-    private double totalCostSolution(double[][] distLoc, int[][] traficoInst, ArrayList<Point> l) {
-        double sum = 0;
-        for (int i = 0; i < l.size(); ++i) {
-            Point p1 = l.get(i);
-            for (int j = i + 1; j < l.size(); ++j) {
-                Point p2 = l.get(j);
-                sum += costBtw2Assig(distLoc, traficoInst, p1, p2);
-            }
-        }
-
-        return sum;
-    }
-
-    /* private Node greedySolution(double[][] distLoc, int[][] traficoInst) {
-        int n = distLoc.length;
-        Node u = new Node(0, n, n);
-
-        for (int i = 0; i < n; ++i) {
-            Point bestAssig = new Point(-1, -1);
-            double minCost = Double.MAX_VALUE;
-            
-            for (int j = 0; j < n; ++j) {
-                if (!u.usedInst[j]) {
-                    Point assig = new Point(i, j);
-                    double cost = costPlaceInst(distLoc, traficoInst, u.partialSol, assig);
-                    if (cost < minCost) {
-                        bestAssig = assig;
-                        minCost = cost;
-                    }
-                }
-            }
-
-            u.cost += minCost;
-            u.partialSol.add(bestAssig);
-            u.usedInst[bestAssig.y] = true;
-        }
-        
-        return u;
-    }
-    */
-
-    /*private int sumArray(int[] array) {
-        int sum = 0;
-        for (int i = 0; i < array.length; ++i) sum = sum + array[i];
-        return sum;
-    }
-
-    private double sumArray(double[] array) {
-        double sum = 0;
-        for (int i = 0; i < array.length; ++i) sum = sum + array[i];
-        return sum;
-    }*/
 
     @Override
     protected double generateBound(double[][] distLoc, int[][] traficoInst, Node u) {
@@ -201,23 +108,6 @@ public class QAPOptimized extends QAP {
         return u.cost + boundC12;
     }
 
-
-    /** 
-     * Retorna todas las localizaciones/instalaciones usables
-     * @param b : Array de booleanos que representan las localizaciones/instalaciones usables
-     * @return ArrayList<Integer> : Devuelve un ArrayList con todas las posiciones de "b" 
-     *                  a false
-    */
-    private ArrayList<Integer> getUsable(boolean[] b) {
-        ArrayList<Integer> res = new ArrayList<>();
-
-        for(int i = 0; i < b.length; ++i) {
-            if (!b[i]) {
-                res.add(i);
-            }
-        }
-        return res;
-    }
 
     /** 
      * Genera la matriz C1 usada para calcular la Gilmore-Lawler bound 
