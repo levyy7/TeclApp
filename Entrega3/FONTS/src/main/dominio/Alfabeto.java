@@ -8,6 +8,9 @@ public class Alfabeto extends Input{
 
     private String alphabet;
 
+    /**
+     * Constructora de alfabeto con todos sus parametros correspondientes
+    */
     public Alfabeto(String nombre, String alphabet){
         super(nombre);
         this.alphabet = alphabet;

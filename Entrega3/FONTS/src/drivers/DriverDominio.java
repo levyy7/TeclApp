@@ -5,10 +5,19 @@ import java.util.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
+/**
+ * Driver de controlador de Dominio
+ * Driver que se encarga de comprobar las funcionalidades del controlador
+ * de dominio. Dado que es el controlador más grande también comprueba
+ * el resto de clases del dominio y de persistencia
+ * @author Miguel Ángel Montero Flores
+*/
 public class DriverDominio {
 
+    /** Controlador de dominio a interaccionar */
     private static CtrlDominio ctrlD;
 
+    /** Listado de funcionalidades a probar */
 	private static void GuiaInstrucciones() {
 
         System.out.println("Guía de instrucciones");
@@ -43,6 +52,7 @@ public class DriverDominio {
         System.out.println("33 = Salir");
 	}
 
+    /** Función que consulta los teclados guardados */
     private static void consultarTeclados() {
         HashMap<String, Teclado> teclados = ctrlD.consultarTeclados();
         System.out.println("Los teclados guardados son\n");
@@ -51,6 +61,7 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** Función que consulta un teclado */
     private static void consultarTeclado() {
         Scanner tec = new Scanner(System.in);      
         System.out.print("Nombre del teclado a consultar: ");
@@ -71,6 +82,7 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** Función que consultalos alfabetos guardados */
     private static void consultarAlfabetos() {
         HashMap<String, Input> alf = ctrlD.consultarAlfabetos();
 
@@ -80,6 +92,7 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** Función que consulta un alfabeto */
     private static void consultarAlfabeto() {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del alfabeto a consultar: ");
@@ -94,6 +107,7 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** Función que consulta los textos guardados*/
     private static void consultarTextos() {
         HashMap<String, Input> textos = ctrlD.consultarTextos();
 
@@ -103,6 +117,7 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** Función que consulta un texto*/
     private static void consultarTexto() {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
@@ -113,6 +128,7 @@ public class DriverDominio {
         System.out.println("Texto:\n"+text+"\n\n");
     }
 
+    /** Función que consulta las listas guardadas*/
     private static void consultarListas() {
         HashMap<String, Input> listas = ctrlD.consultarListas();
 
@@ -122,6 +138,7 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** Función que consulta una lista */
     private static void consultarLista() {
         Scanner tec = new Scanner(System.in);
         
@@ -137,6 +154,10 @@ public class DriverDominio {
         System.out.println("\n");
     }
 
+    /** 
+     * Función que introduce nombres de textos y listas
+     * @return Vector(String) : nombres de textos y listas
+    */
     private static Vector<String> introducirTextos() {
 
         Scanner tec = new Scanner(System.in);
@@ -152,6 +173,10 @@ public class DriverDominio {
         return textos;
     }
 
+    /**
+     * Función que introduce una lista por terminal y la devuelve
+     * @return Map(String, Integer) : lista de palabras introducida 
+    */
     private static Map<String, Integer> introducirLista() {
 
         Scanner tec = new Scanner(System.in);
@@ -183,6 +208,7 @@ public class DriverDominio {
         return lista;
     }
 
+    /** Función que se encarga de comprobar la creación de un teclado */
     private static void crearTeclado() {
 
         String algor, alfab, teclado;
@@ -211,6 +237,7 @@ public class DriverDominio {
         ctrlD.crearTeclado(teclado, alfab, textos, algor);
     }
 
+    /** Función que se encarga de comprobar el borrado de un teclado */
     private static void borrarTeclado() {
 
         Scanner tec = new Scanner(System.in);
@@ -221,6 +248,7 @@ public class DriverDominio {
         ctrlD.borrarTeclado(nombreTeclado);
     }
 
+    /** Función que se encarga de comprobar la importación de un alfabeto */
     private static void importarAlfabeto() {
 
         Scanner tec = new Scanner(System.in);
@@ -234,6 +262,7 @@ public class DriverDominio {
         ctrlD.importarAlfabeto(nombreAlfabeto, alfabeto);
     }
 
+    /** Función que se encarga de comprobar la importación de un texto */
     private static void importarTexto() {
 
         Scanner tec = new Scanner(System.in);
@@ -247,6 +276,7 @@ public class DriverDominio {
         ctrlD.importarTexto(nombreTexto, texto);
     }
 
+    /** Función que se encarga de comprobar la importación de una lista */
     private static void importarListaPalabras() {
 
         Scanner tec = new Scanner(System.in);
@@ -261,6 +291,7 @@ public class DriverDominio {
         ctrlD.importarListaPalabras(nombreLista, lista);
     }
 
+    /** Función que se encarga de comprobar la modificación de un teclado */
     private static void modificarTeclado() {
 
         Scanner tec = new Scanner(System.in);
@@ -284,6 +315,7 @@ public class DriverDominio {
         else ctrlD.modificarTeclado(nombreTeclado, textos);
     }
 
+    /** Función que se encarga de comprobar la modificación de un alfabeto */
     private static void modificarAlfabeto() {
 
         Scanner tec = new Scanner(System.in);
@@ -297,6 +329,7 @@ public class DriverDominio {
         ctrlD.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);
     }
 
+    /** Función que se encarga de comprobar la modficación de un texto */
     private static void modificarTexto() {
         
         Scanner tec = new Scanner(System.in);
@@ -310,6 +343,7 @@ public class DriverDominio {
         ctrlD.modificarTexto(nombreTexto, texto);
     }
 
+    /** Función que se encarga de comprobar la modificación de una lista */
     private static void modificarListaPalabras() {
 
         Scanner tec = new Scanner(System.in);
@@ -324,6 +358,7 @@ public class DriverDominio {
         ctrlD.modificarListaPalabras(nombreLista, listaNueva);
     }
 
+    /** Función que se encarga de comprobar el borrado de un alfabeto */
     private static void borrarAlfabeto() {
 
         Scanner tec = new Scanner(System.in);
@@ -334,6 +369,7 @@ public class DriverDominio {
         ctrlD.borrarAlfabeto(nombreAlfabeto);
     }
 
+    /** Función que se encarga de comprobar el borrado de un texto */
     private static void borrarTexto() {
 
         Scanner tec = new Scanner(System.in);
@@ -344,6 +380,7 @@ public class DriverDominio {
         ctrlD.borrarAlfabeto(nombreTexto);
     }
 
+    /** Función que se encarga de comprobar el borrado de una lista */
     private static void borrarListaPalabras() {
 
         Scanner tec = new Scanner(System.in);

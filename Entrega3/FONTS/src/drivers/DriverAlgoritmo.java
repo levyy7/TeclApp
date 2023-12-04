@@ -7,10 +7,17 @@ import java.awt.Point;
 import java.lang.Object;
 import java.awt.geom.Point2D;
 
+/**
+ * Driver del controlador del Algoritmo
+ * Driver que comprueba las funcionalidades del controlador de algoritmo
+ * @author Miguel Ángel Montero Flores
+*/
 public class DriverAlgoritmo {
 
+	/** Controlador de algoritmo a interactuar */
 	private static CtrlAlgoritmo ctrlA;
 
+	/** Listado de funcionalidades a probar */
 	private static void inicializar() {
 
 		ctrlA = new CtrlAlgoritmo();
@@ -20,6 +27,10 @@ public class DriverAlgoritmo {
 		System.out.println("33 = Salir");
 	}
 
+	/**
+	 * Función que introduce una lista por terminal y la devuelve
+	 * @return Map(String, Integer) : lista de palabras introducida 
+	*/
 	private static Map<String, Integer> introducirLista() {
 
         Scanner tec = new Scanner(System.in);
@@ -51,11 +62,15 @@ public class DriverAlgoritmo {
         return lista;
     }
 
+    /**
+     * Función que se encarga de introducir lo necesario para usar QAP
+    */
 	private static void usarQAP() {
 
 		Scanner tecInt = new Scanner(System.in);
 		Scanner tec = new Scanner(System.in);
 		
+		//Introducción de textos
 		System.out.print("Cuantos textos quieres introducir: ");
 		int numTextos = tecInt.nextInt();
 
@@ -65,6 +80,7 @@ public class DriverAlgoritmo {
 			for (int i = 0; i < numTextos; ++i) textos.addElement(tec.nextLine());
 		}
 
+		//Introducción de listas
 		System.out.print("Cuantas listas quieres introducir: ");
 		int numListas = tecInt.nextInt();
 
@@ -75,6 +91,7 @@ public class DriverAlgoritmo {
 				listas.addElement(introducirLista());
 		}
 
+		//Instroducción de alfabetos
 		System.out.println("Introduce el Alfabeto: ");
 		String alfabeto = tec.nextLine();
 		int tam = alfabeto.length();
