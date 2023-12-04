@@ -10,9 +10,18 @@ import java.awt.Point;
  * @author Eneko Sabaté Iturgaiz 
 */
 public abstract class EstrategiaCreacionLayout {
-
+    /** Control del randomizado sobre el algoritmo greedy*/
     private static final double ALPHA = 0.5;
 
+    /** 
+     * Calcula una solución greedy usando elementos random para QAP
+     * @param rand : Generador de números random 
+     * @param size : Tamaño del problema QAP para el que se aplica
+     * @return double: Devuelve una solución para el problema QAP. 
+     *                  Cada punto de la lista representa una instalación emplazada, tal que 
+     *                  el atributo "x" del punto representará una localización y el atributo 
+     *                  "y" una instalación 
+    */
     protected ArrayList<Point> constructGreedyRandomizedSolution(Random rand, int size) {
         ArrayList<Point> solution = new ArrayList<>();
         boolean[] usedInst = new boolean[size];
@@ -42,6 +51,12 @@ public abstract class EstrategiaCreacionLayout {
         return solution;
     }
 
+     /** 
+     * Retorna todas las localizaciones/instalaciones usables
+     * @param b : Array de booleanos que representan las localizaciones/instalaciones usables
+     * @return ArrayList<Integer> : Devuelve un ArrayList con todas las posiciones de "b" 
+     *                  a false
+    */
     protected ArrayList<Integer> getUsable(boolean[] b) {
         ArrayList<Integer> res = new ArrayList<>();
 
@@ -53,10 +68,38 @@ public abstract class EstrategiaCreacionLayout {
         return res;
     }
 
+    /** 
+     * Calcula el coste entre dos emplazamientos.
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @param a : Representación de un emplazamiento, tal que el atributo "x" del punto 
+     *                  representará una localización y el atribto "y" una instalación           
+     * @param a : Representación de un emplazamiento, tal que el atributo "x" del punto 
+     *                  representará una localización y el atribto "y" una instalación 
+     * @return double : Devuelve el coste entre los emplazamientos "a" y "b"
+    */
     protected double costBtw2Assig(double[][] distLoc, int[][] traficoInst, Point a, Point b) {
         return (distLoc[a.x][b.x]*traficoInst[a.y][b.y]);
     }
     
+    /** 
+     * Calcula el coste de una asignación dada
+     * @param distLoc : Matriz de distancias entre localizaciones, tal que 
+     *                  distLoc[i][j] es la distancia entre la localización i 
+     *                  y la localización j
+     * @param traficoInst : Matriz de tráfico entre instalaciones, tal que 
+     *                  traficoInst[i][j] es el tráfico entre la instalación i 
+     *                  y la instalación j 
+     * @param l : Asignación sobre la que se quiere calcular el coste Cada punto de la lista 
+     *                  representa una instalación emplazada, tal que el atributo "x" del 
+     *                  punto representará una localización y el atributo "y" una instalación 
+     * @return double: Devuelve el coste de la asignación "l", basada en las matrices
+     *                  "distLoc" y "traficoInst"
+    */
     protected double totalCostSolution(double[][] distLoc, int[][] traficoInst, ArrayList<Point> l) {
         double sum = 0;
         for (int i = 0; i < l.size(); ++i) {
