@@ -1,5 +1,5 @@
 package main.dominio;
-import Excepcións.*;
+import Excepcions.*;
 import main.dominio.*;
 import main.persistencia.CtrlPersistencia;
 
