@@ -13,8 +13,6 @@ import java.awt.Point;
 public class QAPOptimized extends QAP {
     /** Número de iteraciones que ejecutará el algoritmo greedy GRASP */
     private static final int ITERATIONS_GREEDY = 100;
-    /** Control del randomizado sobre el algoritmo greedy GRASP */
-    private static final double ALPHA = 0.5;
 
     @Override 
     protected Node initialSolutionBB(double[][] distLoc, int[][] traficoInst) {
@@ -23,7 +21,6 @@ public class QAPOptimized extends QAP {
         u.partialSol = initialSol;
         return u;
     }
-
 
     /** 
      * Calcula una solución no óptima para el problema QAP
@@ -58,18 +55,6 @@ public class QAPOptimized extends QAP {
         return bestSol;
     }
 
-    /** 
-     * Calcula una solución greedy usando elementos random para QAP
-     * @param rand : Generador de números random 
-     * @param size : Tamaño del problema QAP para el que se aplica
-     * @return double: Devuelve una solución para el problema QAP. 
-     *                  Cada punto de la lista representa una instalación emplazada, tal que 
-     *                  el atributo "x" del punto representará una localización y el atributo 
-     *                  "y" una instalación 
-    */
-
-
-
     @Override
     protected double generateBound(double[][] distLoc, int[][] traficoInst, Node u) {
         return generateGLBound(distLoc, traficoInst, u);
@@ -103,7 +88,6 @@ public class QAPOptimized extends QAP {
             ArrayList<Point> optimalAssignation = hungarianAlgorithm(C12); 
             boundC12 = sumPointsMatrix(C12, optimalAssignation);
         }
-        //System.out.print("(" + u.level + " " + u.bound + " " + u.cost + ")");
 
         return u.cost + boundC12;
     }
@@ -210,7 +194,6 @@ public class QAPOptimized extends QAP {
      * @param m2 : Matriz de doubles
      * @return double[][] : el elemento (i, j) de la matriz devuelta es la suma del 
      *                      elemento (i, j) de la matriz m1 y del elemento (i, j) de m2
-
     */
     private double[][] matrixSum(double[][] m1, double[][] m2) {
         double[][] res = new double[m1.length][m1[0].length];
@@ -408,7 +391,6 @@ public class QAPOptimized extends QAP {
     private int minimumCoverLines(double[][] matrix, boolean[] rowCover, boolean[] colCover) {
         ArrayList<Point> partialAssignation = partialMaximumAssignation(matrix);
         int numLinesCovered = 0;
-        //printPointList(partialAssignation);
 
         Arrays.fill(rowCover, true);
         Arrays.fill(colCover, false);
