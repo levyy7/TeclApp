@@ -18,4 +18,4 @@ Elementos del directorio
 	Subclase de QAP utilizada para mejorar el rendimiento del algoritmo.
 
 - Algoritmo2.java:
-	Por implementar
+	Algoritmo Genetico para crear un buen teclado.
