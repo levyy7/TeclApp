@@ -15,7 +15,7 @@ public class GestorCSV {
      * @param inf : información a guardar
      * @param filePath : Path donde guardar la información
     */
-	public static void guardarInfo(String[][] inf, String filePath) {
+	public void guardarInfoOW(String[][] inf, String filePath) {
 		
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
         
@@ -30,6 +30,20 @@ public class GestorCSV {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+	}
+
+    /**
+     * Función que guarda la información enviada en la base de datos
+     * @param inf : información a guardar
+     * @param filePath : Path donde guardar la información
+    */
+	public void guardarInfo(String[][] inf, String filePath) {
+		List<String[]> info = new ArrayList<>(Arrays.asList(cargarInfo(filePath)));
+        
+        info.addAll(Arrays.asList(inf));
+
+        guardarInfoOW(info.toArray(new String[info.size()][]), filePath);
 	}
 
     /**
@@ -38,7 +52,7 @@ public class GestorCSV {
      * @return String[][] : matriz que contiene toda la información en datos
      *                      primitivos
     */
-	public static String[][] cargarInfo(String filePath) {
+	public String[][] cargarInfo(String filePath) {
 		
         List<String[]> info = new ArrayList<>();
         
@@ -61,5 +75,21 @@ public class GestorCSV {
         }
         return info.toArray(new String[info.size()][]);
 	}
+
+
+    public void borrarInfo(String[] primaryKeys, String filePath) {
+        List<String[]> info = new ArrayList<>(Arrays.asList(cargarInfo(filePath)));
+        
+        info.removeIf(array -> equalsAny(array[0], primaryKeys));
+
+        guardarInfoOW(info.toArray(new String[info.size()][]), filePath);
+    }
+
+    private boolean equalsAny(String s, String[] array) {
+        for (String x : array) 
+            if (s == x) return true;
+
+        return false;
+    }
 
 }

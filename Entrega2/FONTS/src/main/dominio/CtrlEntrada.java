@@ -306,6 +306,13 @@ public class CtrlEntrada{
 		Input in = inputs.get(e);			
 		return ((Alfabeto)in).getAlfabeto();
 	}
+	
+
+	public Input getInput(String e) throws InputInexistente{
+		Input in = inputs.get(e);			
+		return in;
+	}
+
 
 	//pre: el texto existe
 	//post: retorna el texto

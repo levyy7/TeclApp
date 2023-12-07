@@ -31,59 +31,13 @@ public class CtrlDominio {
     */
     public CtrlDominio() {
         ctrlP = new CtrlPersistencia();
-        String[][] teclados = ctrlP.cargarTeclados();
-        String[][] alfabetos = ctrlP.cargarAlfabetos();
-        String[][] textos = ctrlP.cargarTextos();
-        String[][] listas = ctrlP.cargarListas();
+        String[][] teclados = CtrlPersistencia.cargarTeclados();
+        String[][] alfabetos = CtrlPersistencia.cargarAlfabetos();
+        String[][] textos = CtrlPersistencia.cargarTextos();
+        String[][] listas = CtrlPersistencia.cargarListas();
 
         ctrlE = new CtrlEntrada(teclados, alfabetos, textos, listas);
         ctrlA = new CtrlAlgoritmo();
-    }
-
-    /**
-     * Asigna los textos y las listas correspondientes de los nombresTLP
-     * @param textos : Vector de textos, inicialmente vacio que contendra 
-     *                 los textos correspondientes
-     * @param listas : Vector de listas, inicialmente vacio que contendra
-     *                 las listas correspondientes
-     * @param nombresTLP : Vector de nombres TLP
-     * @return boolean : devuelve true si los textos y listas contienen
-     *                   solo caracteres del alfabeto y si todos lo nombresTLP
-     *                   pertenecen a textos y listas unicamente. Falso en
-     *                   caso contrario
-    */
-    private boolean asignarTextosYListas(Vector<String> textos, 
-            Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
-            String alfabeto) {
-
-        for (int i = 0; i < nombresTLP.size(); ++i) {
-            
-            String nombreTLP = nombresTLP.elementAt(i);
-            String type = "";
-
-            try {type = ctrlE.getType(nombreTLP);}
-            catch (InputInexistente e) 
-                {System.out.println("Error: "+e.getMessage()); return false;}
-
-            if (type == "Texto") {
-                String texto = ctrlE.getTexto(nombreTLP);
-                textos.addElement(texto);
-            }
-            else if (type == "Lista de Palabras") {
-                Map<String, Integer> lista = ctrlE.getListaPalabras(nombreTLP);
-                listas.addElement(lista);
-            }
-        }
-
-        try {
-            ctrlE.compruebaTextos(textos, alfabeto);
-            ctrlE.compruebaListas(listas, alfabeto);
-        }
-        catch (TextoNoValido e) 
-            {System.out.println("Error: "+e.getMessage()); return false;}
-        catch (ListaNoValida e)
-            {System.out.println("Error: "+e.getMessage()); return false;}
-        return true;
     }
 
     /**
@@ -122,7 +76,9 @@ public class CtrlDominio {
                 Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
                 char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
-                ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);   
+                ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
+                
+                CtrlPersistencia.guardarTeclados(ctrlE.getTeclado(nombreTeclado).toStringArray());
             }
             catch (NGrande e)
                 {System.out.println("Error: "+e.getMessage()); return;}
@@ -131,54 +87,6 @@ public class CtrlDominio {
         }
 
         else System.out.println("Error: "+"El algoritmo no existe");
-
-    }
-
-    /**
-     * Función que borra un teclado de la base de datos y salta una excepción
-     * si no existe
-     * @param nombreTeclado : el nombre del teclado a borrar
-    */
-    public void borrarTeclado(String nombreTeclado) {
-        try {ctrlE.borrarTeclado(nombreTeclado);}
-        catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-
-    }
-
-    /**
-     * Función que importa un alfabeto a la base de datos
-     * @param nombreAlfabeto
-     * @param alfabeto
-    */
-    public void importarAlfabeto(String nombreAlfabeto, String alfabeto) {
-        try {ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);}
-        catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-        catch (AlfabetoInvalido e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-    }
-
-    /**
-     * Función que importa un texto a la base de datos
-     * @param nombreTexto
-     * @param texto 
-    */
-    public void importarTexto(String nombreTexto, String texto) {
-        try {ctrlE.importarTexto(nombreTexto, texto);}
-        catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-    }
-
-    /**
-     * Función que importa una lista de palabras
-     * @param nombreLista
-     * @param lista : lista de palabras con frecuencias 
-    */
-    public void importarListaPalabras(String nombreLista, Map<String, Integer> lista) {
-        try {ctrlE.importarListaPalabras(nombreLista, lista);}
-        catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -221,6 +129,8 @@ public class CtrlDominio {
                 char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
 
                 ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);   
+                
+                CtrlPersistencia.guardarTeclados(ctrlE.getTeclado(nombreTeclado).toStringArray());
             }
             catch (NGrande e)
                 {System.out.println("Error: "+e.getMessage()); return;}
@@ -247,6 +157,39 @@ public class CtrlDominio {
     }
 
     /**
+     * Función que borra un teclado de la base de datos y salta una excepción
+     * si no existe
+     * @param nombreTeclado : el nombre del teclado a borrar
+    */
+    public void borrarTeclado(String nombreTeclado) {
+        try {
+            ctrlE.borrarTeclado(nombreTeclado);
+            CtrlPersistencia.borrarTeclado(nombreTeclado);
+        }
+        catch (TecladoInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+
+    }
+
+    /**
+     * Función que importa un alfabeto a la base de datos
+     * @param nombreAlfabeto
+     * @param alfabeto
+    */
+    public void importarAlfabeto(String nombreAlfabeto, String alfabeto) {
+        try {
+            ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);
+            CtrlPersistencia.guardarAlfabetos(ctrlE.getInput(nombreAlfabeto).toStringArray());
+        }
+        catch (InputJaCreat e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (AlfabetoInvalido e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+
+    /**
      * Función que modifica un alfabeto existente en la base de datos
      * @param nombreAlfabeto : nombre del alfabeto a modificar
      * @param alfabetoNuevo : alfabeto que sustituirá al antiguo
@@ -260,12 +203,55 @@ public class CtrlDominio {
         if (tipo != "Alfabeto")
             {System.out.println("Error: "+"el alfabeto no existe"); return;}
 
-        try {ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);}
+        try {
+            ctrlE.modificarAlfabeto(nombreAlfabeto, alfabetoNuevo);
+            CtrlPersistencia.modificarAlfabeto(ctrlE.getInput(nombreAlfabeto).toStringArray());
+        }
         catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (AlfabetoInvalido e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
     }
+
+    /**
+     * Función que borra un alfabeto de la base de datos
+     * @param nombreAlfabeto
+    */
+    public void borrarAlfabeto(String nombreAlfabeto) {
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreAlfabeto);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Alfabeto")
+            {System.out.println("Error: "+"el alfabeto no existe"); return;}
+
+        try {
+            ctrlE.borrarAlfabeto(nombreAlfabeto);
+            CtrlPersistencia.borrarAlfabeto(nombreAlfabeto);
+        }
+        catch (AlfabetoUsandose e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+
+    /**
+     * Función que importa un texto a la base de datos
+     * @param nombreTexto
+     * @param texto 
+    */
+    public void importarTexto(String nombreTexto, String texto) {
+        try {
+            ctrlE.importarTexto(nombreTexto, texto);
+            CtrlPersistencia.guardarTextos(ctrlE.getInput(nombreTexto).toStringArray());
+        }
+        catch (InputJaCreat e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+
 
     /**
      * Función que modifica un texto existente en la base de datos
@@ -282,7 +268,47 @@ public class CtrlDominio {
             {System.out.println("Error: "+"el texto no existe"); return;}
         
         ctrlE.modificarTexto(nombreTexto, textoNuevo);
+        try {CtrlPersistencia.modificarTexto(ctrlE.getInput(nombreTexto).toStringArray());}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
     }
+
+
+    /**
+     * Función que borra un texto de la base de datos
+     * @param nombreTexto
+    */
+    public void borrarTexto(String nombreTexto) {
+        String tipo = "";
+        try {tipo = ctrlE.getType(nombreTexto);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+
+        if (tipo != "Texto")
+            {System.out.println("Error: "+"el texto no existe"); return;}
+
+        ctrlE.borrarTexto(nombreTexto);
+        CtrlPersistencia.borrarTexto(nombreTexto);
+    }
+
+
+    /**
+     * Función que importa una lista de palabras
+     * @param nombreLista
+     * @param lista : lista de palabras con frecuencias 
+    */
+    public void importarListaPalabras(String nombreLista, Map<String, Integer> lista) {
+        try {
+            ctrlE.importarListaPalabras(nombreLista, lista);
+            CtrlPersistencia.guardarListas(ctrlE.getInput(nombreLista).toStringArray());
+        }
+        catch (InputJaCreat e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+
+    
 
     /**
      * Función que modifica una lista de palabras de la base de datos
@@ -299,41 +325,12 @@ public class CtrlDominio {
             {System.out.println("Error: "+"la lista no existe"); return;}
 
         ctrlE.modificarListaPalabras(nombreLista, listaNueva);
-    }
-
-    /**
-     * Función que borra un alfabeto de la base de datos
-     * @param nombreAlfabeto
-    */
-    public void borrarAlfabeto(String nombreAlfabeto) {
-        String tipo = "";
-        try {tipo = ctrlE.getType(nombreAlfabeto);}
+        try {CtrlPersistencia.modificarLista(ctrlE.getInput(nombreLista).toStringArray());}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
-
-        if (tipo != "Alfabeto")
-            {System.out.println("Error: "+"el alfabeto no existe"); return;}
-
-        try {ctrlE.borrarAlfabeto(nombreAlfabeto);}
-        catch (AlfabetoUsandose e)
-            {System.out.println("Error: "+e.getMessage()); return;}
     }
 
-    /**
-     * Función que borra un texto de la base de datos
-     * @param nombreTexto
-    */
-    public void borrarTexto(String nombreTexto) {
-        String tipo = "";
-        try {tipo = ctrlE.getType(nombreTexto);}
-        catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-
-        if (tipo != "Texto")
-            {System.out.println("Error: "+"el texto no existe"); return;}
-
-        ctrlE.borrarTexto(nombreTexto);
-    }
+    
 
     /**
      * Función qe borra una lista de palabras de la base de datos
@@ -349,6 +346,7 @@ public class CtrlDominio {
             {System.out.println("Error: "+"la lista no existe"); return;}
 
         ctrlE.borrarListaPalabras(nombreLista);
+        CtrlPersistencia.borrarLista(nombreLista);
     }
 
 
@@ -397,5 +395,51 @@ public class CtrlDominio {
         return ctrlE.getListaPalabras(nombreLista);
     }
     
+
+    /**
+     * Asigna los textos y las listas correspondientes de los nombresTLP
+     * @param textos : Vector de textos, inicialmente vacio que contendra 
+     *                 los textos correspondientes
+     * @param listas : Vector de listas, inicialmente vacio que contendra
+     *                 las listas correspondientes
+     * @param nombresTLP : Vector de nombres TLP
+     * @return boolean : devuelve true si los textos y listas contienen
+     *                   solo caracteres del alfabeto y si todos lo nombresTLP
+     *                   pertenecen a textos y listas unicamente. Falso en
+     *                   caso contrario
+    */
+    private boolean asignarTextosYListas(Vector<String> textos, 
+            Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
+            String alfabeto) {
+
+        for (int i = 0; i < nombresTLP.size(); ++i) {
+            
+            String nombreTLP = nombresTLP.elementAt(i);
+            String type = "";
+
+            try {type = ctrlE.getType(nombreTLP);}
+            catch (InputInexistente e) 
+                {System.out.println("Error: "+e.getMessage()); return false;}
+
+            if (type == "Texto") {
+                String texto = ctrlE.getTexto(nombreTLP);
+                textos.addElement(texto);
+            }
+            else if (type == "Lista de Palabras") {
+                Map<String, Integer> lista = ctrlE.getListaPalabras(nombreTLP);
+                listas.addElement(lista);
+            }
+        }
+
+        try {
+            ctrlE.compruebaTextos(textos, alfabeto);
+            ctrlE.compruebaListas(listas, alfabeto);
+        }
+        catch (TextoNoValido e) 
+            {System.out.println("Error: "+e.getMessage()); return false;}
+        catch (ListaNoValida e)
+            {System.out.println("Error: "+e.getMessage()); return false;}
+        return true;
+    }
 }
 //autor Miguel
