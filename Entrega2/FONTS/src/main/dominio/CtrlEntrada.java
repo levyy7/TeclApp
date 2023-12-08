@@ -7,6 +7,9 @@ import Excepcions.*;
 
 import main.dominio.*;
 import java.util.HashMap;
+
+import javax.lang.model.type.NullType;
+
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
@@ -115,17 +118,7 @@ public class CtrlEntrada{
 		board.setLayout(layout);
 	}
 
-	//pre: el teclado e existe
-	//post: borrar la intancia de teclado con nombre e
-	/**
-     * Borra un teclado
-     * @param nombreTeclado : nombre del teclado
-     * @throws TecladoInexistente
-    */
-	public void borrarTeclado(String e) throws TecladoInexistente{
-		if(teclados.containsKey(e) == false) throw new TecladoInexistente(e);
-		teclados.remove(e);
-	}
+	
 
 	//pre: el teclado existe
 	//post: retorna el nombre del algoritmo usado para crear el teclado
@@ -149,11 +142,60 @@ public class CtrlEntrada{
      * @return string : devuelve el tipo de input que es ("Alfabeto", "Texto", "Lista de Palabras")
      * @throws TecladoInexistente
     */
-	public String getType(String nombreTLP) throws InputInexistente{
+	/*public String getType(String nombreTLP) throws InputInexistente{
 		if(inputs.containsKey(nombreTLP) == false) throw new InputInexistente();
 		Input input = inputs.get(nombreTLP);
 		return input.getType();
 	}
+
+	
+
+	
+
+	
+
+	//pre: el teclado exitse
+	//post: retorna el nombre del alfabeto del teclado
+	/**
+     * consulta el alfabeto de un teclado
+     * @param nombreTeclado : nombre del teclado
+     * @return string : nombre del alfabeto
+     * @throws TecladoInexistente
+    */
+	public String getAlfabetoTeclado(String nombreTeclado) throws TecladoInexistente{
+		if(teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(nombreTeclado);
+		Teclado a = teclados.get(nombreTeclado);
+		return a.getAlfabeto();
+	}
+
+	//pre: 
+	//post: retorna el teclado "nombreTeclado"
+	/**
+     * consulta un teclado
+     * @param nombreTeclado : nombre del teclado
+     * @return Teclado : el teclado
+    */
+	public Teclado getTeclado(String nombreTeclado) throws TecladoInexistente {
+		Teclado board = teclados.get(nombreTeclado);
+
+		if (board == null) throw new TecladoInexistente(nombreTeclado);
+
+		return board;
+	}
+
+	//pre: el teclado e existe
+	//post: borrar la intancia de teclado con nombre e
+	/**
+     * Borra un teclado
+     * @param nombreTeclado : nombre del teclado
+     * @throws TecladoInexistente
+    */
+	public void borrarTeclado(String e) throws TecladoInexistente {
+		if (teclados.containsKey(e) == false) throw new TecladoInexistente(e);
+
+		teclados.remove(e);
+	}
+
 
 	//pre: no existe ningun input con nombre nAlfa i alfa no tiene caracteres repetidos 
 	//post: crea una nueva instancia de alfabeto llamada nAlfa
@@ -171,46 +213,21 @@ public class CtrlEntrada{
 		inputs.put(nAlfa, in);
 	}
 
-	//pre: no existe ningun input con nombre nTexto
-	//post: crea una nueva instancia de Texto llamada nTexto
+	//pre: el alfabeto existe
+	//post: retorna el alfabeto
 	/**
-     * crear una nueva instancia de texto
-     * @param nTexto : nombre del texto
-     * @param texto : contenido del texto
-     * @throws InputJaCreat
+     * consulta un alfabeto
+     * @param e : nombre del alfabeto
+     * @return string: contenido del alfabeto
+     * @throws InputInexistente
     */
-	public void importarTexto(String nTexto, String texto) throws InputJaCreat {
-		if(inputs.containsKey(nTexto)) throw new InputJaCreat(nTexto);
-		Input in = new Texto(nTexto, texto);
-		inputs.put(nTexto, in);
-	}
+	public Alfabeto getAlfabeto(String nombreAlfabeto) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreAlfabeto);
 
-	//pre: no existe ningun input con nombre nLista
-	//post:crea una nueva instancia de ListaPalabras llamada nLista
-	/**
-     * crear una nueva instancia de ListaPalabras
-     * @param nLista : nombre de la lista
-     * @param lista : contenido de la lista
-     * @throws InputJaCreat
-    */
-	public void importarListaPalabras(String nLista, Map<String, Integer> lista) throws InputJaCreat{
-		if(inputs.containsKey(nLista)) throw new InputJaCreat(nLista);
-		Input in = new ListaPalabras(nLista,lista); 
-		inputs.put(nLista, in);
-	}
+		if (in == null)	throw new InputInexistente();
+		if (!(in instanceof Alfabeto)) throw new WrongInputType("Alfabeto", in.getClass().getName());
 
-	//pre: el teclado exitse
-	//post: retorna el nombre del alfabeto del teclado
-	/**
-     * consulta el alfabeto de un teclado
-     * @param nombreTeclado : nombre del teclado
-     * @return string : nombre del alfabeto
-     * @throws TecladoInexistente
-    */
-	public String getAlfabetoTeclado(String nombreTeclado) throws TecladoInexistente{
-		if(teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(nombreTeclado);
-		Teclado a = teclados.get(nombreTeclado);
-		return a.getAlfabeto();
+		return (Alfabeto) in;
 	}
 
 	//pre: no hay ningun teclado que se haya creado con el alfabeto "nombreAlfabeto" i "alfabetoNuevo" es valido
@@ -222,28 +239,69 @@ public class CtrlEntrada{
      * @throws AlfabetoUsandose
      * @throws AlfabetoInvalido
     */
-	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) throws AlfabetoUsandose, AlfabetoInvalido{
+	public void modificarAlfabeto(String nombreAlfabeto, String alfabetoNuevo) throws AlfabetoUsandose, AlfabetoInvalido, InputInexistente, WrongInputType{
 		for (Map.Entry<String, Teclado> texplorado : teclados.entrySet()) {
 			Teclado board = texplorado.getValue();
 			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
 		}
 		if(comproE.AlfaCorrecto(alfabetoNuevo) == false) throw new AlfabetoInvalido(nombreAlfabeto);
-		inputs.remove(nombreAlfabeto);
-		Input in = new Alfabeto(nombreAlfabeto, alfabetoNuevo);
-		inputs.put(nombreAlfabeto, in);
+		
+		Alfabeto alf = getAlfabeto(nombreAlfabeto);
+		
+		alf.setLetras(alfabetoNuevo);
 	}
 
-	//pre: hay una instancia de ListaPalabras con nombre "nombreLista" (siempre va a pasar en nuestro codigo)
-	//post: canvia el valor de la instancia "nombreLista" a "listaNueva"
+	//pre: el alfabeto existe (siempre passa) i ningun teclado lo esta usando
+	//post: borra el alfabeto
 	/**
-     * modificar un lista
-     * @param nombreLista : nombre de la lista
-     * @param listaNueva : nuevo contenido de la lista
+     * eliminar un alfabeto
+     * @param nombreAlfabeto : nombre del alfabeto
+     * @throws AlfabetoUsandose
     */
-	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva){
-		inputs.remove(nombreLista);
-		Input in = new ListaPalabras(nombreLista,listaNueva); 
-		inputs.put(nombreLista, in);
+	public void borrarAlfabeto(String nombreAlfabeto) throws AlfabetoUsandose, InputInexistente, WrongInputType {
+		for (Map.Entry<String, Teclado> texplorado : teclados.entrySet()) {
+			Teclado board = texplorado.getValue();
+			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
+		}
+
+		Input in = inputs.get(nombreAlfabeto);
+
+		if (in == null)	throw new InputInexistente();
+		if (!(in instanceof Alfabeto)) throw new WrongInputType("Alfabeto", in.getClass().getName());
+
+     	inputs.remove(nombreAlfabeto);
+    }
+
+
+	//pre: no existe ningun input con nombre nTexto
+	//post: crea una nueva instancia de Texto llamada nTexto
+	/**
+     * crear una nueva instancia de texto
+     * @param nTexto : nombre del texto
+     * @param texto : contenido del texto
+     * @throws InputJaCreat
+    */
+	public void importarTexto(String nTexto, String texto) throws InputJaCreat {
+		if(inputs.containsKey(nTexto)) throw new InputJaCreat(nTexto);
+
+		Input in = new Texto(nTexto, texto);
+		inputs.put(nTexto, in);
+	}
+
+	//pre: el texto existe
+	//post: retorna el texto
+	/**
+     * consulta un texto
+     * @param e : nombre del texto
+     * @return string: contenido del texto
+    */
+	public Texto getTexto(String nombreTexto) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreTexto);
+
+		if (in == null)	throw new InputInexistente();
+		if (!(in instanceof Texto)) throw new WrongInputType("Texto", in.getClass().getName());
+
+		return (Texto) in;
 	}
 
 	//pre: hay una instancia de Texto con nombre "nombreTexto" (siempre va a pasar en nuestro codigo)
@@ -253,77 +311,41 @@ public class CtrlEntrada{
      * @param nombreTexto : nombre del texto
      * @param textoNuevo : nuevo contenido del texto
     */
-	public void modificarTexto(String nombreTexto, String textoNuevo){
-		inputs.remove(nombreTexto);
-		Input in = new Texto(nombreTexto, textoNuevo);
-		inputs.put(nombreTexto, in);
+	public void modificarTexto(String nombreTexto, String textoNuevo) throws InputInexistente, WrongInputType {
+		Texto tex = getTexto(nombreTexto);
+		
+		tex.setTexto(textoNuevo);
 	}
-	
-	//pre: el alfabeto existe (siempre passa) i ningun teclado lo esta usando
-	//post: borra el alfabeto
-	/**
-     * eliminar un alfabeto
-     * @param nombreAlfabeto : nombre del alfabeto
-     * @throws AlfabetoUsandose
-    */
-	public void borrarAlfabeto(String nombreAlfabeto) throws AlfabetoUsandose{
-		for (Map.Entry<String, Teclado> texplorado : teclados.entrySet()) {
-			Teclado board = texplorado.getValue();
-			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
-		}
-     	inputs.remove(nombreAlfabeto);
-    }
-   
-    //pre: el texto existe (siempre passa)
+
+	//pre: el texto existe (siempre passa)
 	//post:borra el texto
 	/**
      * eliminar un texto
      * @param nombreTexto : nombre del texto
     */
-    public void borrarTexto(String nombreTexto){
+    public void borrarTexto(String nombreTexto) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreTexto);
+
+		if (in == null)	throw new InputInexistente();
+		if (!(in instanceof Texto)) throw new WrongInputType("Texto", in.getClass().getName());
+
         inputs.remove(nombreTexto);
     }
 
-    //pre: la listapalabras existe (siempre passa)
-	//post:  borrar listapalabras
+
+	//pre: no existe ningun input con nombre nLista
+	//post:crea una nueva instancia de ListaPalabras llamada nLista
 	/**
-     * eliminar una lista
-     * @param lista : nombre de la lista
+     * crear una nueva instancia de ListaPalabras
+     * @param nLista : nombre de la lista
+     * @param lista : contenido de la lista
+     * @throws InputJaCreat
     */
-    public void borrarListaPalabras(String lista) {
-        inputs.remove(lista);
-    }
+	public void importarListaPalabras(String nLista, Map<String, Integer> lista) throws InputJaCreat{
+		if(inputs.containsKey(nLista)) throw new InputJaCreat(nLista);
 
-    //pre: el alfabeto existe
-	//post: retorna el alfabeto
-	/**
-     * consulta un alfabeto
-     * @param e : nombre del alfabeto
-     * @return string: contenido del alfabeto
-     * @throws InputInexistente
-    */
-	public String getAlfabeto(String e) throws InputInexistente{
-		Input in = inputs.get(e);			
-		return ((Alfabeto)in).getAlfabeto();
-	}
-	
-
-	public Input getInput(String e) throws InputInexistente{
-		Input in = inputs.get(e);			
-		return in;
-	}
-
-
-	//pre: el texto existe
-	//post: retorna el texto
-	/**
-     * consulta un texto
-     * @param e : nombre del texto
-     * @return string: contenido del texto
-    */
-	public String getTexto(String e){
-		Input in = inputs.get(e);
-		return ((Texto)in).getTexto();
+		Input in = new ListaPalabras(nLista,lista); 
+		inputs.put(nLista, in);
 	}
 
 	//pre: el listaPalabras existe
@@ -333,10 +355,68 @@ public class CtrlEntrada{
      * @param e : nombre de la lista
      * @return Map<String, Integer>: contenido de la lista
     */
-	public Map<String, Integer> getListaPalabras(String e){
-		Input in = inputs.get(e);
-		return ((ListaPalabras)in).getListaFreq();
+	public ListaPalabras getListaPalabras(String nombreLista) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreLista);
+		
+		if (in == null)	throw new InputInexistente();
+		if (!(in instanceof ListaPalabras)) throw new WrongInputType("ListaPalabras", in.getClass().getName());
+
+		return (ListaPalabras) in;
 	} 
+
+	//pre: hay una instancia de ListaPalabras con nombre "nombreLista" (siempre va a pasar en nuestro codigo)
+	//post: canvia el valor de la instancia "nombreLista" a "listaNueva"
+	/**
+     * modificar un lista
+     * @param nombreLista : nombre de la lista
+     * @param listaNueva : nuevo contenido de la lista
+    */
+	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) throws InputInexistente, WrongInputType {
+		ListaPalabras lp = getListaPalabras(nombreLista);
+
+		lp.setListaFreq(listaNueva);
+	}
+
+    //pre: la listapalabras existe (siempre passa)
+	//post:  borrar listapalabras
+	/**
+     * eliminar una lista
+     * @param lista : nombre de la lista
+    */
+    public void borrarListaPalabras(String nombreLista) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreLista);
+
+		if (in == null)	throw new InputInexistente();
+		if (!(in instanceof ListaPalabras)) throw new WrongInputType("ListaPalabras", in.getClass().getName());
+
+        inputs.remove(nombreLista);
+    }
+
+    
+	
+	
+
+	
+
+	public Input getInput(String e) throws InputInexistente{
+		Input in = inputs.get(e);			
+		return in;
+	}
+
+
+	public TLP getTLP(String nombreTLP) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreTLP);
+
+		Boolean isText = (in instanceof Texto);
+		Boolean isLP = (in instanceof ListaPalabras);
+		if (in == null)	throw new InputInexistente();
+		if (!(isLP || isText)) throw new WrongInputType("TLP", in.getClass().getName());
+
+		return (TLP) in;
+	}
+	
+
+	
 
 	//pre: 
 	//post: retorna true si todos los carácteres del texto son del alfabeto
@@ -372,17 +452,7 @@ public class CtrlEntrada{
 		return teclados;
 	}
 
-	//pre: 
-	//post: retorna el teclado "nombreTeclado"
-	/**
-     * consulta un teclado
-     * @param nombreTeclado : nombre del teclado
-     * @return Teclado : el teclado
-    */
-	public Teclado getTeclado(String nombreTeclado){
-		Teclado board = teclados.get(nombreTeclado);
-		return board;
-	}
+	
 
 	//pre: 
 	//post:retorna todos los alfabetos

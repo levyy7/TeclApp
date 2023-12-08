@@ -4,13 +4,13 @@ import java.util.*;
 import java.awt.Point;
 
 /** 
- * Clase del algoritmo 2
+ * Clase AG
  * Se basa en un algoritmo genético
  * Permite dada una matriz de distancias i de frequencias generar un teclado eficiente
  * @author Pol Ribera
 */
 
-public class Algoritmo2 extends EstrategiaCreacionLayout {
+public class AG extends EstrategiaCreacionLayout {
 	/** Número de generaciones que tendra el algoritmo antes de parar */
 	private static final int GENETIC = 100;
 	/** Número de teclados activos cada geracion */

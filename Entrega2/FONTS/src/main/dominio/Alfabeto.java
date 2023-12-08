@@ -6,57 +6,45 @@ import java.util.*;
 
 public class Alfabeto extends Input{
 
-    private String alphabet;
+    private String letras;
 
     /**
      * Constructora de alfabeto con todos sus parametros correspondientes
     */
-    public Alfabeto(String nombre, String alphabet){
-        super(nombre);
-        this.alphabet = alphabet;
+    public Alfabeto(String nombre, String letras){
+        this.nombre = nombre;
+        this.letras = letras;
     }
 
     public Alfabeto(String[] alf) {
         nombre = alf[0];
-        alphabet = alf[1];
+        letras = alf[1];
     }
 
-    public String getAlfabeto(){
-        return alphabet;
+    public String getLetras(){
+        return letras;
     }
 
-    public String getNombre(){
-        return super.getNombre();
+    public void setLetras(String letras){
+        this.letras = letras;
     }
 
     public int getSize(){
-        return alphabet.length();
+        return letras.length();
     }
 
-    public String getType(){
-        return "Alfabeto";
-    }
-
-    public void importInput(String name, String alphabet, String type){
+    /*public void importInput(String name, String alphabet, String type){
         if(type == "Alfabeto") {
             super.setNombre(name);
             this.alphabet = alphabet;
         }
-    }
-
-    public void setNombre(String nombre) {
-        super.setNombre(nombre);
-    }
-
-    public void setAlfabeto(String newAlphabet){
-        this.alphabet = newAlphabet;
-    }
-
+    }*/
+    
     @Override
     public String[] toStringArray() {
         String[] info = new String[2];
         info[0] = nombre;
-        info[1] = alphabet;
+        info[1] = letras;
         return info;
     }
 }

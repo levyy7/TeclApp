@@ -5,13 +5,13 @@ import java.util.*;
 public abstract class Input{
 
     protected String nombre;
+ 
+    public Input() {
+        
+    }
 
     public Input(String nombre){
         this.nombre = nombre; 
-    }
-
-    public Input() {
-        
     }
 
     public void setNombre(String nombre) {
@@ -23,10 +23,10 @@ public abstract class Input{
         return nombre;
     }
 
-    public abstract String getType();
+    //public abstract String getType();
 
     //assigna input. name es el nom del input, in es el contingut i type es si es un alfabet, llista etc;
-    public abstract void importInput(String name, String in, String type);
+    //public abstract void importInput(String name, String in, String type);
 
     public abstract int getSize();
 

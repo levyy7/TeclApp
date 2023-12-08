@@ -2,6 +2,9 @@ package main.dominio;
 import main.dominio.algoritmos.*;
 
 import java.util.*;
+
+import Excepcions.InvalidAlgorithm;
+
 import java.awt.geom.Point2D;
 import java.awt.Point;
 
@@ -14,7 +17,7 @@ import java.awt.Point;
 public class CtrlAlgoritmo {
 
     /** Contiene la instancia de la clase QAPOptimized*/
-    private static EstrategiaCreacionLayout qapO;
+    
 
     /** Contiene la instancia de la clase Algoritmo2*/
     //private static EstrategiaCreacionLayout alg2;
@@ -24,7 +27,7 @@ public class CtrlAlgoritmo {
 
     public CtrlAlgoritmo() {
         utA = new UtilesAlgoritmo();
-        qapO = new QAPOptimized();
+        //qapO = new QAPOptimized();
     }  
 
     /**
@@ -92,9 +95,15 @@ public class CtrlAlgoritmo {
      * @param playout : physical layout
      * @return char[] : layout resultante
     */
-    public char[] usarQAP(Vector<String> textos, 
+    public char[] calcularLayout(Vector<String> textos, 
         Vector<Map<String, Integer>> listas, String alfabeto, 
-        Point2D[] playout) {
+        Point2D[] playout, String tipoAlgoritmo) throws InvalidAlgorithm {
+        
+        EstrategiaCreacionLayout alg;
+
+        if (tipoAlgoritmo == "QAP") alg = new QAPOptimized();
+        else if (tipoAlgoritmo == "GEN") alg = new AG();
+        else throw new InvalidAlgorithm();
 
         Map<Character, Integer> posiciones = new HashMap<>();
         posiciones = inicializaAlfabeto(alfabeto);
@@ -103,7 +112,7 @@ public class CtrlAlgoritmo {
 
         double[][] distLoc = utA.calculoDistLoc(playout);
 
-        ArrayList<Point> layoutA = qapO.crearLayout(distLoc, traficoInt);
+        ArrayList<Point> layoutA = alg.crearLayout(distLoc, traficoInt);
 
         return calculoLayout(layoutA, posiciones);
     }

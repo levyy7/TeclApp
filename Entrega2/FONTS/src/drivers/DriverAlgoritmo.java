@@ -3,6 +3,9 @@ import main.dominio.CtrlAlgoritmo;
 import main.dominio.Playout;
 
 import java.util.*;
+
+import Excepcions.InvalidAlgorithm;
+
 import java.awt.Point;
 import java.lang.Object;
 import java.awt.geom.Point2D;
@@ -65,7 +68,7 @@ public class DriverAlgoritmo {
     /**
      * Función que se encarga de introducir lo necesario para usar QAP
     */
-	private static void usarQAP() {
+	private static void usarQAP() { //Hacen falta cambios
 
 		Scanner tecInt = new Scanner(System.in);
 		Scanner tec = new Scanner(System.in);
@@ -99,7 +102,10 @@ public class DriverAlgoritmo {
 		Playout play = new Playout(tam);
 		Point2D[] playout = play.getTeclas();
 
-		char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
+		char[] layout; 
+		try {layout = ctrlA.calcularLayout(textos, listas, alfabeto, playout, "QAP");}
+		catch (InvalidAlgorithm e) 
+            {System.out.println("Error: "+e.getMessage()); return;}
 
 		System.out.println("\nEl layout es:\n");
 		for (int i = 0; i < layout.length; ++i) System.out.print(layout[i]+" ");
