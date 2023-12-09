@@ -96,8 +96,8 @@ public class CtrlAlgoritmo {
         
         EstrategiaCreacionLayout alg;
 
-        if (tipoAlgoritmo == "QAP") alg = new QAPOptimized();
-        else if (tipoAlgoritmo == "GEN") alg = new AG();
+        if (tipoAlgoritmo.equals("QAP")) alg = new QAPOptimized();
+        else if (tipoAlgoritmo.equals("GEN")) alg = new AG();
         else throw new InvalidAlgorithm();
 
         Map<Character, Integer> posiciones = new HashMap<>();
