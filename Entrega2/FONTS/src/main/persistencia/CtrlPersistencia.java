@@ -31,34 +31,34 @@ public class CtrlPersistencia {
 	}
 
 	/**
-	 * Función que guarda un conjunto de teclados
-	 * @param tec : teclados a guardar
+	 * Función que guarda un teclado
+	 * @param tec : teclado a guardar
 	*/
-	public static void guardarTeclados(String[] tec) {
+	public static void guardarTeclado(String[] tec) {
 		gestC.guardarInfo(new String[][]{tec}, PATHTec);
 	}
 
 	/**
-	 * Función que guarda un conjunto de alfabetos
-	 * @param alf : alfabetos a guardar
+	 * Función que guarda un alfabeto
+	 * @param alf : alfabeto a guardar
 	*/
-	public static void guardarAlfabetos(String[] alf) {
+	public static void guardarAlfabeto(String[] alf) {
 		gestC.guardarInfo(new String[][]{alf}, PATHAlf);
 	}
 
 	/**
-	 * Función que guarda un conjunto de textos
-	 * @param text : textos a guardar
+	 * Función que guarda un texto
+	 * @param text : texto a guardar
 	*/
-	public static void guardarTextos(String[] text) {
+	public static void guardarTexto(String[] text) {
 		gestC.guardarInfo(new String[][]{text}, PATHTex);
 	}
 
 	/**
-	 * Función que guarda un conjunto de listas
+	 * Función que guarda una lista
 	 * @param list : listas a guardar
 	*/
-	public static void guardarListas(String[] list) {
+	public static void guardarLista(String[] list) {
 		gestC.guardarInfo(new String[][]{list}, PATHLis);
 	}
 
@@ -97,8 +97,8 @@ public class CtrlPersistencia {
 	}
 
 	/**
-	 * Función que guarda un conjunto de teclados
-	 * @param tec : teclados a guardar
+	 * Función que modifica un teclado
+	 * @param tec : teclado a modificar
 	*/
 	public static void modificarTeclado(String[] tec) {
 		gestC.borrarInfo(new String[]{tec[0]}, PATHTec);
@@ -106,8 +106,8 @@ public class CtrlPersistencia {
 	}
 
 	/**
-	 * Función que guarda un conjunto de alfabetos
-	 * @param alf : alfabetos a guardar
+	 * Función que modifica un alfabeto
+	 * @param alf : alfabeto a modificar
 	*/
 	public static void modificarAlfabeto(String[] alf) {
 		gestC.borrarInfo(new String[]{alf[0]}, PATHAlf);
@@ -115,8 +115,8 @@ public class CtrlPersistencia {
 	}
 
 	/**
-	 * Función que guarda un conjunto de textos
-	 * @param text : textos a guardar
+	 * Función que modificar un texto
+	 * @param text : texto a modificar
 	*/
 	public static void modificarTexto(String[] text) {
 		gestC.borrarInfo(new String[]{text[0]}, PATHTex);
@@ -124,8 +124,8 @@ public class CtrlPersistencia {
 	}
 
 	/**
-	 * Función que guarda un conjunto de listas
-	 * @param list : listas a guardar
+	 * Función que modifica una lista
+	 * @param list : listas a modificar
 	*/
 	public static void modificarLista(String[] list) {
 		gestC.borrarInfo(new String[]{list[0]}, PATHLis);
@@ -133,32 +133,32 @@ public class CtrlPersistencia {
 	}
 
 	/**
-	 * Función que guarda un conjunto de teclados
-	 * @param tec : teclados a guardar
+	 * Función que borra un teclado
+	 * @param tec : teclados a borrar
 	*/
 	public static void borrarTeclado(String tec) {
 		gestC.borrarInfo(new String[]{tec}, PATHTec);
 	}
 
 	/**
-	 * Función que guarda un conjunto de alfabetos
-	 * @param alf : alfabetos a guardar
+	 * Función que borra un alfabeto
+	 * @param alf : alfabeto a borrar
 	*/
 	public static void borrarAlfabeto(String alf) {
 		gestC.borrarInfo(new String[]{alf}, PATHAlf);
 	}
 
 	/**
-	 * Función que guarda un conjunto de textos
-	 * @param text : textos a guardar
+	 * Función que borra un texto
+	 * @param text : texto a borrar
 	*/
 	public static void borrarTexto(String text) {
 		gestC.borrarInfo(new String[]{text}, PATHTex);
 	}
 
 	/**
-	 * Función que guarda un conjunto de listas
-	 * @param list : listas a guardar
+	 * Función que borra una lista
+	 * @param list : lista a borrar
 	*/
 	public static void borrarLista(String list) {
 		gestC.borrarInfo(new String[]{list}, PATHLis);
