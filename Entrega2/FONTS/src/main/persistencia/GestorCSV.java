@@ -86,13 +86,17 @@ public class GestorCSV {
     public void borrarInfo(String[] primaryKeys, String filePath) {
         List<String[]> info = new ArrayList<>(Arrays.asList(cargarInfo(filePath)));
         
-        for (int k = 0; k < info.size(); k++) {
-            String[] elemento = info.get(k);
-            for (String id : primaryKeys)
-                if (elemento[0].equals(id)) info.remove(k);
-                
-        }
+        info.removeIf(array -> equalsAny(array[0], primaryKeys));
 
         guardarInfoOW(info.toArray(new String[info.size()][]), filePath);
     }
+
+    private boolean equalsAny(String s, String[] array) {
+        Boolean same = false;
+        for (int i = 0; i < array.length && !same; ++i) 
+            same = s.equals(array[i]);
+
+        return same;
+    }
+
 }

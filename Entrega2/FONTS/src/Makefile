@@ -29,8 +29,11 @@ testTeclado:
 
 testTexto: 
 	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.TextoTest
+	
+testGestorCSV: 
+	java -cp $(LIBS):$(CLASS_OUTPUT) org.junit.runner.JUnitCore tests.GestorCSVTest
 
-testAll: testAlfabeto testListaPalabras testPlayout testTeclado testTexto
+testAll: testAlfabeto testListaPalabras testPlayout testTeclado testTexto testGestorCSV
 
 driverAlgoritmo:
 	java -cp $(CLASS_OUTPUT) drivers.DriverAlgoritmo
