@@ -11,7 +11,7 @@ import java.util.*;
 public class GestorCSV {
 
     /**
-     * Función que guarda la información enviada en la base de datos
+     * Función que sobreescribe la información enviada en el filePath
      * @param inf : información a guardar
      * @param filePath : Path donde guardar la información
     */
@@ -34,7 +34,7 @@ public class GestorCSV {
 	}
 
     /**
-     * Función que guarda la información enviada en la base de datos
+     * Función que guarda la información enviada en el filePath
      * @param inf : información a guardar
      * @param filePath : Path donde guardar la información
     */
@@ -77,19 +77,22 @@ public class GestorCSV {
 	}
 
 
+    /**
+     * Función que borra la línea que contenga alguno de los String del
+     * array primaryKeys en el archivo filePath
+     * @param primaryKeys : nombres a borrar
+     * @param filePath : Path donde borrar la información
+    */
     public void borrarInfo(String[] primaryKeys, String filePath) {
         List<String[]> info = new ArrayList<>(Arrays.asList(cargarInfo(filePath)));
         
-        info.removeIf(array -> equalsAny(array[0], primaryKeys));
+        for (int k = 0; k < info.size(); k++) {
+            String[] elemento = info.get(k);
+            for (String id : primaryKeys)
+                if (elemento[0].equals(id)) info.remove(k);
+                
+        }
 
         guardarInfoOW(info.toArray(new String[info.size()][]), filePath);
     }
-
-    private boolean equalsAny(String s, String[] array) {
-        for (String x : array) 
-            if (s == x) return true;
-
-        return false;
-    }
-
 }

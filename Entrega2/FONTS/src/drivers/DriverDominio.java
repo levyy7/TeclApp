@@ -220,10 +220,10 @@ public class DriverDominio {
 
         System.out.println("Introduce tipo de algoritmo:");
         System.out.println("1 = QAP");
-        System.out.println("2 = porImplementar");
+        System.out.println("2 = GEN");
         entrada = tecInt.nextInt();
         if (entrada == 1) algor = "QAP";
-        else if (entrada == 2) algor = "a";
+        else if (entrada == 2) algor = "GEN";
         else algor = "error";
 
         System.out.print("Introduce el alfabeto: ");

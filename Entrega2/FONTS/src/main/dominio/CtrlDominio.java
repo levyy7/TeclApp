@@ -63,15 +63,23 @@ public class CtrlDominio {
 
         Vector<String> textos = new Vector<String>();
         Vector<Map<String, Integer>> listas = new Vector<>();
-        if (asignarTextosYListas(textos, listas, nombresTLP, letrasAlfabeto) == false)
-            return;
+        
+        try {asignarTextosYListas(textos, listas, nombresTLP, letrasAlfabeto);}
+        catch (InputInexistente e) 
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (TextoNoValido e) 
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (ListaNoValida e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 
         try {
             Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
             char[] layout = ctrlA.calcularLayout(textos, listas, letrasAlfabeto, playout, nombreAlgoritmo);
 
             ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
-            CtrlPersistencia.guardarTeclados(ctrlE.getTeclado(nombreTeclado).toStringArray());
+            CtrlPersistencia.guardarTeclado(ctrlE.getTeclado(nombreTeclado).toStringArray());
         }
         catch (NGrande e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -105,9 +113,17 @@ public class CtrlDominio {
 
         Vector<String> textos = new Vector<String>();
         Vector<Map<String, Integer>> listas = new Vector<>();
-        asignarTextosYListas(textos, listas, nombresTLP, letras);
-        if (asignarTextosYListas(textos, listas, nombresTLP, letras) == false)
-            return;
+        
+        try {asignarTextosYListas(textos, listas, nombresTLP, letras);}
+        catch (InputInexistente e) 
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (TextoNoValido e) 
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (ListaNoValida e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+
 
         try {
             borrarTeclado(nombreTeclado);
@@ -169,7 +185,7 @@ public class CtrlDominio {
     public void importarAlfabeto(String nombreAlfabeto, String alfabeto) {
         try {
             ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);
-            CtrlPersistencia.guardarAlfabetos(ctrlE.getAlfabeto(nombreAlfabeto).toStringArray());
+            CtrlPersistencia.guardarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto).toStringArray());
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -226,7 +242,7 @@ public class CtrlDominio {
     public void importarTexto(String nombreTexto, String texto) {
         try {
             ctrlE.importarTexto(nombreTexto, texto);
-            CtrlPersistencia.guardarTextos(ctrlE.getTexto(nombreTexto).toStringArray());
+            CtrlPersistencia.guardarTexto(ctrlE.getTexto(nombreTexto).toStringArray());
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -278,7 +294,7 @@ public class CtrlDominio {
     public void importarListaPalabras(String nombreLista, Map<String, Integer> lista) {
         try {
             ctrlE.importarListaPalabras(nombreLista, lista);
-            CtrlPersistencia.guardarListas(ctrlE.getListaPalabras(nombreLista).toStringArray());
+            CtrlPersistencia.guardarLista(ctrlE.getListaPalabras(nombreLista).toStringArray());
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -396,19 +412,17 @@ public class CtrlDominio {
      *                   pertenecen a textos y listas unicamente. Falso en
      *                   caso contrario
     */
-    private boolean asignarTextosYListas(Vector<String> textos, 
+    private void asignarTextosYListas(Vector<String> textos, 
             Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
-            String alfabeto) {
+            String alfabeto) throws InputInexistente, WrongInputType, TextoNoValido, ListaNoValida {
 
         for (int i = 0; i < nombresTLP.size(); ++i) {
             String nombreTLP = nombresTLP.elementAt(i);
 
             TLP tlp;
             try {tlp = ctrlE.getTLP(nombreTLP);}
-            catch (InputInexistente e) 
-                {System.out.println("Error: "+e.getMessage()); return false;}
-            catch (WrongInputType e)
-                {System.out.println("Error: "+e.getMessage()); return false;}
+            catch (InputInexistente e) {throw e;}
+            catch (WrongInputType e) {throw e;}
 
             if (tlp instanceof Texto) textos.addElement(((Texto)tlp).getTexto()); 
             else listas.addElement(((ListaPalabras)tlp).getListaFreq());
@@ -418,11 +432,8 @@ public class CtrlDominio {
             ctrlE.compruebaTextos(textos, alfabeto);
             ctrlE.compruebaListas(listas, alfabeto);
         }
-        catch (TextoNoValido e) 
-            {System.out.println("Error: "+e.getMessage()); return false;}
-        catch (ListaNoValida e)
-            {System.out.println("Error: "+e.getMessage()); return false;}
-        return true;
+        catch (TextoNoValido e) {throw e;}
+        catch (ListaNoValida e) {throw e;}
     }
 }
 //autor Miguel

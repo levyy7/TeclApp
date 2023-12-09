@@ -41,5 +41,8 @@ driverDominio:
 driverEntrada:
 	java -cp $(CLASS_OUTPUT) drivers.DriverEntrada
 
+driverPersistencia:
+	java -cp $(CLASS_OUTPUT) drivers.DriverPersistencia
+
 clean:
 	rm -r ../../EXE/out/*
