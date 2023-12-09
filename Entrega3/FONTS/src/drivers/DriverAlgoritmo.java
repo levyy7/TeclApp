@@ -3,6 +3,9 @@ import main.dominio.CtrlAlgoritmo;
 import main.dominio.Playout;
 
 import java.util.*;
+
+import Excepcions.InvalidAlgorithm;
+
 import java.awt.Point;
 import java.lang.Object;
 import java.awt.geom.Point2D;
@@ -23,7 +26,7 @@ public class DriverAlgoritmo {
 		ctrlA = new CtrlAlgoritmo();
 
 		System.out.println("Este es el Driver del Algoritmo, las funcionalidades son:");
-		System.out.println("1 = Utilizar QAP");
+		System.out.println("1 = Calcular Layout");
 		System.out.println("33 = Salir");
 	}
 
@@ -65,7 +68,7 @@ public class DriverAlgoritmo {
     /**
      * Función que se encarga de introducir lo necesario para usar QAP
     */
-	private static void usarQAP() {
+	private static void calcularLayout() { //Hacen falta cambios
 
 		Scanner tecInt = new Scanner(System.in);
 		Scanner tec = new Scanner(System.in);
@@ -91,20 +94,29 @@ public class DriverAlgoritmo {
 				listas.addElement(introducirLista());
 		}
 
-		//Instroducción de alfabetos
-		System.out.println("Introduce el Alfabeto: ");
+		//Introducción de alfabetos
+		System.out.print("Introduce el Alfabeto: ");
 		String alfabeto = tec.nextLine();
 		int tam = alfabeto.length();
 
 		Playout play = new Playout(tam);
 		Point2D[] playout = play.getTeclas();
 
-		char[] layout = ctrlA.usarQAP(textos, listas, alfabeto, playout);
+		char[] layout;
+
+		System.out.print("Por último, introduce el algoritmo: ");
+		String alg = tec.nextLine();
+
+		try {layout = ctrlA.calcularLayout(textos, listas, alfabeto, playout, alg);}
+		catch (InvalidAlgorithm e) 
+            {System.out.println("Error: "+e.getMessage()); return;}
 
 		System.out.println("\nEl layout es:\n");
 		for (int i = 0; i < layout.length; ++i) System.out.print(layout[i]+" ");
 		System.out.println("\n");
 	}
+
+
 
 	public static void main(String[] args) {
 
@@ -115,11 +127,12 @@ public class DriverAlgoritmo {
 		boolean finalizar = false;
 		while (finalizar == false) {
 
+			System.out.print("Introduce una nueva instruccion: ");
 			int instruccion = tec.nextInt();
 
 			switch(instruccion) {
 
-				case 1: usarQAP(); break;
+				case 1: calcularLayout(); break;
 
 				case 33: finalizar = true; break;
 			}

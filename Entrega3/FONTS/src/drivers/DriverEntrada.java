@@ -132,9 +132,13 @@ public class DriverEntrada {
         alfabeto.replace(" ", "");
 
 		try {ctrlE.modificarAlfabeto(name, alfabeto);}
-		catch (AlfabetoInvalido e)
+		catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (AlfabetoUsandose e)
+        catch (AlfabetoInvalido e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
@@ -147,7 +151,11 @@ public class DriverEntrada {
 		System.out.print("Introduce el texto en una linea: ");
 		texto += tec.nextLine();
 
-		ctrlE.modificarTexto(name, texto);
+		try {ctrlE.modificarTexto(name, texto);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
 	private static void modificarListaPalabras(){
@@ -165,7 +173,11 @@ public class DriverEntrada {
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
 
-		ctrlE.modificarListaPalabras(name, lista);
+		try {ctrlE.modificarListaPalabras(name, lista);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
 	private static void borrarAlfabeto(){
@@ -176,6 +188,10 @@ public class DriverEntrada {
 		try {ctrlE.borrarAlfabeto(name);}
         catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
 	private static void borrarTexto(){
@@ -183,7 +199,11 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre del texto a borrar: ");
 		String name = tec.nextLine();	
 
-		ctrlE.borrarTexto(name);	
+		try {ctrlE.borrarTexto(name);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}	
 	}
 
 	private static void borrarListaPalabras(){
@@ -191,7 +211,11 @@ public class DriverEntrada {
 		System.out.print("Introduce el nombre de la lista de palabras con frecuencia a borrar: ");
 		String name = tec.nextLine();	
 
-		ctrlE.borrarListaPalabras(name);	
+		try{ctrlE.borrarListaPalabras(name);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}	
 	}
 
 	private static void borrarTeclado(){
@@ -219,9 +243,11 @@ public class DriverEntrada {
         System.out.print("Nombre del alfabeto a consultar: ");
         String nomAlf = tec.nextLine();
         String alf = "";
-		try {alf=ctrlE.getAlfabeto(nomAlf);}
+		try {alf=ctrlE.getAlfabeto(nomAlf).getLetras();}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage());return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 		
         System.out.println("Nombre: "+ nomAlf);
         System.out.println("Alfabeto:");
@@ -244,7 +270,12 @@ public class DriverEntrada {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
         String nomText = tec.nextLine();
-        String text = ctrlE.getTexto(nomText);
+        String text;
+        try {text = ctrlE.getTexto(nomText).getTexto();}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 
         System.out.println("Nombre: "+nomText);
         System.out.println("Texto:\n"+text+"\n\n");
@@ -264,7 +295,12 @@ public class DriverEntrada {
         
         System.out.print("Nombre de la lista a consultar: ");
         String nomList = tec.nextLine();
-        Map<String, Integer> list = ctrlE.getListaPalabras(nomList);
+        Map<String, Integer> list; 
+        try {list = ctrlE.getListaPalabras(nomList).getListaFreq();}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 
         System.out.println("Nombre: "+nomList);
         System.out.println("Lista:");
@@ -286,7 +322,10 @@ public class DriverEntrada {
         Scanner tec = new Scanner(System.in);      
         System.out.print("Nombre del teclado a consultar: ");
         String teclado = tec.nextLine();
-        Teclado t = ctrlE.getTeclado(teclado);
+        Teclado t;
+        try {t = ctrlE.getTeclado(teclado);}
+        catch (TecladoInexistente e)
+            {System.out.println("Error: "+e.getMessage()); return;}
 
         System.out.println("El Teclado se compone de\n");
         System.out.println("Nombre: "+t.getNombre());

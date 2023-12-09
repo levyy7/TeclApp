@@ -2,29 +2,26 @@ package main.dominio;
 import main.dominio.algoritmos.*;
 
 import java.util.*;
+
+import Excepcions.InvalidAlgorithm;
+
 import java.awt.geom.Point2D;
 import java.awt.Point;
 
 /**
  * Controlador de Algoritmo
- * Controlador que une la informacion necesaria para utilizar las
+ * Controlador que une la información necesaria para utilizar las
  * funcionalidades principales de los algoritmos
  * @author Miguel Ángel Montero Flores
 */
 public class CtrlAlgoritmo {
 
-    /** Contiene la instancia de la clase QAPOptimized*/
-    private static EstrategiaCreacionLayout qapO;
-
-    /** Contiene la instancia de la clase Algoritmo2*/
-    //private static EstrategiaCreacionLayout alg2;
-
     /** Contiene la instancia de la clase UtilesAlgoritmo*/
     private static UtilesAlgoritmo utA;
 
+    /** Constructora de Algoritmo por default que inicializa UtilesAlgoritmo*/
     public CtrlAlgoritmo() {
         utA = new UtilesAlgoritmo();
-        qapO = new QAPOptimized();
     }  
 
     /**
@@ -33,7 +30,6 @@ public class CtrlAlgoritmo {
      * @param alfabeto
      * @return Map(Character, Integer) : mapa de posiciones
     */
-    //Mapa de posiciones de las letras de un alfabeto
     private Map<Character, Integer> inicializaAlfabeto(String alfabeto) {
 
         Map<Character, Integer> map = new HashMap<>();
@@ -47,11 +43,11 @@ public class CtrlAlgoritmo {
     }
 
     /**
-     * Función que devuelve la letra correspondiente de la posicion pos
+     * Función que devuelve la letra correspondiente de la posición pos
      * del mapa de posiciones
      * @param posiciones : mapa de posiciones
      * @param pos : posicion a consultar
-     * @return Character : caracter correspondiente de la posicion pos
+     * @return Character : carácter correspondiente de la posicion pos
     */
     private Character getLetra(Map<Character, Integer> posiciones, int pos) {
 
@@ -85,16 +81,24 @@ public class CtrlAlgoritmo {
     }
 
     /**
-     * Función que calcula el layout resultante de un teclado al utilizar QAP
-     * @param textos : textos usados para la creacion del layout
-     * @param listas : listas usadas para la creacion del layout
-     * @param alfabeot : afabeto usado para la creacion del layout
+     * Función que calcula el layout resultante de un teclado
+     * @param textos : textos usados para la creación del layout
+     * @param listas : listas usadas para la creación del layout
+     * @param alfabeto : afabeto usado para la creación del layout
      * @param playout : physical layout
+     * @param tipoAlgoritmo : algoritmo a utilizar
      * @return char[] : layout resultante
+     * @throws InvalidAlgorithm
     */
-    public char[] usarQAP(Vector<String> textos, 
+    public char[] calcularLayout(Vector<String> textos, 
         Vector<Map<String, Integer>> listas, String alfabeto, 
-        Point2D[] playout) {
+        Point2D[] playout, String tipoAlgoritmo) throws InvalidAlgorithm {
+        
+        EstrategiaCreacionLayout alg;
+
+        if (tipoAlgoritmo.equals("QAP")) alg = new QAPOptimized();
+        else if (tipoAlgoritmo.equals("GEN")) alg = new AG();
+        else throw new InvalidAlgorithm();
 
         Map<Character, Integer> posiciones = new HashMap<>();
         posiciones = inicializaAlfabeto(alfabeto);
@@ -103,7 +107,7 @@ public class CtrlAlgoritmo {
 
         double[][] distLoc = utA.calculoDistLoc(playout);
 
-        ArrayList<Point> layoutA = qapO.crearLayout(distLoc, traficoInt);
+        ArrayList<Point> layoutA = alg.crearLayout(distLoc, traficoInt);
 
         return calculoLayout(layoutA, posiciones);
     }

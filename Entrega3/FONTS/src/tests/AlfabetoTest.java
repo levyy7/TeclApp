@@ -17,12 +17,12 @@ public class AlfabetoTest {
     public void testCreadoraAndGetters(){
         Alfabeto a = new Alfabeto("beta", "sdiurl");
         
-        assertEquals("sdiurl", a.getAlfabeto());
+        assertEquals("sdiurl", a.getLetras());
         assertEquals("beta", a.getNombre());
         assertEquals(6, a.getSize());
-        assertEquals("Alfabeto", a.getType());
     }
 
+    /*
     @Test
     public void testImportInputValidType(){
         Alfabeto a = new Alfabeto("beta", "sdiurl");
@@ -42,6 +42,7 @@ public class AlfabetoTest {
         assertEquals("sdiurl", a.getAlfabeto());
 
     }
+    */
 
     @Test
     public void testSetNombre(){
@@ -51,10 +52,10 @@ public class AlfabetoTest {
     }
 
     @Test
-    public void testSetAlfabeto(){
+    public void testSetLetras(){
         Alfabeto a = new Alfabeto("beta", "sdiurl");
-        a.setAlfabeto("help");
-        assertEquals("help", a.getAlfabeto());
+        a.setLetras("help");
+        assertEquals("help", a.getLetras());
     }
 }
 

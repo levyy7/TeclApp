@@ -11,11 +11,11 @@ import java.util.*;
 public class GestorCSV {
 
     /**
-     * Función que guarda la información enviada en la base de datos
+     * Función que sobreescribe la información enviada en el filePath
      * @param inf : información a guardar
      * @param filePath : Path donde guardar la información
     */
-	public static void guardarInfo(String[][] inf, String filePath) {
+	public void guardarInfoOW(String[][] inf, String filePath) {
 		
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
         
@@ -30,6 +30,20 @@ public class GestorCSV {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+	}
+
+    /**
+     * Función que guarda la información enviada en el filePath
+     * @param inf : información a guardar
+     * @param filePath : Path donde guardar la información
+    */
+	public void guardarInfo(String[][] inf, String filePath) {
+		List<String[]> info = new ArrayList<>(Arrays.asList(cargarInfo(filePath)));
+        
+        info.addAll(Arrays.asList(inf));
+
+        guardarInfoOW(info.toArray(new String[info.size()][]), filePath);
 	}
 
     /**
@@ -38,7 +52,7 @@ public class GestorCSV {
      * @return String[][] : matriz que contiene toda la información en datos
      *                      primitivos
     */
-	public static String[][] cargarInfo(String filePath) {
+	public String[][] cargarInfo(String filePath) {
 		
         List<String[]> info = new ArrayList<>();
         
@@ -62,4 +76,23 @@ public class GestorCSV {
         return info.toArray(new String[info.size()][]);
 	}
 
+
+    /**
+     * Función que borra la línea que contenga alguno de los String del
+     * array primaryKeys en el archivo filePath
+     * @param primaryKeys : nombres a borrar
+     * @param filePath : Path donde borrar la información
+    */
+    public void borrarInfo(String[] primaryKeys, String filePath) {
+        List<String[]> info = new ArrayList<>(Arrays.asList(cargarInfo(filePath)));
+        
+        for (int k = 0; k < info.size(); k++) {
+            String[] elemento = info.get(k);
+            for (String id : primaryKeys)
+                if (elemento[0].equals(id)) info.remove(k);
+                
+        }
+
+        guardarInfoOW(info.toArray(new String[info.size()][]), filePath);
+    }
 }

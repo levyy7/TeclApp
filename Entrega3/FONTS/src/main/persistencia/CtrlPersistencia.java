@@ -14,41 +14,52 @@ public class CtrlPersistencia {
 	/** Contiene la instancia del GestorCSV */
 	private static GestorCSV gestC;
 
+	/** Path relativa del archivo "Teclados.csv" */
+	private static final String PATHTec = "../informacion/Teclados.csv";
+	/** Path relativa del archivo "Alfabetos.csv" */
+	private static final String PATHAlf = "../informacion/Alfabetos.csv";
+	/** Path relativa del archivo "Textos.csv" */
+	private static final String PATHTex = "../informacion/Textos.csv";
+	/** Path relativa del archivo "Listas.csv" */
+	private static final String PATHLis = "../informacion/Listas.csv";
+
+
+
 	/** Constructora por defecto que asigna únicamente al gestorCSV*/
-	public static void inicializar() {
+	public CtrlPersistencia() {
 		gestC = new GestorCSV();
 	}
 
 	/**
-	 * Función que guarda un conjunto de teclados
-	 * @param tec : teclados a guardar
+	 * Función que guarda un teclado
+	 * @param tec : teclado a guardar
 	*/
-	public static void guardarTeclados(String[][] tec) {
-		gestC.guardarInfo(tec, "../informacion/Teclados.csv");
+	public static void guardarTeclado(String[] tec) {
+		gestC.guardarInfo(new String[][]{tec}, PATHTec);
 	}
 
 	/**
-	 * Función que guarda un conjunto de alfabetos
-	 * @param alf : alfabetos a guardar
+	 * Función que guarda un alfabeto
+	 * @param alf : alfabeto a guardar
 	*/
-	public static void guardarAlfabetos(String[][] alf) {
-		gestC.guardarInfo(alf, "../informacion/Alfabetos.csv");
+	public static void guardarAlfabeto(String[] alf) {
+		gestC.guardarInfo(new String[][]{alf}, PATHAlf);
 	}
 
 	/**
-	 * Función que guarda un conjunto de textos
-	 * @param text : textos a guardar
+	 * Función que guarda un texto
+	 * @param text : texto a guardar
 	*/
-	public static void guardarTextos(String[][] text) {
-		gestC.guardarInfo(text, "../informacion/Textos.csv");
+	public static void guardarTexto(String[] text) {
+		gestC.guardarInfo(new String[][]{text}, PATHTex);
 	}
 
 	/**
-	 * Función que guarda un conjunto de listas
+	 * Función que guarda una lista
 	 * @param list : listas a guardar
 	*/
-	public static void guardarListas(String[][] list) {
-		gestC.guardarInfo(list, "../informacion/Listas.csv");
+	public static void guardarLista(String[] list) {
+		gestC.guardarInfo(new String[][]{list}, PATHLis);
 	}
 
 	/**
@@ -56,7 +67,7 @@ public class CtrlPersistencia {
 	 * @return String[][] : teclados a cargar
 	*/
 	public static String[][] cargarTeclados() {
-        return gestC.cargarInfo("../informacion/Teclados.csv");
+        return gestC.cargarInfo(PATHTec);
 	}
 
 	/**
@@ -65,7 +76,7 @@ public class CtrlPersistencia {
 	*/
 
 	public static String[][] cargarAlfabetos() {
-        return gestC.cargarInfo("../informacion/Alfabetos.csv");
+        return gestC.cargarInfo(PATHAlf);
 	}
 
 	/**
@@ -74,7 +85,7 @@ public class CtrlPersistencia {
 	*/
 
 	public static String[][] cargarTextos() {
-        return gestC.cargarInfo("../informacion/Textos.csv");
+        return gestC.cargarInfo(PATHTex);
 	}
 
 	/**
@@ -82,7 +93,74 @@ public class CtrlPersistencia {
 	 * @return String[][] : listas a cargar
 	*/
 	public static String[][] cargarListas() {
-        return gestC.cargarInfo("../informacion/Listas.csv");
+        return gestC.cargarInfo(PATHLis);
+	}
+
+	/**
+	 * Función que modifica un teclado
+	 * @param tec : teclado a modificar
+	*/
+	public static void modificarTeclado(String[] tec) {
+		gestC.borrarInfo(new String[]{tec[0]}, PATHTec);
+		gestC.guardarInfo(new String[][]{tec}, PATHTec);
+	}
+
+	/**
+	 * Función que modifica un alfabeto
+	 * @param alf : alfabeto a modificar
+	*/
+	public static void modificarAlfabeto(String[] alf) {
+		gestC.borrarInfo(new String[]{alf[0]}, PATHAlf);
+		gestC.guardarInfo(new String[][]{alf}, PATHAlf);
+	}
+
+	/**
+	 * Función que modificar un texto
+	 * @param text : texto a modificar
+	*/
+	public static void modificarTexto(String[] text) {
+		gestC.borrarInfo(new String[]{text[0]}, PATHTex);
+		gestC.guardarInfo(new String[][]{text}, PATHTex);
+	}
+
+	/**
+	 * Función que modifica una lista
+	 * @param list : listas a modificar
+	*/
+	public static void modificarLista(String[] list) {
+		gestC.borrarInfo(new String[]{list[0]}, PATHLis);
+		gestC.guardarInfo(new String[][]{list}, PATHLis);
+	}
+
+	/**
+	 * Función que borra un teclado
+	 * @param tec : teclados a borrar
+	*/
+	public static void borrarTeclado(String tec) {
+		gestC.borrarInfo(new String[]{tec}, PATHTec);
+	}
+
+	/**
+	 * Función que borra un alfabeto
+	 * @param alf : alfabeto a borrar
+	*/
+	public static void borrarAlfabeto(String alf) {
+		gestC.borrarInfo(new String[]{alf}, PATHAlf);
+	}
+
+	/**
+	 * Función que borra un texto
+	 * @param text : texto a borrar
+	*/
+	public static void borrarTexto(String text) {
+		gestC.borrarInfo(new String[]{text}, PATHTex);
+	}
+
+	/**
+	 * Función que borra una lista
+	 * @param list : lista a borrar
+	*/
+	public static void borrarLista(String list) {
+		gestC.borrarInfo(new String[]{list}, PATHLis);
 	}
 }
-//autor Miguel

@@ -152,7 +152,7 @@ public class QAPTest {
 
      @Test
     public void testGeneticn4() {
-        EstrategiaCreacionLayout algoritmo = new Algoritmo2();
+        EstrategiaCreacionLayout algoritmo = new AG();
 
         //Input n = 4
         double[][] distLoc = {
@@ -181,7 +181,7 @@ public class QAPTest {
 
     @Test
     public void testGeneticn10() {
-        EstrategiaCreacionLayout algoritmo = new Algoritmo2();
+        EstrategiaCreacionLayout algoritmo = new AG();
 
         //Input n = 10
         int[][] traficoInst = {

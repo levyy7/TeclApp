@@ -61,7 +61,7 @@ public class Playout {
             }
         }
 
-        System.out.print(c);
+        //System.out.print(c);
     }        
 
 

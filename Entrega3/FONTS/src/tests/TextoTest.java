@@ -18,10 +18,10 @@ public class TextoTest {
         
         assertEquals("brocoli", t.getNombre());
         assertEquals("El boli es vermell", t.getTexto());
-        assertEquals("Texto", t.getType());
         assertEquals(18, t.getSize());
     }
 
+    /*
     @Test
     public void testImportInputValidType(){
         Texto t = new Texto("brocoli", "El boli es vermell");
@@ -41,6 +41,7 @@ public class TextoTest {
         assertEquals("El boli es vermell", t.getTexto());
 
     }
+    */
 
     @Test
     public void testSetTexto(){

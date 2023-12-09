@@ -19,12 +19,12 @@
 
 ## Elementos del directorio
 
-Cada carpeta (menos lib), contiene un **README.md** que explica más
+Cada carpeta (menos lib), contiene un **index.txt** que explica más
 detalladamente el contenido de ésta.
 
 ### DOCS:
 
-Contiene la documentación asignada a la primera entrega. En un solo
+Contiene la documentación asignada a la segunda entrega. En un solo
 archivo pdf se encuentra la información necesaria, que son los casos
 de uso, el diagrama de clases, las estructuras de datos y algoritmos
 y la relación clase miembro.
@@ -42,7 +42,9 @@ de las clases correspondientes.
 ### FONTS:
 
 Solo tiene la carpeta src, que contiene todas las clases, que son los
-tests, los drivers, las excepciones y todas las clases del dominio. 
+tests, los drivers, las excepciones y todas las clases del dominio, y
+persistencia.
+
 A parte también tiene el Makefile que genera los ejecutables de todas
 los archivos .java.
 
@@ -50,12 +52,3 @@ los archivos .java.
 
 Contiene las bibliotecas externas necesarias (JARs) para utilizar los
 tests de los JUnit.
-
-## Nota
-
-El algoritmo implementado en QAP optimized, no da la solución óptima
-aunque estuviese programada para que fuese así. El cálculo de la
-lower bound durante el branch and bound es erróneo, ya que la mejor
-solución que encuentra nuestro algoritmo es la solución dada por
-el algoritmo greedy. Somos conscientes de ello y es un fallo que no 
-hemos podido resolver.
