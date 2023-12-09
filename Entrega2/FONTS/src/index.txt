@@ -11,16 +11,16 @@ Elementos del directorio
 	de uso)
 
 - drivers:
-	Contiene los drivers (.java) de todos los controladores del proyecto,
+	Contiene los drivers (.java) de todos los controladores del dominio,
 	que sirven para probar el programa. Si se precisa de una explicacion
-	para utilizarlos, consultar la carpeta drivers/
+	para utilizarlos, consultar la carpeta drivers/.
 
 - main:
-	Contiene los archivos de las clases del dominio y de la persistencia
+	Contiene los archivos de las clases del dominio.
 
 - tests:
 	Contiene los archivos de los tests implementados de todas las clases
-	del proyecto menos la de los controladores
+	menos la de los controladores.
 
 --------------------------Makefile-----------------------------------
 
@@ -48,7 +48,5 @@ primero se tiene que usar make all para generar los ejecutables.
 - driverDominio: Se ejecuta el driverDominio
 
 - driverEntrada: Se ejecuta el driverEntrada
-
-- driverPersistencia: Se ejecuta el driverPersistencia
 
 - clean: Se borran todos los ejecutables generados en el make all

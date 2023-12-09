@@ -3,14 +3,14 @@
 Este directorio contiene todos los archivos .java de las clases
 del dominio. Para compilar el programa usar el Makefile de la
 carpeta src en FONTS/. Para mas informacion sobre las clases del
-dominio mirar el documento "2aEntregaDocumentacion".
+dominio mirar el documento "1aEntregaDocumentacion".
 
 Elementos del directorio
 - algoritmos/:
 	Contiene las clases de los algoritmos
 
 - ed/:
-	Contiene una unica clase nodo usada para los algoritmos
+	Contiene una única clase nodo usada para los algoritmos
 
 - Alfabeto.java:
 	Clase del dominio perteneciente a Alfabeto

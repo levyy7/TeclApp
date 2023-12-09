@@ -37,7 +37,7 @@ public class DriverPersistencia {
 		System.out.println("12 = Borrar Texto\n");
 
 		System.out.println("13 = Guardar Lista De Palabras");
-		System.out.println("14 = Cargar Listas De Palabras");
+		System.out.println("14 = Cargar Listas");
 		System.out.println("15 = Modificar Lista De Palabras");
 		System.out.println("16 = Borrar Lista De Palabras\n");
 
