@@ -1,21 +1,20 @@
 ---------------------Directorio algoritmos---------------------
 
-Este directorio contiene el codigo de los algoritmos utilizados. Hasta
-el momento solo tenemos uno de los dos algoritmos.
+Este directorio contiene el codigo de los algoritmos utilizados.
 
-Elementos del directorio
 
+Elementos del directorio:
 
 - EstrategiaCreacionLayout.java:
-	Interfaz que especifica los métodos necesarios a la hora de 
+	Interfaz que especifica los metodos necesarios a la hora de 
 	implementar algoritmos.
 
 - QAP.java:
 	Algoritmo QAP utilizado para la EstrategiaCreacionLayout. Para
-	más información consultar el documento "1aEntregaDocumentacion".
+	mas información consultar el documento "1aEntregaDocumentacion".
 
 - QAPOptimized.java:
 	Subclase de QAP utilizada para mejorar el rendimiento del algoritmo.
 
-- Algoritmo2.java:
+- AG.java:
 	Algoritmo Genetico para crear un buen teclado.

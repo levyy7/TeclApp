@@ -122,16 +122,17 @@ Elementos del directorio
 
     Guia de uso:
 
-	1. Usar QAP
+	1. Calcular Layout
 		Introducir numero de textos que se introduciran
 		Introducir en caso de que el numero sea mayor que 0
 			los textos linea por linea
-		Introducir número de listas que se introduciran
+		Introducir numero de listas que se introduciran
 		Introducir en caso de que el numero sea mayor que 0
 			las listas en el formato:
 			palabra entero *enter*
 			*enter*
 		Introducir un alfabeto
+        Introducir el algoritmo a utilizar. Dos opciones -> "GEN" o "QAP"
 		Se muestra el layout resultante al utilizar QAP
 
 	33. Salir
@@ -224,3 +225,91 @@ Elementos del directorio
 
 	33. Salir
 		Finaliza el programa
+
+
+- DriverPersistencia.java:
+    
+    Este driver contiene las funcionalides del controlador de persistencia
+    con el fin de comprobar correcto funcionamiento del mismo.
+
+    Guia de uso:
+
+    1. Guardar Teclado:
+        Introducir el nombre
+        Introducir el algoritmo
+        Introducir el alfabeto
+        Introducir el layout
+        Se guarda en el archivo Teclados.csv el teclado
+
+    2. Cargar Teclados:
+        Se muestran los teclados guardados en el archivo Teclados.csv
+
+    3. Modificar Teclado:
+        Introducir el nombre
+        Introducir el algoritmo
+        Introducir el alfabeto
+        Introducir el layout
+        Se guarda en el archivo Teclados.csv el teclado modificado y se borra
+            el anterior
+
+    4. Borrar Teclado:
+        Introducir el nombre
+        Se borra el teclado identificado con ese nombre en el 
+            archivo Teclados.csv
+
+    5. Guardar Alfabeto:
+        Introducir el nombre
+        Introducir el alfabeto
+        Se guarda el alfabeto en el archivo Alfabetos.csv
+
+    6. Cargar Alfabetos:
+        Se muestran los alfabetos guardados en el archivo Alfabetos.csv
+
+    7. Modificar Alfabeto:
+        Introducir el nombre
+        Introducir el alfabeto
+        Se guarda el alfabeto en el archivo Alfabetos.csv y se borra el
+            anterior
+
+    8. Borrar Alfabeto:
+        Introducir el nombre
+        Se borra el alfabeto identificado con ese nombre en el archivo
+            Alfabetos.csv
+
+    9. Guardar Texto:
+        Introducir el nombre
+        Introducir el texto
+        Se guarda el texto en el archivo Textos.csv
+
+    10. Cargar Textos:
+        Se muestran los textos guardados en el archivo Textos.csv
+
+    11. Modificar Texto:
+        Introducir el nombre
+        Introducir el texto
+        Se guarda el texto en el archivo Textos.csv y se borra el anterior
+
+    12. Borrar Texto:
+        Introducir el nombre
+        Se borra el texto identificado con ese nombre del archivo Textos.csv
+
+    13. Guardar Lista de Palabras:
+        Introducir el nombre
+        Introducir la lista en el formato:
+            palabra entero *enter*
+            *enter*
+        Se guarda la Lista en el archivo Listas.csv
+
+    14. Cargar Listas de Palabras:
+        Se muestran las listas guardadas en el archivo Listas.csv
+
+    15. Modificar Lista de Palabras:
+        Introducir el nombre
+        Introducir la lista en el formato:
+            palabra entero *enter*
+            *enter*
+        Se guarda la Lista en el archivo Listas.csv y se borra la anterior
+
+    16. Borrar Lista de Palabras:
+        Introducir el nombre
+        Se borra la lista identificada con ese nombre del archivo Listas.csv
