@@ -86,10 +86,11 @@ public class GestorCSV {
     }
 
     private boolean equalsAny(String s, String[] array) {
-        for (String x : array) 
-            if (s == x) return true;
+        Boolean same = false;
+        for (int i = 0; i < array.length && !same; ++i) 
+            same = s.equals(array[i]);
 
-        return false;
+        return same;
     }
 
 }
