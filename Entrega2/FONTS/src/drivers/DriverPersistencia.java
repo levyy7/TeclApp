@@ -13,8 +13,10 @@ import java.util.*;
 
 public class DriverPersistencia {
 
+	/** Controlador de Persistencia a interaccionar*/
 	private static CtrlPersistencia ctrlP;
 
+	/** Lista de funcionalidades*/
 	private static void instrucciones() {
 
 		System.out.println("Guia de instrucciones");
@@ -42,6 +44,7 @@ public class DriverPersistencia {
 		System.out.println("33 = Salir");
 	}
 
+	/** Función que crea un teclado auxiliar y lo guarda*/
 	private static void guardarTeclado() {
 
 
@@ -75,6 +78,7 @@ public class DriverPersistencia {
 		ctrlP.guardarTeclado(teclado);
 	}
 
+	/** Función que carga y muestra los teclados*/
 	private static void cargarTeclados() {
 
 		String[][] teclados = ctrlP.cargarTeclados();
@@ -86,6 +90,7 @@ public class DriverPersistencia {
 		}
 	}
 
+	/** Función que modifica un teclado*/
 	private static void modificarTeclado() {
 
 		Scanner tec = new Scanner(System.in);
@@ -118,6 +123,7 @@ public class DriverPersistencia {
 		ctrlP.modificarTeclado(teclado);
 	}
 
+	/** Función que borra un teclado*/
 	private static void borrarTeclado() {
 
 		Scanner tec = new Scanner(System.in);
@@ -128,6 +134,7 @@ public class DriverPersistencia {
 		ctrlP.borrarTeclado(nombre);
 	}
 
+	/** Función que crea un alfabeto auxiliar y lo guarda*/
 	private static void guardarAlfabeto() {
 
 		Scanner tec = new Scanner(System.in);
@@ -144,6 +151,7 @@ public class DriverPersistencia {
 		ctrlP.guardarAlfabeto(alf);
 	}
 
+	/** Función que carga y muestra los alfabetos*/
 	private static void cargarAlfabetos() {
 
 		String[][] alfabetos = ctrlP.cargarAlfabetos();
@@ -155,6 +163,7 @@ public class DriverPersistencia {
 		}
 	}
 
+	/** Función que modifica un alfabeto*/
 	private static void modificarAlfabeto() {
 
 		Scanner tec = new Scanner(System.in);
@@ -171,6 +180,7 @@ public class DriverPersistencia {
 		ctrlP.modificarAlfabeto(alf);
 	}
 
+	/** Función que borra un alfabeto*/
 	private static void borrarAlfabeto() {
 		
 		Scanner tec = new Scanner(System.in);
@@ -181,6 +191,7 @@ public class DriverPersistencia {
 		ctrlP.borrarAlfabeto(nombre);
 	}
 
+	/** Función que crea un texto auxiliar y lo guarda*/
 	private static void guardarTexto() {
 
 		Scanner tec = new Scanner(System.in);
@@ -197,6 +208,7 @@ public class DriverPersistencia {
 		ctrlP.guardarTexto(tex);
 	}
 
+	/** Función que carga y muestra los textos*/
 	private static void cargarTextos() {
 
 		String[][] textos = ctrlP.cargarTextos();
@@ -208,6 +220,7 @@ public class DriverPersistencia {
 		}
 	}
 
+	/** Función que modifica un texto*/
 	private static void modificarTexto() {
 
 		Scanner tec = new Scanner(System.in);
@@ -224,6 +237,7 @@ public class DriverPersistencia {
 		ctrlP.modificarTexto(tex);
 	}
 
+	/** Función que borra un texto*/
 	private static void borrarTexto() {
 		
 		Scanner tec = new Scanner(System.in);
@@ -234,6 +248,81 @@ public class DriverPersistencia {
 		ctrlP.borrarTexto(nombre);
 	}
 
+	/** Función que crea una lista auxiliar y la guarda*/
+	private static void guardarLista() {
+
+		Scanner tec = new Scanner(System.in);
+
+		System.out.print("Introduce el nombre: ");
+		String nombre = tec.nextLine();
+
+		System.out.print("Introduce la lista: ");
+		Map<String, Integer> listaFreq = introducirLista();
+
+		String[] lista = new String[2];
+		lista[0] = nombre;
+		String list = "";
+        boolean primero = true;
+        for (Map.Entry<String, ?> entry : listaFreq.entrySet()) {
+            if (primero == false) list += " ";
+            list += entry.getKey()+" "+entry.getValue();
+            primero = false;
+        }
+        lista[1] = list;
+		ctrlP.guardarLista(lista);
+	}
+
+	/** Función que carga y muestra las listas de palabras*/
+	private static void cargarListas() {
+
+		String[][] listas = ctrlP.cargarListas();
+
+		System.out.println("Las listas son:");
+		for (String[] lis : listas) {
+			for (String parametro : lis) System.out.print(" "+parametro);
+			System.out.println();
+		}
+	}
+
+	/** Función que modifica una lista de palabras*/
+	private static void modificarLista() {
+
+		Scanner tec = new Scanner(System.in);
+
+		System.out.print("Introduce el nombre: ");
+		String nombre = tec.nextLine();
+
+		System.out.print("Introduce la lista: ");
+		Map<String, Integer> listaFreq = introducirLista();
+
+		String[] lista = new String[2];
+		lista[0] = nombre;
+		String list = "";
+        boolean primero = true;
+        for (Map.Entry<String, ?> entry : listaFreq.entrySet()) {
+            if (primero == false) list += " ";
+            list += entry.getKey()+" "+entry.getValue();
+            primero = false;
+        }
+        lista[1] = list;
+		ctrlP.modificarLista(lista);
+	}
+
+	/** Función que borra una lista de palabras*/
+	private static void borrarLista() {
+		
+		Scanner tec = new Scanner(System.in);
+
+		System.out.print("Introduce el nombre: ");
+		String nombre = tec.nextLine();
+
+		ctrlP.borrarLista(nombre);
+	}
+
+	/**
+     * Función que introduce una lista por terminal y la devuelve
+     * @return Map(String, Integer) : lista de palabras introducida 
+    */
 	private static Map<String, Integer> introducirLista() {
 
         Scanner tec = new Scanner(System.in);
@@ -264,73 +353,6 @@ public class DriverPersistencia {
 
         return lista;
     }
-
-	private static void guardarLista() {
-
-		Scanner tec = new Scanner(System.in);
-
-		System.out.print("Introduce el nombre: ");
-		String nombre = tec.nextLine();
-
-		System.out.print("Introduce la lista: ");
-		Map<String, Integer> listaFreq = introducirLista();
-
-		String[] lista = new String[2];
-		lista[0] = nombre;
-		String list = "";
-        boolean primero = true;
-        for (Map.Entry<String, ?> entry : listaFreq.entrySet()) {
-            if (primero == false) list += " ";
-            list += entry.getKey()+" "+entry.getValue();
-            primero = false;
-        }
-        lista[1] = list;
-		ctrlP.guardarLista(lista);
-	}
-
-	private static void cargarListas() {
-
-		String[][] listas = ctrlP.cargarListas();
-
-		System.out.println("Las listas son:");
-		for (String[] lis : listas) {
-			for (String parametro : lis) System.out.print(" "+parametro);
-			System.out.println();
-		}
-	}
-
-	private static void modificarLista() {
-
-		Scanner tec = new Scanner(System.in);
-
-		System.out.print("Introduce el nombre: ");
-		String nombre = tec.nextLine();
-
-		System.out.print("Introduce la lista: ");
-		Map<String, Integer> listaFreq = introducirLista();
-
-		String[] lista = new String[2];
-		lista[0] = nombre;
-		String list = "";
-        boolean primero = true;
-        for (Map.Entry<String, ?> entry : listaFreq.entrySet()) {
-            if (primero == false) list += " ";
-            list += entry.getKey()+" "+entry.getValue();
-            primero = false;
-        }
-        lista[1] = list;
-		ctrlP.modificarLista(lista);
-	}
-
-	private static void borrarLista() {
-		
-		Scanner tec = new Scanner(System.in);
-
-		System.out.print("Introduce el nombre: ");
-		String nombre = tec.nextLine();
-
-		ctrlP.borrarLista(nombre);
-	}
 
 	public static void main(String[] args) {
 
@@ -372,3 +394,4 @@ public class DriverPersistencia {
 		}
 	}
 }
+//autor Miguel

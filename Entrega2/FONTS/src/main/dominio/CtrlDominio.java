@@ -22,15 +22,11 @@ public class CtrlDominio {
     /** Contiene la instancia del controlador de algoritmo*/
     private static CtrlAlgoritmo ctrlA;
 
-    /** Contiene la instancia del controlador de persistencia*/
-    private static CtrlPersistencia ctrlP;
-
     /**
      * Constructora por defecto que instancia los controladores y carga
      * los datos necesarios de persistencia
     */
     public CtrlDominio() {
-        ctrlP = new CtrlPersistencia();
         String[][] teclados = CtrlPersistencia.cargarTeclados();
         String[][] alfabetos = CtrlPersistencia.cargarAlfabetos();
         String[][] textos = CtrlPersistencia.cargarTextos();
@@ -178,7 +174,9 @@ public class CtrlDominio {
     }
 
     /**
-     * Función que importa un alfabeto a la base de datos
+     * Función que importa un alfabeto a la base de datos y salta una
+     * excepción si el alfabeto ya está creado o si tiene algun carácter
+     * repetido
      * @param nombreAlfabeto
      * @param alfabeto
     */
@@ -191,14 +189,16 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (AlfabetoInvalido e)
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (InputInexistente e)
+        catch (InputInexistente e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (WrongInputType e)
+        catch (WrongInputType e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     /**
-     * Función que modifica un alfabeto existente en la base de datos
+     * Función que modifica un alfabeto existente y salta
+     * una excepción si el alfabeto está siendo usado por algún teclado, si
+     * el alfabeto no existe o el nuevo alfabeto contiene carácteres repetidos
      * @param nombreAlfabeto : nombre del alfabeto a modificar
      * @param alfabetoNuevo : alfabeto que sustituirá al antiguo
     */
@@ -218,7 +218,9 @@ public class CtrlDominio {
     }
 
     /**
-     * Función que borra un alfabeto de la base de datos
+     * Función que borra un alfabeto y salta una excepcion si el alfabeto
+     * está siendo usado, si no existe ningún Input o si existe el Input
+     * pero no pertenece a un alfabeto
      * @param nombreAlfabeto
     */
     public void borrarAlfabeto(String nombreAlfabeto) {
@@ -235,7 +237,7 @@ public class CtrlDominio {
     }
 
     /**
-     * Función que importa un texto a la base de datos
+     * Función que importa un texto y salta una excepción si el texto existe
      * @param nombreTexto
      * @param texto 
     */
@@ -246,15 +248,16 @@ public class CtrlDominio {
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (InputInexistente e)
+        catch (InputInexistente e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (WrongInputType e)
+        catch (WrongInputType e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
 
     /**
-     * Función que modifica un texto existente en la base de datos
+     * Función que modifica un texto existente y salta una excepción si el
+     * texto no existe o existe el Input pero no es del tipo correspondiente
      * @param nombreTexto : nombre del texto a modificar
      * @param textoNuevo : texto que sustituirá al antiguo
     */
@@ -271,7 +274,8 @@ public class CtrlDominio {
 
 
     /**
-     * Función que borra un texto de la base de datos
+     * Función que borra un texto y salta una excepción si el texto no existe
+     * o no pertenece a un texto
      * @param nombreTexto
     */
     public void borrarTexto(String nombreTexto) {
@@ -287,7 +291,8 @@ public class CtrlDominio {
 
 
     /**
-     * Función que importa una lista de palabras
+     * Función que importa una lista de palabras y salta una excepción si la
+     * lista ya existe
      * @param nombreLista
      * @param lista : lista de palabras con frecuencias 
     */
@@ -298,16 +303,17 @@ public class CtrlDominio {
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (InputInexistente e)
+        catch (InputInexistente e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
-        catch (WrongInputType e)
+        catch (WrongInputType e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;} 
     }
 
     
 
     /**
-     * Función que modifica una lista de palabras de la base de datos
+     * Función que modifica una lista de palabras y salta una excepción si no
+     * existe o no pertenece a una lista
      * @param nombreLista : nombre de la lista a modificar
      * @param listaNueva : lista que sustituirá a la antigua
     */
@@ -325,7 +331,8 @@ public class CtrlDominio {
     
 
     /**
-     * Función qe borra una lista de palabras de la base de datos
+     * Función que borra una lista de palabras y salta una excepción si no
+     * existe o el Input no pertenece a una lista
      * @param nombreLista
     */
     public void borrarListaPalabras(String nombreLista) {
@@ -340,35 +347,55 @@ public class CtrlDominio {
     }
 
 
-        //Consulta de todos los nombres de los teclados
+    /** 
+     * Consulta de los teclados
+     * @return HashMap(String, Teclado) : contiene los teclados guardados
+    */
     public HashMap<String, Teclado> consultarTeclados() {
         return ctrlE.getTeclados();
     }
 
-    //Consulta de un teclado
+    /**
+     * Consulta de un teclado
+     * @param nombreTeclado
+     * @return Teclado : contiene el teclado consultado
+    */
     public Teclado consultarTeclado(String nombreTeclado) {
         try {return ctrlE.getTeclado(nombreTeclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return null;}
     }
 
-    //Consulta de todos nombres de los alfabetos
+    /** 
+     * Consulta de los alfabetos
+     * @return HashMap(String, Input) : contiene los alfabetos guardados
+    */
     public HashMap<String, Input> consultarAlfabetos() {
         return ctrlE.getAlfabetos();
     }
 
-    //Consulta de todos nombres de los textos
+    /** 
+     * Consulta de los textos
+     * @return HashMap(String, Input) : contiene los textos guardados
+    */
     public HashMap<String, Input> consultarTextos() {
         return ctrlE.getTextos();
     }
 
-    //Consulta de todos nombres de las listas
+    /** 
+     * Consulta de las listas
+     * @return HashMap(String, Input) : contiene las listas guardadas
+    */
     public HashMap<String, Input> consultarListas() {
         return ctrlE.getListas();
     }
 
 
-    //Consulta de un alfabeto
+    /** 
+     * Consulta de un alfabeto
+     * @param nombreAlfabeto
+     * @return String : contiene el alfabeto consultado
+    */
     public String consultarAlfabeto(String nombreAlfabeto) {
         try {return ctrlE.getAlfabeto(nombreAlfabeto).getLetras();}
         catch (InputInexistente e)
@@ -377,7 +404,11 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return null;}
     }
 
-    //Consulta de un texto
+    /** 
+     * Consulta de un texto
+     * @param nombreTexto
+     * @return String : contiene el texto consultado
+    */
     public String consultarTexto(String nombreTexto) {
         try {
             return ctrlE.getTexto(nombreTexto).getTexto();
@@ -388,7 +419,11 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return null;}
     }
 
-    //Consulta de una lista
+    /** 
+     * Consulta de una lista de palabras
+     * @param nombreLista
+     * @return Map(String, Integer) : contiene la lista consultada
+    */
     public Map<String, Integer> consultarLista(String nombreLista) {
         try {
             return ctrlE.getListaPalabras(nombreLista).getListaFreq();
@@ -401,16 +436,15 @@ public class CtrlDominio {
     
 
     /**
-     * Asigna los textos y las listas correspondientes de los nombresTLP
+     * Asigna los textos y las listas correspondientes de los nombresTLP y
+     * salta una excepción si alguno de los nombres no existe como Input,
+     * existe pero no ni de tipo Texto ni de tipo ListaPalabras, algún texto
+     * no corresponde al alfabeto o alguna lista no corresponde al alfabeto
      * @param textos : Vector de textos, inicialmente vacio que contendra 
      *                 los textos correspondientes
      * @param listas : Vector de listas, inicialmente vacio que contendra
      *                 las listas correspondientes
      * @param nombresTLP : Vector de nombres TLP
-     * @return boolean : devuelve true si los textos y listas contienen
-     *                   solo caracteres del alfabeto y si todos lo nombresTLP
-     *                   pertenecen a textos y listas unicamente. Falso en
-     *                   caso contrario
     */
     private void asignarTextosYListas(Vector<String> textos, 
             Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
