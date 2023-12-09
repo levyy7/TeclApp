@@ -3,9 +3,21 @@ package main.dominio;
 import java.util.*;
 import java.awt.geom.Point2D;
 
+/**
+ * Clase Playout.
+ * Representa la disposición de teclas en un teclado virtual.
+ * Calcula la posición de las teclas en función del número de caracteres.
+ * Utiliza coordenadas (x, y) de Point2D para representar la posición de cada tecla.
+ * @author Mariona Aguilera Folqué
+ */
 public class Playout {
 	private Point2D[] teclas;
 
+    /**
+     * Constructor de la clase Playout.
+     * Calcula y asigna la posición de las teclas en función del número de caracteres.
+     * @param caracteres El número de caracteres para el teclado.
+     */
     public Playout(int caracteres){
         this.teclas = new Point2D[caracteres]; 
 
@@ -14,16 +26,22 @@ public class Playout {
         else notPerfectSquare(caracteres, n);
     }
 
+    /**
+     * Obtiene el arreglo de coordenadas que representa la posición de las teclas.
+     * @return El arreglo de coordenadas de las teclas.
+     */
     public Point2D[] getTeclas(){
         return this.teclas;
     }
 
+    // Método privado para organizar las teclas en un cuadrado perfecto
     private void perfectSquare(int n) {
         for(double i = 0; i<n; ++i){
             for(double j = 0; j<n; ++j) this.teclas[(int)(n*i+j)] = new Point2D.Double(i, j);
         }
     }
 
+    // Método privado para organizar las teclas en un cuadrado no perfecto
     private void notPerfectSquare(int caracteres, int n){
         int minsize = (int) Math.ceil(Math.sqrt(caracteres)); //podria ser minsize = n+1;
         Point2D[][] pos = new Point2D[minsize][minsize];

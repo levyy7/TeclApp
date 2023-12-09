@@ -8,9 +8,21 @@ import main.dominio.Teclado;
 
 import java.awt.geom.Point2D;
 
+/**
+ * Clase que proporciona un menú interactivo para probar y demostrar las funcionalidades
+ * de la clase CtrlEntrada y sus subclases relacionadas.
+ * Permite realizar operaciones como importar, modificar, borrar y consultar alfabetos, textos,
+ * listas de palabras y teclados.
+ * También proporciona una opción para salir del programa.
+ * @author Mariona Aguilera Folqué
+ */
+
 public class DriverEntrada {
     private static CtrlEntrada ctrlE;
 
+    /**
+     * Muestra las instrucciones disponibles en el menú.
+     */
     private static void GuiaInstrucciones() {
 
 		ctrlE = new CtrlEntrada();
@@ -45,6 +57,10 @@ public class DriverEntrada {
 		System.out.println("33 = Salir");
 	}
 
+    /**
+     * Permite al usuario introducir una lista de palabras con frecuencia.
+     * @return Un mapa que representa la lista de palabras con sus frecuencias.
+     */
 	private static Map<String, Integer> introducirLista() {
 
         Scanner tec = new Scanner(System.in);
@@ -76,6 +92,9 @@ public class DriverEntrada {
         return lista;
     }
 
+    /**
+     * Permite al usuario importar un alfabeto.
+     */
 	private static void importarAlfabeto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del alfabeto: ");
@@ -92,6 +111,9 @@ public class DriverEntrada {
 			{System.out.println("Error: "+e.getMessage());return;}
 	}
 
+    /**
+     * Permite al usuario importar un texto.
+     */
 	private static void importarTexto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del texto: ");
@@ -106,6 +128,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
+    /**
+     * Permite al usuario importar una lista de palabras con frecuencia.
+     */
 	private static void importarListaPalabras(){
 		Scanner tec = new Scanner(System.in);
 
@@ -122,6 +147,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
+    /**
+     * Permite al usuario modificar un alfabeto existente.
+     */
 	private static void modificarAlfabeto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del alfabeto a modificar: ");
@@ -142,6 +170,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
+    /**
+     * Permite al usuario modificar un texto existente.
+     */
 	private static void modificarTexto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del texto a modificar: ");
@@ -158,6 +189,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
+    /**
+     * Permite al usuario modificar una lista de palabras con frecuencia existente.
+     */
 	private static void modificarListaPalabras(){
 		Scanner tec = new Scanner(System.in);
 
@@ -180,6 +214,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
+    /**
+     * Permite al usuario borrar un alfabeto existente.
+     */
 	private static void borrarAlfabeto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del alfabeto a borrar: ");
@@ -194,6 +231,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
+    /**
+     * Permite al usuario borrar un texto existente.
+     */
 	private static void borrarTexto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del texto a borrar: ");
@@ -206,6 +246,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}	
 	}
 
+    /**
+     * Permite al usuario borrar una lista de palabras con frecuencia existente.
+     */
 	private static void borrarListaPalabras(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre de la lista de palabras con frecuencia a borrar: ");
@@ -218,6 +261,9 @@ public class DriverEntrada {
             {System.out.println("Error: "+e.getMessage()); return;}	
 	}
 
+    /**
+     * Permite al usuario borrar un teclado existente.
+     */
 	private static void borrarTeclado(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del teclado a borrar: ");
@@ -229,6 +275,9 @@ public class DriverEntrada {
 
 	}
 
+    /**
+     * Permite al usuario consultar la lista de alfabetos disponibles.
+     */
 	private static void consultarAlfabetos() {
         HashMap<String, Input> alf = ctrlE.getAlfabetos();
 
@@ -238,6 +287,9 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
+    /**
+     * Permite al usuario consultar un alfabeto específico.
+     */
 	private static void consultarAlfabeto() {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del alfabeto a consultar: ");
@@ -257,6 +309,9 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
+    /**
+     * Permite al usuario consultar la lista de textos disponibles.
+     */
 	private static void consultarTextos() {
         HashMap<String, Input> textos = ctrlE.getTextos();
 
@@ -266,6 +321,9 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
+    /**
+     * Permite al usuario consultar un texto específico.
+     */
     private static void consultarTexto() {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
@@ -281,6 +339,9 @@ public class DriverEntrada {
         System.out.println("Texto:\n"+text+"\n\n");
     }
 
+    /**
+    * Método para consultar y mostrar los nombres de las listas guardadas en el controlador de entrada.
+    */
 	private static void consultarListas() {
         HashMap<String, Input> listas = ctrlE.getListas();
 
@@ -290,6 +351,10 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
+    /**
+     * Método para consultar y mostrar el contenido de una lista de palabras a partir de su nombre.
+     * Se solicita el nombre de la lista al usuario y se muestra el contenido si la lista existe.
+     */
     private static void consultarLista() {
         Scanner tec = new Scanner(System.in);
         
@@ -310,6 +375,9 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
+    /**
+     * Método para consultar y mostrar los nombres de los teclados guardados en el controlador de entrada.
+     */
 	private static void consultarTeclados() {
         HashMap<String, Teclado> teclados = ctrlE.getTeclados();
         System.out.println("Los teclados guardados son\n");
@@ -318,6 +386,10 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
+    /**
+     * Método para consultar y mostrar la información detallada de un teclado a partir de su nombre.
+     * Se solicita el nombre del teclado al usuario y se muestra la información si el teclado existe.
+     */
     private static void consultarTeclado() {
         Scanner tec = new Scanner(System.in);      
         System.out.print("Nombre del teclado a consultar: ");
@@ -341,7 +413,10 @@ public class DriverEntrada {
         System.out.println("\n");
     }
 
-
+    /**
+     * Método principal del programa.
+     * Permite al usuario realizar diversas operaciones mediante un menú interactivo.
+     */
 	public static void main(String[] args) {
 		ctrlE = new CtrlEntrada();
 		Scanner tec = new Scanner (System.in);
@@ -387,5 +462,3 @@ public class DriverEntrada {
         }
     }
 }
-
-//Mariona
