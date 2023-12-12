@@ -16,6 +16,15 @@
 
 - Ricardo Fernández Domenech ([ricardo.fernandez.domenech@upc.edu]())
 
+## Cambios respecto a la primera entrega
+
+- Implementación segundo algoritmo
+- Implementación capa persistencia
+- Drivers y tests persistencia
+- Mejora del código en la capa de dominio
+- Descripción y diagramas UML 3 capas
+- Documentación de todo el código implementado hasta el momento (Javadoc)
+- Ampliación de la documentación de estructuras de datos y algoritmos
 
 ## Elementos del directorio
 
@@ -54,3 +63,6 @@ tests de los JUnit.
 ### Javadoc:
 
 Contiene el javadoc de todo el código implementado hasta el momento.
+
+
+
