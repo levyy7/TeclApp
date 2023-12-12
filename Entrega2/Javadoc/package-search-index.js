@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"drivers"},{"l":"Excepcions"},{"l":"main.dominio"},{"l":"main.dominio.algoritmos"},{"l":"main.dominio.ed"},{"l":"main.persistencia"}]

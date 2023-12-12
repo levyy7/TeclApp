@@ -50,3 +50,7 @@ los archivos .java.
 
 Contiene las bibliotecas externas necesarias (JARs) para utilizar los
 tests de los JUnit.
+
+### Javadoc:
+
+Contiene el javadoc de todo el código implementado hasta el momento.
