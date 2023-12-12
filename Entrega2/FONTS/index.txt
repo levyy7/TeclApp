@@ -2,3 +2,11 @@
 
 Este directorio contiene el codigo de todas las clases implementadas,
 tests, drivers y excepcions en la carpeta src.
+
+Elementos del directorio:
+
+- src/:
+	Donde esta todo el codigo del proyecto
+
+- informacion/:
+	Datos guardados en archivos (.csv)

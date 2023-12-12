@@ -25,12 +25,9 @@ detalladamente el contenido de ésta.
 ### DOCS:
 
 Contiene la documentación asignada a la segunda entrega. En un solo
-archivo pdf se encuentra la información necesaria, que son los casos
-de uso, el diagrama de clases, las estructuras de datos y algoritmos
-y la relación clase miembro.
+archivo pdf se encuentra la información necesaria (2aEntregaDocumentacion).
 
-A parte de ese documento están los gráficos de los casos de uso y
-del diagrama de clases.
+A parte de ese documento están los gráficos de los diagramas de clases.
 
 ### EXE:
 
@@ -41,7 +38,8 @@ de las clases correspondientes.
 
 ### FONTS:
 
-Solo tiene la carpeta src, que contiene todas las clases, que son los
+Tiene una carpeta para guardar la informacion necesaria del proyecto y 
+tiene la carpeta src, que contiene todas las clases, que son los
 tests, los drivers, las excepciones y todas las clases del dominio, y
 persistencia.
 

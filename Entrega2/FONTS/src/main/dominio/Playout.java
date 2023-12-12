@@ -78,21 +78,7 @@ public class Playout {
                 }
             }
         }
-
-        //System.out.print(c);
     }        
-
-
-    /*public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        System.out.print("Ingresa un número de caracteres: ");
-        int n = s.nextInt();
-
-        Playout p = new Playout(n);
-        Point2D[] v = p.getTeclas();
-        System.out.println("número de teclas: " + v.length);
-        for(int i = 0; i<n; ++i) System.out.println(" " + v[i].getX() + ", " + v[i].getY() + " // ");
-    }*/
 
 }
 //mariona
