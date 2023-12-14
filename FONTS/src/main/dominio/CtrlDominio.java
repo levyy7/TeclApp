@@ -72,10 +72,10 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
 
         try {
-            Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
+            Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, nombreAlgoritmo);
             char[] layout = ctrlA.calcularLayout(textos, listas, letrasAlfabeto, playout, nombreAlgoritmo);
 
-            ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);
+            ctrlE.setLayout(nombreTeclado, layout);
             CtrlPersistencia.guardarTeclado(ctrlE.getTeclado(nombreTeclado).toStringArray());
         }
         catch (NGrande e)
@@ -125,10 +125,10 @@ public class CtrlDominio {
         try {
             borrarTeclado(nombreTeclado);
 
-            Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto);
+            Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, nombreAlgoritmo);
             char[] layout = ctrlA.calcularLayout(textos, listas, letras, playout, nombreAlgoritmo);
 
-            ctrlE.setLayout(nombreTeclado, nombreAlgoritmo, layout);   
+            ctrlE.setLayout(nombreTeclado, layout);   
                 
             CtrlPersistencia.modificarTeclado(ctrlE.getTeclado(nombreTeclado).toStringArray());
             }

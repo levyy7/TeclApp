@@ -19,17 +19,18 @@ class TecladoTest {
 
     @Test
     public void testConstructorAndGetters() {
-        Teclado teclado = new Teclado("tec", "alfa", 16);
+        Teclado teclado = new Teclado("tec", "alfa", 16, "GEN");
 
         assertEquals("tec", teclado.getNombre());
         assertEquals("alfa", teclado.getAlfabeto());
         assertNull(teclado.getLayout()); // Inicialmente es null
         assertNotNull(teclado.getPlayout()); // Asegurarse de que el playout no sea nulo
+        assertEquals("GEN", teclado.getAlgoritmo());
     }
 
     @Test
     public void testSetters() {
-        Teclado teclado = new Teclado("tec", "alfa", 16);
+        Teclado teclado = new Teclado("tec", "alfa", 16, "QAP");
 
         teclado.setNombre("patata");
         assertEquals("patata", teclado.getNombre());

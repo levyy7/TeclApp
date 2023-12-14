@@ -119,13 +119,13 @@ public class CtrlEntrada{
      * @throws NGrande
      * @throws TecladoYaExiste
     */
-	public Point2D[] crearTecladoVacio (String nombreTeclado, String nombreAlfabeto) throws NGrande,TecladoYaExiste { 
+	public Point2D[] crearTecladoVacio (String nombreTeclado, String nombreAlfabeto, String nombreAlgoritmo) throws NGrande,TecladoYaExiste { 
 
 		Input alfa = inputs.get(nombreAlfabeto);
 		int numeroCaracters = alfa.getSize();
-		if(numeroCaracters>=20) throw new NGrande();
+		if(numeroCaracters>=20 && nombreAlgoritmo.equals("QAP")) throw new NGrande();
 		if(teclados.containsKey(nombreTeclado)) throw new TecladoYaExiste(nombreTeclado);
-		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto, numeroCaracters);
+		Teclado board = new Teclado(nombreTeclado, nombreAlfabeto, numeroCaracters, nombreAlgoritmo);
 		teclados.put(nombreTeclado, board);
 		Point2D[] playout = board.getPlayout();
 		return playout;
@@ -137,9 +137,8 @@ public class CtrlEntrada{
      * @param nombreAlgoritmo : nombre del algoritmo 
      * @param layout : vector de chars que representan una distribucion 
 	*/
-	public void setLayout(String nombreTeclado, String nombreAlgoritmo, char[] layout){ 
+	public void setLayout(String nombreTeclado, char[] layout){ 
 		Teclado board = teclados.get(nombreTeclado);
-		board.setAlgoritmo(nombreAlgoritmo);
 		board.setLayout(layout);
 	}
 

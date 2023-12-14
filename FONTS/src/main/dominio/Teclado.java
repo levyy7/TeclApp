@@ -31,11 +31,12 @@ public class Teclado {
      * @param alfabeto El nombre del alfabeto asociado al teclado.
      * @param numchar El número de caracteres en el teclado para calcular la disposición.
      */
-    public Teclado(String nombre, String alfabeto, int numchar) {
+    public Teclado(String nombre, String alfabeto, int numchar, String algoritmo) {
         this.nombre = nombre;
         this.alfabeto = alfabeto;
         this.playout = new Playout(numchar);
         this.layout = null;
+        this.algoritmo = algoritmo;
     }
 
     /**
