@@ -27,6 +27,7 @@ public class CtrlDominio {
      * los datos necesarios de persistencia
     */
     public CtrlDominio() {
+        CtrlPersistencia.inicializar();
         String[][] teclados = CtrlPersistencia.cargarTeclados();
         String[][] alfabetos = CtrlPersistencia.cargarAlfabetos();
         String[][] textos = CtrlPersistencia.cargarTextos();

@@ -23,10 +23,14 @@ public class CtrlPersistencia {
 	/** Path relativa del archivo "Listas.csv" */
 	private static final String PATHLis = "../informacion/Listas.csv";
 
-
+	private static CtrlPersistencia ctrlP;
 
 	/** Constructora por defecto que asigna únicamente al gestorCSV*/
 	public CtrlPersistencia() {
+		gestC = new GestorCSV();
+	}
+
+	public static void inicializar() {
 		gestC = new GestorCSV();
 	}
 
