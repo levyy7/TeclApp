@@ -75,21 +75,43 @@ public class CtrlPersistencia {
 	}
 
 	/**
+	 * Función que carga un conjunto de teclados de un path específico
+	 * @return String[][] : teclados a cargar
+	*/
+	public static String[][] cargarTeclados(String path) {
+        return gestC.cargarInfo(path);
+	}
+
+	/**
 	 * Función que carga un conjunto de alfabetos
 	 * @return String[][] : alfabetos a cargar
 	*/
-
 	public static String[][] cargarAlfabetos() {
         return gestC.cargarInfo(PATHAlf);
+	}
+
+	/**
+	 * Función que carga un conjunto de alfabetos de un path específico
+	 * @return String[][] : alfabetos a cargar
+	*/
+	public static String[][] cargarAlfabetos(String path) {
+        return gestC.cargarInfo(path);
 	}
 
 	/**
 	 * Función que carga un conjunto de textos
 	 * @return String[][] : textos a cargar
 	*/
-
 	public static String[][] cargarTextos() {
         return gestC.cargarInfo(PATHTex);
+	}
+
+	/**
+	 * Función que carga un conjunto de textos de un path específico
+	 * @return String[][] : textos a cargar
+	*/
+	public static String[][] cargarTextos(String path) {
+        return gestC.cargarInfo(path);
 	}
 
 	/**
@@ -98,6 +120,14 @@ public class CtrlPersistencia {
 	*/
 	public static String[][] cargarListas() {
         return gestC.cargarInfo(PATHLis);
+	}
+
+	/**
+	 * Función que carga un conjunto de listas de un path específico
+	 * @return String[][] : listas a cargar
+	*/
+	public static String[][] cargarListas(String path) {
+        return gestC.cargarInfo(path);
 	}
 
 	/**

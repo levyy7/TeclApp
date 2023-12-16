@@ -142,6 +142,24 @@ public class CtrlEntrada{
 		board.setLayout(layout);
 	}
 
+	/**
+     * Creación de nuevas instancias de Teclaod
+     * @param teclados : teclados a importar
+     * @throws TecladoYaExiste
+    */
+	public void importarTeclados(String[][] teclados) throws TecladoYaExiste {
+
+		for (String[] tecladoActual : teclados) {
+			Teclado tec = new Teclado(tecladoActual);
+			if (this.teclados.containsKey(tec.getNombre())) throw new TecladoYaExiste(tec.getNombre());
+		}
+
+		for (String[] tecladoActual : teclados) {
+			Teclado tec = new Teclado(tecladoActual);
+			this.teclados.put(tec.getNombre(), tec);
+		}
+	}
+
 	
 	/**
      * Consulta el algoritmo de un teclado
@@ -172,10 +190,9 @@ public class CtrlEntrada{
      * @param nombreTeclado : nombre del teclado
      * @return Teclado : el teclado
     */
-	public Teclado getTeclado(String nombreTeclado) throws TecladoInexistente {
-		Teclado board = teclados.get(nombreTeclado);
-
-		if (board == null) throw new TecladoInexistente(nombreTeclado);
+	public String[] getTeclado(String nombreTeclado) throws TecladoInexistente {
+		if (teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(nombreTeclado);
+		String[] board = teclados.get(nombreTeclado).toStringArray();
 
 		return board;
 	}
@@ -198,11 +215,28 @@ public class CtrlEntrada{
      * @throws InputJaCreat
      * @throws AlfabetoInvalido
     */
-	public void importarAlfabeto(String nAlfa, String alfa) throws InputJaCreat, AlfabetoInvalido {
+	public void crearAlfabeto(String nAlfa, String alfa) throws InputJaCreat, AlfabetoInvalido {
 		if(inputs.containsKey(nAlfa)) throw new InputJaCreat(nAlfa);
 		if(comproE.AlfaCorrecto(alfa) == false) throw new AlfabetoInvalido(nAlfa);
 		Input in = new Alfabeto(nAlfa, alfa);
 		inputs.put(nAlfa, in);
+	}
+
+	/**
+     * Creación de nuevas instancias de Alfabeto
+     * @param alfabetos : alfabetos a importar
+     * @throws InputJaCreat
+    */
+	public void importarAlfabetos(String[][] alfabetos) throws InputJaCreat {
+		for (String[] alfabetoActual : alfabetos) {
+			Input in = new Alfabeto(alfabetoActual);
+			if(inputs.containsKey(in.getNombre())) throw new InputJaCreat(in.getNombre());
+		}
+
+		for (String[] alfabetoActual : alfabetos) {
+			Input in = new Alfabeto(alfabetoActual);
+			inputs.put(in.getNombre(), in);
+		}
 	}
 
 	/**
@@ -212,13 +246,13 @@ public class CtrlEntrada{
      * @throws InputInexistente
      * @throws WrongInputType
     */
-	public Alfabeto getAlfabeto(String nombreAlfabeto) throws InputInexistente, WrongInputType {
+	public String[] getAlfabeto(String nombreAlfabeto) throws InputInexistente, WrongInputType {
 		Input in = inputs.get(nombreAlfabeto);
 
 		if (in == null)	throw new InputInexistente();
 		if (!(in instanceof Alfabeto)) throw new WrongInputType("Alfabeto", in.getClass().getName());
 
-		return (Alfabeto) in;
+		return in.toStringArray();
 	}
 
 	/**
@@ -237,7 +271,7 @@ public class CtrlEntrada{
 		}
 		if(comproE.AlfaCorrecto(alfabetoNuevo) == false) throw new AlfabetoInvalido(nombreAlfabeto);
 		
-		Alfabeto alf = getAlfabeto(nombreAlfabeto);
+		Alfabeto alf =  (Alfabeto) inputs.get(nombreAlfabeto);
 		
 		alf.setLetras(alfabetoNuevo);
 	}
@@ -269,11 +303,28 @@ public class CtrlEntrada{
      * @param texto : contenido del texto
      * @throws InputJaCreat
     */
-	public void importarTexto(String nTexto, String texto) throws InputJaCreat {
+	public void crearTexto(String nTexto, String texto) throws InputJaCreat {
 		if(inputs.containsKey(nTexto)) throw new InputJaCreat(nTexto);
 
 		Input in = new Texto(nTexto, texto);
 		inputs.put(nTexto, in);
+	}
+
+	/**
+     * Creación de nuevas instancias de Texto
+     * @param textos : textos a importar
+     * @throws InputJaCreat
+    */
+	public void importarTextos(String[][] textos) throws InputJaCreat {
+		for (String[] textoActual : textos) {
+			Input in = new Texto(textoActual);
+			if(inputs.containsKey(in.getNombre())) throw new InputJaCreat(in.getNombre());
+		}
+
+		for (String[] textoActual : textos) {
+			Input in = new Texto(textoActual);
+			inputs.put(in.getNombre(), in);
+		}
 	}
 
 	/**
@@ -283,13 +334,13 @@ public class CtrlEntrada{
      * @throws InputInexistente 
      * @throws WrongInputType
     */
-	public Texto getTexto(String nombreTexto) throws InputInexistente, WrongInputType {
+	public String[] getTexto(String nombreTexto) throws InputInexistente, WrongInputType {
 		Input in = inputs.get(nombreTexto);
 
 		if (in == null)	throw new InputInexistente();
 		if (!(in instanceof Texto)) throw new WrongInputType("Texto", in.getClass().getName());
 
-		return (Texto) in;
+		return in.toStringArray();
 	}
 
 	/**
@@ -300,7 +351,7 @@ public class CtrlEntrada{
      * @throws WrongInputType
     */
 	public void modificarTexto(String nombreTexto, String textoNuevo) throws InputInexistente, WrongInputType {
-		Texto tex = getTexto(nombreTexto);
+		Texto tex = (Texto) inputs.get(nombreTexto);
 		
 		tex.setTexto(textoNuevo);
 	}
@@ -326,7 +377,7 @@ public class CtrlEntrada{
      * @param lista : contenido de la lista
      * @throws InputJaCreat
     */
-	public void importarListaPalabras(String nLista, Map<String, Integer> lista) throws InputJaCreat{
+	public void crearListaPalabras(String nLista, Map<String, Integer> lista) throws InputJaCreat{
 		if(inputs.containsKey(nLista)) throw new InputJaCreat(nLista);
 
 		Input in = new ListaPalabras(nLista,lista); 
@@ -334,17 +385,34 @@ public class CtrlEntrada{
 	}
 
 	/**
+     * Creación de nuevas instancias de ListaPalabras
+     * @param listas : listas a importar
+     * @throws InputJaCreat
+    */
+	public void importarListasPalabras(String[][] listas) throws InputJaCreat {
+		for (String[] listaActual : listas) {
+			Input in = new ListaPalabras(listaActual);
+			if(inputs.containsKey(in.getNombre())) throw new InputJaCreat(in.getNombre());
+		}
+
+		for (String[] listaActual : listas) {
+			Input in = new ListaPalabras(listaActual);
+			inputs.put(in.getNombre(), in);
+		}
+	}
+
+	/**
      * Consulta de una lista de palabras
      * @param nombreLista : nombre de la lista
      * @return ListaPalabras : Lista consultada
     */
-	public ListaPalabras getListaPalabras(String nombreLista) throws InputInexistente, WrongInputType {
+	public String[] getListaPalabras(String nombreLista) throws InputInexistente, WrongInputType {
 		Input in = inputs.get(nombreLista);
 		
 		if (in == null)	throw new InputInexistente();
 		if (!(in instanceof ListaPalabras)) throw new WrongInputType("ListaPalabras", in.getClass().getName());
 
-		return (ListaPalabras) in;
+		return in.toStringArray();
 	} 
 
 	/**
@@ -353,7 +421,7 @@ public class CtrlEntrada{
      * @param listaNueva : nuevo contenido de la lista
     */
 	public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) throws InputInexistente, WrongInputType {
-		ListaPalabras lp = getListaPalabras(nombreLista);
+		ListaPalabras lp = (ListaPalabras) inputs.get(nombreLista);
 
 		lp.setListaFreq(listaNueva);
 	}
@@ -378,8 +446,8 @@ public class CtrlEntrada{
 	 * @param e : Input a consultar
 	 * @return Input : Input consultado
     */
-	public Input getInput(String e) throws InputInexistente{
-		Input in = inputs.get(e);			
+	public String[] getInput(String e) throws InputInexistente{
+		String[] in = inputs.get(e).toStringArray();			
 		return in;
 	}
 
@@ -423,18 +491,21 @@ public class CtrlEntrada{
      * Consulta de los teclados
      * @return HashMap(String, Teclado): conjunto de teclados
     */
-	public HashMap<String, Teclado> getTeclados(){
-		return teclados;
+	public HashMap<String, String[]> getTeclados() {
+		HashMap<String, String[]> tec = new HashMap<>();
+		for (Map.Entry<String, Teclado> actual : teclados.entrySet())
+			tec.put(actual.getKey(), actual.getValue().toStringArray());
+		return tec;
 	}
 
 	/**
      * Consulta de todos los alfabetos
      * @return HashMap(String, Input): conjunto de alfabetos
     */
-	public HashMap<String, Input> getAlfabetos() {
-		HashMap<String, Input> a  = new HashMap<String, Input>();
+	public HashMap<String, String[]> getAlfabetos() {
+		HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
-        	if (actual.getValue() instanceof Alfabeto) a.put(actual.getKey(),actual.getValue());
+        	if (actual.getValue() instanceof Alfabeto) a.put(actual.getKey(),actual.getValue().toStringArray());
         }
         return a;
     }
@@ -443,10 +514,10 @@ public class CtrlEntrada{
      * Consulta de todos los textos
      * @return HashMap(String, Input): conjunto de textos
     */
-    public HashMap<String, Input> getTextos() {
-    	HashMap<String, Input> a  = new HashMap<String, Input>();
+    public HashMap<String, String[]> getTextos() {
+    	HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
-        	if (actual.getValue() instanceof Texto) a.put(actual.getKey(),actual.getValue());
+        	if (actual.getValue() instanceof Texto) a.put(actual.getKey(),actual.getValue().toStringArray());
         }
         return a;
     }
@@ -455,10 +526,10 @@ public class CtrlEntrada{
      * Consulta de todas las listas
      * @return HashMap(String, Input): conjunto de listas
     */
-    public HashMap<String, Input> getListas() {
-    	HashMap<String, Input> a  = new HashMap<String, Input>();
+    public HashMap<String, String[]> getListas() {
+    	HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
-        	if (actual.getValue() instanceof ListaPalabras) a.put(actual.getKey(),actual.getValue());
+        	if (actual.getValue() instanceof ListaPalabras) a.put(actual.getKey(),actual.getValue().toStringArray());
         }
         return a;
     }

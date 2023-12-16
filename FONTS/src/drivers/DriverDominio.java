@@ -22,39 +22,44 @@ public class DriverDominio {
 
         System.out.println("Guía de instrucciones");
         System.out.println("1 = Crear teclado");
-		System.out.println("2 = Borrar teclado");
+        System.out.println("2 = Importar teclados");
+		System.out.println("3 = Borrar teclado");
 
-		System.out.println("3 = Importar alfabeto");
-		System.out.println("4 = Importar texto");
-        System.out.println("5 = Importar lista de palabras");
+        System.out.println("4 = Crear alfabeto");
+        System.out.println("5 = Crear texto");
+        System.out.println("6 = Crear lista");
 
-		System.out.println("6 = Modificar teclado");
-        System.out.println("7 = Modificar alfabeto");
-		System.out.println("8 = Modificar texto");
-        System.out.println("9 = Modificar lista de palabras");
+		System.out.println("7 = Importar alfabetos");
+		System.out.println("8 = Importar textos");
+        System.out.println("9 = Importar listas de palabras");
 
-        System.out.println("10 = Borrar alfabeto");
-        System.out.println("11 = Borrar texto");
-        System.out.println("12 = Borrar lista de palabras");
+		System.out.println("10 = Modificar teclado");
+        System.out.println("11 = Modificar alfabeto");
+		System.out.println("12 = Modificar texto");
+        System.out.println("13 = Modificar lista de palabras");
 
-        System.out.println("13 = Consultar teclados");
-        System.out.println("14 = Consultar teclado");
+        System.out.println("14 = Borrar alfabeto");
+        System.out.println("15 = Borrar texto");
+        System.out.println("16 = Borrar lista de palabras");
 
-        System.out.println("15 = Consultar alfabetos");
-        System.out.println("16 = Consultar alfabeto");
+        System.out.println("17 = Consultar teclados");
+        System.out.println("18 = Consultar teclado");
 
-        System.out.println("17 = Consultar textos");
-        System.out.println("18 = Consultar texto");
+        System.out.println("19 = Consultar alfabetos");
+        System.out.println("20 = Consultar alfabeto");
 
-        System.out.println("19 = Consultar listas");
-        System.out.println("20 = Consultar lista");
+        System.out.println("21 = Consultar textos");
+        System.out.println("22 = Consultar texto");
+
+        System.out.println("23 = Consultar listas");
+        System.out.println("24 = Consultar lista");
         
         System.out.println("33 = Salir");
 	}
 
     /** Función que consulta los teclados guardados */
     private static void consultarTeclados() {
-        HashMap<String, Teclado> teclados = ctrlD.consultarTeclados();
+        HashMap<String, String[]> teclados = ctrlD.consultarTeclados();
         System.out.println("Los teclados guardados son\n");
         for (String key : teclados.keySet())
             System.out.println(key);
@@ -66,25 +71,25 @@ public class DriverDominio {
         Scanner tec = new Scanner(System.in);      
         System.out.print("Nombre del teclado a consultar: ");
         String teclado = tec.nextLine();
-        Teclado t = ctrlD.consultarTeclado(teclado);
+        String[] t = ctrlD.consultarTeclado(teclado);
 
         System.out.println("El Teclado se compone de\n");
-        System.out.println("Nombre: "+t.getNombre());
-        System.out.println("Algoritmo: "+t.getAlgoritmo());
-        System.out.println("Alfabeto: "+t.getAlfabeto());
+        System.out.println("Nombre: "+t[0]);
+        System.out.println("Algoritmo: "+t[1]);
+        System.out.println("Alfabeto: "+t[2]);
         System.out.print("Layout:");
-        char[] lay = t.getLayout();
+        char[] lay = t[3].toCharArray();
         for (int i = 0; i < lay.length; ++i) System.out.print(" "+lay[i]);
-        System.out.println("\nPlayout:");
-        Point2D[] playout = t.getPlayout();
-        for (int i = 0; i < playout.length; ++i) 
-            System.out.print(" "+playout[i]);
+        //System.out.println("\nPlayout:");
+        //Point2D[] playout = t.getPlayout();
+        //for (int i = 0; i < playout.length; ++i) 
+        //    System.out.print(" "+playout[i]);
         System.out.println("\n");
     }
 
     /** Función que consultalos alfabetos guardados */
     private static void consultarAlfabetos() {
-        HashMap<String, Input> alf = ctrlD.consultarAlfabetos();
+        HashMap<String, String[]> alf = ctrlD.consultarAlfabetos();
 
         System.out.println("Los alfabetos guardado son");
         for (String key : alf.keySet())
@@ -97,11 +102,11 @@ public class DriverDominio {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del alfabeto a consultar: ");
         String nomAlf = tec.nextLine();
-        String alf = ctrlD.consultarAlfabeto(nomAlf);
+        String[] alf = ctrlD.consultarAlfabeto(nomAlf);
 
-        System.out.println("Nombre: "+nomAlf);
+        System.out.println("Nombre: "+alf[0]);
         System.out.println("Alfabeto:");
-        char[] alfabeto = alf.toCharArray();
+        char[] alfabeto = alf[1].toCharArray();
         for (int i = 0; i < alfabeto.length; ++i)
             System.out.print(" "+alfabeto[i]);
         System.out.println("\n");
@@ -109,7 +114,7 @@ public class DriverDominio {
 
     /** Función que consulta los textos guardados*/
     private static void consultarTextos() {
-        HashMap<String, Input> textos = ctrlD.consultarTextos();
+        HashMap<String, String[]> textos = ctrlD.consultarTextos();
 
         System.out.println("Los textos guardado son");
         for (String key : textos.keySet())
@@ -122,15 +127,15 @@ public class DriverDominio {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
         String nomText = tec.nextLine();
-        String text = ctrlD.consultarTexto(nomText);
+        String[] text = ctrlD.consultarTexto(nomText);
 
-        System.out.println("Nombre: "+nomText);
-        System.out.println("Texto:\n"+text+"\n\n");
+        System.out.println("Nombre: "+text[0]);
+        System.out.println("Texto:\n"+text[1]+"\n\n");
     }
 
     /** Función que consulta las listas guardadas*/
     private static void consultarListas() {
-        HashMap<String, Input> listas = ctrlD.consultarListas();
+        HashMap<String, String[]> listas = ctrlD.consultarListas();
 
         System.out.println("Las listas guardadas son");
         for (String key : listas.keySet())
@@ -144,13 +149,10 @@ public class DriverDominio {
         
         System.out.print("Nombre de la lista a consultar: ");
         String nomList = tec.nextLine();
-        Map<String, Integer> list = ctrlD.consultarLista(nomList);
+        String[] list = ctrlD.consultarLista(nomList);
 
         System.out.println("Nombre: "+nomList);
-        System.out.println("Lista:");
-        for (String key : list.keySet()) {
-            System.out.println(key+" "+list.get(key));
-        }
+        System.out.println("Lista:\n"+list[1]);
         System.out.println("\n");
     }
 
@@ -158,19 +160,19 @@ public class DriverDominio {
      * Función que introduce nombres de textos y listas
      * @return Vector(String) : nombres de textos y listas
     */
-    private static Vector<String> introducirTextos() {
+    private static String[] introducirTextos() {
 
         Scanner tec = new Scanner(System.in);
         Scanner tecInt = new Scanner(System.in);
-        Vector<String> textos = new Vector<String>();
 
         System.out.print("Cuantos textos/listas quieres introducir: ");
         int numeroDeTextos = tecInt.nextInt();
 
+        String[] nombresTLP = new String[numeroDeTextos];
         System.out.println("Introduce los nombres de los textos/listas:");
-        for (int i = 0; i < numeroDeTextos; ++i) textos.addElement(tec.nextLine());
+        for (int i = 0; i < numeroDeTextos; ++i) nombresTLP[i] = tec.nextLine();
     
-        return textos;
+        return nombresTLP;
     }
 
     /**
@@ -212,7 +214,6 @@ public class DriverDominio {
     private static void crearTeclado() {
 
         String algor, alfab, teclado;
-        Vector<String> textos = new Vector<String>();
         
         Scanner tec = new Scanner(System.in);
         Scanner tecInt = new Scanner(System.in);
@@ -229,12 +230,22 @@ public class DriverDominio {
         System.out.print("Introduce el alfabeto: ");
         alfab = tec.nextLine();
 
-        textos = introducirTextos();
+        String[] textos = introducirTextos();
         
         System.out.print("Por ultimo el nombre del teclado: ");
         teclado = tec.nextLine();
 
         ctrlD.crearTeclado(teclado, alfab, textos, algor);
+    }
+
+    private static void importarTeclados() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el path de los teclados a importar: ");
+        String path = tec.nextLine();
+
+        ctrlD.importarTeclados(path);
     }
 
     /** Función que se encarga de comprobar el borrado de un teclado */
@@ -249,7 +260,7 @@ public class DriverDominio {
     }
 
     /** Función que se encarga de comprobar la importación de un alfabeto */
-    private static void importarAlfabeto() {
+    private static void crearAlfabeto() {
 
         Scanner tec = new Scanner(System.in);
 
@@ -259,11 +270,11 @@ public class DriverDominio {
         System.out.print("Escribe el alfabeto en una linea: ");
         String alfabeto = tec.nextLine();
 
-        ctrlD.importarAlfabeto(nombreAlfabeto, alfabeto);
+        ctrlD.crearAlfabeto(nombreAlfabeto, alfabeto);
     }
 
     /** Función que se encarga de comprobar la importación de un texto */
-    private static void importarTexto() {
+    private static void crearTexto() {
 
         Scanner tec = new Scanner(System.in);
 
@@ -273,11 +284,11 @@ public class DriverDominio {
         System.out.print("Escribe el texto en una linea: ");
         String texto = tec.nextLine();
 
-        ctrlD.importarTexto(nombreTexto, texto);
+        ctrlD.crearTexto(nombreTexto, texto);
     }
 
     /** Función que se encarga de comprobar la importación de una lista */
-    private static void importarListaPalabras() {
+    private static void crearListaPalabras() {
 
         Scanner tec = new Scanner(System.in);
 
@@ -288,7 +299,37 @@ public class DriverDominio {
         System.out.print("cuando acabes presiona enter: ");
         Map<String, Integer> lista = introducirLista();
 
-        ctrlD.importarListaPalabras(nombreLista, lista);
+        ctrlD.crearListaPalabras(nombreLista, lista);
+    }
+
+    private static void importarAlfabetos() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el path de los alfabetos a importar: ");
+        String path = tec.nextLine();
+
+        ctrlD.importarAlfabetos(path);
+    }
+
+    private static void importarTextos() {
+
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el path de los textos a importar: ");
+        String path = tec.nextLine();
+
+        ctrlD.importarTextos(path);
+    }
+
+    private static void importarListasPalabras() {
+        
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escribe el path de las listas a importar: ");
+        String path = tec.nextLine();
+
+        ctrlD.importarListasPalabras(path);
     }
 
     /** Función que se encarga de comprobar la modificación de un teclado */
@@ -300,7 +341,7 @@ public class DriverDominio {
         System.out.print("Introduce el nombre del teclado a modificar: ");
         String nombreTeclado = tec.nextLine();
 
-        Vector<String> textos = introducirTextos();
+        String[] textos = introducirTextos();
 
         System.out.println("Quieres modificar el alfabeto?");
         System.out.println("Y = Si");
@@ -409,32 +450,37 @@ public class DriverDominio {
             switch (instruccion) {
 
                 case 1: crearTeclado(); break;
-                case 2: borrarTeclado(); break;
+                case 2: importarTeclados(); break;
+                case 3: borrarTeclado(); break;
 
-                case 3: importarAlfabeto(); break;
-                case 4: importarTexto(); break;
-                case 5: importarListaPalabras(); break;
+                case 4: crearAlfabeto(); break;
+                case 5: crearTexto(); break;
+                case 6: crearListaPalabras(); break;
 
-                case 6: modificarTeclado(); break;
-                case 7: modificarAlfabeto(); break;
-                case 8: modificarTexto(); break;
-                case 9: modificarListaPalabras(); break;
+                case 7: importarAlfabetos(); break;
+                case 8: importarTextos(); break;
+                case 9: importarListasPalabras(); break;
 
-                case 10: borrarAlfabeto(); break;
-                case 11: borrarTexto(); break;
-                case 12: borrarListaPalabras(); break;
+                case 10: modificarTeclado(); break;
+                case 11: modificarAlfabeto(); break;
+                case 12: modificarTexto(); break;
+                case 13: modificarListaPalabras(); break;
 
-                case 13: consultarTeclados(); break;
-                case 14: consultarTeclado(); break;
+                case 14: borrarAlfabeto(); break;
+                case 15: borrarTexto(); break;
+                case 16: borrarListaPalabras(); break;
 
-                case 15: consultarAlfabetos(); break;
-                case 16: consultarAlfabeto(); break;
+                case 17: consultarTeclados(); break;
+                case 18: consultarTeclado(); break;
 
-                case 17: consultarTextos(); break;
-                case 18: consultarTexto(); break;
+                case 19: consultarAlfabetos(); break;
+                case 20: consultarAlfabeto(); break;
 
-                case 19: consultarListas(); break;
-                case 20: consultarLista(); break;
+                case 21: consultarTextos(); break;
+                case 22: consultarTexto(); break;
+
+                case 23: consultarListas(); break;
+                case 24: consultarLista(); break;
 
                 case 33: salir = true; break;
             }

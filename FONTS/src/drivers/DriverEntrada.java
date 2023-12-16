@@ -3,6 +3,7 @@ import java.util.*;
 
 import Excepcions.*;
 import main.dominio.CtrlEntrada;
+import main.persistencia.CtrlPersistencia;
 import main.dominio.Input;
 import main.dominio.Teclado;
 
@@ -11,8 +12,8 @@ import java.awt.geom.Point2D;
 /**
  * Clase que proporciona un menú interactivo para probar y demostrar las funcionalidades
  * de la clase CtrlEntrada y sus subclases relacionadas.
- * Permite realizar operaciones como importar, modificar, borrar y consultar alfabetos, textos,
- * listas de palabras y teclados.
+ * Permite realizar operaciones como crear, importar, modificar, borrar y consultar 
+ * alfabetos, textos, listas de palabras y teclados.
  * También proporciona una opción para salir del programa.
  * @author Mariona Aguilera Folqué
  */
@@ -25,13 +26,11 @@ public class DriverEntrada {
      */
     private static void GuiaInstrucciones() {
 
-		ctrlE = new CtrlEntrada();
-
 		System.out.println("Este es el Driver de Entrada, las funcionalidades son:");
 
-		System.out.println("1 = Importar Alfabeto");
-		System.out.println("2 = Importar Texto");
-		System.out.println("3 = Importar Lista de palabras con frecuencia");
+		System.out.println("1 = Crear Alfabeto");
+		System.out.println("2 = Crear Texto");
+		System.out.println("3 = Crear Lista de palabras con frecuencia");
 
 		System.out.println("4 = Modificar Alfabeto");
 		System.out.println("5 = Modificar Texto");
@@ -93,9 +92,9 @@ public class DriverEntrada {
     }
 
     /**
-     * Permite al usuario importar un alfabeto.
+     * Permite al usuario crear un alfabeto.
      */
-	private static void importarAlfabeto(){
+	private static void crearAlfabeto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del alfabeto: ");
 		String name = tec.nextLine();
@@ -104,7 +103,7 @@ public class DriverEntrada {
 		String alfabeto = tec.nextLine();
         alfabeto.replace(" ", "");
 
-		try {ctrlE.importarAlfabeto(name, alfabeto);}
+		try {ctrlE.crearAlfabeto(name, alfabeto);}
 		catch (InputJaCreat e)
 			{System.out.println("Error: "+e.getMessage());return;}
 		catch (AlfabetoInvalido e)
@@ -112,9 +111,9 @@ public class DriverEntrada {
 	}
 
     /**
-     * Permite al usuario importar un texto.
+     * Permite al usuario crear un texto.
      */
-	private static void importarTexto(){
+	private static void crearTexto(){
 		Scanner tec = new Scanner(System.in);
 		System.out.print("Introduce el nombre del texto: ");
 		String name = tec.nextLine();
@@ -123,15 +122,15 @@ public class DriverEntrada {
 		String texto = tec.nextLine();
         texto.replace(" ", "");
 
-		try {ctrlE.importarTexto(name, texto);}
+		try {ctrlE.crearTexto(name, texto);}
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
 
     /**
-     * Permite al usuario importar una lista de palabras con frecuencia.
+     * Permite al usuario crear una lista de palabras con frecuencia.
      */
-	private static void importarListaPalabras(){
+	private static void crearListaPalabras(){
 		Scanner tec = new Scanner(System.in);
 
         System.out.print("Escribe el nombre de la nueva lista: ");
@@ -142,7 +141,7 @@ public class DriverEntrada {
         Map<String, Integer> lista = introducirLista();
 
 		
-		try {ctrlE.importarListaPalabras(name, lista);}
+		try {ctrlE.crearListaPalabras(name, lista);}
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
 	}
@@ -203,7 +202,7 @@ public class DriverEntrada {
         Map<String, Integer> lista = introducirLista();
 
 		
-		try {ctrlE.importarListaPalabras(name, lista);}
+		try {ctrlE.crearListaPalabras(name, lista);}
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
 
@@ -279,7 +278,7 @@ public class DriverEntrada {
      * Permite al usuario consultar la lista de alfabetos disponibles.
      */
 	private static void consultarAlfabetos() {
-        HashMap<String, Input> alf = ctrlE.getAlfabetos();
+        HashMap<String, String[]> alf = ctrlE.getAlfabetos();
 
         System.out.println("Los alfabetos guardados son");
         for (String key : alf.keySet())
@@ -294,16 +293,16 @@ public class DriverEntrada {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del alfabeto a consultar: ");
         String nomAlf = tec.nextLine();
-        String alf = "";
-		try {alf=ctrlE.getAlfabeto(nomAlf).getLetras();}
+        String[] alf = new String[2];
+		try {alf=ctrlE.getAlfabeto(nomAlf);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage());return;}
         catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); return;}
 		
-        System.out.println("Nombre: "+ nomAlf);
+        System.out.println("Nombre: "+ alf[0]);
         System.out.println("Alfabeto:");
-        char[] alfabeto = alf.toCharArray();
+        char[] alfabeto = alf[1].toCharArray();
         for (int i = 0; i < alfabeto.length; ++i)
             System.out.print(" "+alfabeto[i]);
         System.out.println("\n");
@@ -313,7 +312,7 @@ public class DriverEntrada {
      * Permite al usuario consultar la lista de textos disponibles.
      */
 	private static void consultarTextos() {
-        HashMap<String, Input> textos = ctrlE.getTextos();
+        HashMap<String, String[]> textos = ctrlE.getTextos();
 
         System.out.println("Los textos guardado son");
         for (String key : textos.keySet())
@@ -328,22 +327,22 @@ public class DriverEntrada {
         Scanner tec = new Scanner(System.in);
         System.out.print("Nombre del texto a consultar: ");
         String nomText = tec.nextLine();
-        String text;
-        try {text = ctrlE.getTexto(nomText).getTexto();}
+        String[] text = new String[2];
+        try {text = ctrlE.getTexto(nomText);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); return;}
 
-        System.out.println("Nombre: "+nomText);
-        System.out.println("Texto:\n"+text+"\n\n");
+        System.out.println("Nombre: "+text[0]);
+        System.out.println("Texto:\n"+text[1]+"\n\n");
     }
 
     /**
     * Método para consultar y mostrar los nombres de las listas guardadas en el controlador de entrada.
     */
 	private static void consultarListas() {
-        HashMap<String, Input> listas = ctrlE.getListas();
+        HashMap<String, String[]> listas = ctrlE.getListas();
 
         System.out.println("Las listas guardadas son");
         for (String key : listas.keySet())
@@ -360,18 +359,15 @@ public class DriverEntrada {
         
         System.out.print("Nombre de la lista a consultar: ");
         String nomList = tec.nextLine();
-        Map<String, Integer> list; 
-        try {list = ctrlE.getListaPalabras(nomList).getListaFreq();}
+        String[] list = new String[2]; 
+        try {list = ctrlE.getListaPalabras(nomList);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); return;}
 
-        System.out.println("Nombre: "+nomList);
-        System.out.println("Lista:");
-        for (String key : list.keySet()) {
-            System.out.println(key+" "+list.get(key));
-        }
+        System.out.println("Nombre: "+list[0]);
+        System.out.println("Lista: "+list[1]);
         System.out.println("\n");
     }
 
@@ -379,7 +375,7 @@ public class DriverEntrada {
      * Método para consultar y mostrar los nombres de los teclados guardados en el controlador de entrada.
      */
 	private static void consultarTeclados() {
-        HashMap<String, Teclado> teclados = ctrlE.getTeclados();
+        HashMap<String, String[]> teclados = ctrlE.getTeclados();
         System.out.println("Los teclados guardados son\n");
         for (String key : teclados.keySet())
             System.out.println(key);
@@ -394,22 +390,22 @@ public class DriverEntrada {
         Scanner tec = new Scanner(System.in);      
         System.out.print("Nombre del teclado a consultar: ");
         String teclado = tec.nextLine();
-        Teclado t;
+        String[] t = new String[4];
         try {t = ctrlE.getTeclado(teclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
 
         System.out.println("El Teclado se compone de\n");
-        System.out.println("Nombre: "+t.getNombre());
-        System.out.println("Algoritmo: "+t.getAlgoritmo());
-        System.out.println("Alfabeto: "+t.getAlfabeto());
+        System.out.println("Nombre: "+t[0]);
+        System.out.println("Algoritmo: "+t[1]);
+        System.out.println("Alfabeto: "+t[2]);
         System.out.print("Layout:");
-        char[] lay = t.getLayout();
+        char[] lay = t[3].toCharArray();
         for (int i = 0; i < lay.length; ++i) System.out.print(" "+lay[i]);
-        System.out.println("\nPlayout:");
-        Point2D[] playout = t.getPlayout();
-        for (int i = 0; i < playout.length; ++i) 
-            System.out.print(" "+playout[i]);
+        //System.out.println("\nPlayout:");
+        //Point2D[] playout = t.getPlayout();
+        //for (int i = 0; i < playout.length; ++i) 
+        //    System.out.print(" "+playout[i]);
         System.out.println("\n");
     }
 
@@ -418,8 +414,15 @@ public class DriverEntrada {
      * Permite al usuario realizar diversas operaciones mediante un menú interactivo.
      */
 	public static void main(String[] args) {
-		ctrlE = new CtrlEntrada();
 		Scanner tec = new Scanner (System.in);
+
+        CtrlPersistencia.inicializar();
+        String[][] teclados = CtrlPersistencia.cargarTeclados();
+        String[][] alfabetos = CtrlPersistencia.cargarAlfabetos();
+        String[][] textos = CtrlPersistencia.cargarTextos();
+        String[][] listas = CtrlPersistencia.cargarListas();
+
+        ctrlE = new CtrlEntrada(teclados, alfabetos, textos, listas);
 
 		GuiaInstrucciones();
         
@@ -432,9 +435,9 @@ public class DriverEntrada {
             //Listado de instrucciones
             switch (instruccion) {   
 				
-				case 1: importarAlfabeto(); break;
-                case 2: importarTexto(); break;
-                case 3: importarListaPalabras(); break;
+				case 1: crearAlfabeto(); break;
+                case 2: crearTexto(); break;
+                case 3: crearListaPalabras(); break;
 
                 case 4: modificarAlfabeto(); break;
                 case 5: modificarTexto(); break;

@@ -48,10 +48,10 @@ public class CtrlDominio {
      * @param nombreAlgoritmo : nombre del algoritmo a utilizar
     */
     public void crearTeclado(String nombreTeclado, String nombreAlfabeto, 
-           Vector<String> nombresTLP, String nombreAlgoritmo) {
+           String[] nombresTLP, String nombreAlgoritmo) {
                 
         String letrasAlfabeto;
-        try {letrasAlfabeto = ctrlE.getAlfabeto(nombreAlfabeto).getLetras();}
+        try {letrasAlfabeto = ctrlE.getAlfabeto(nombreAlfabeto)[1];}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
@@ -76,7 +76,7 @@ public class CtrlDominio {
             char[] layout = ctrlA.calcularLayout(textos, listas, letrasAlfabeto, playout, nombreAlgoritmo);
 
             ctrlE.setLayout(nombreTeclado, layout);
-            CtrlPersistencia.guardarTeclado(ctrlE.getTeclado(nombreTeclado).toStringArray());
+            CtrlPersistencia.guardarTeclado(ctrlE.getTeclado(nombreTeclado));
         }
         catch (NGrande e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -89,20 +89,35 @@ public class CtrlDominio {
     }
 
     /**
+     * Función que importa teclados de un fichero de texto. 
+     * Si el formato o el Path está mal definido salta una excepción.
+     * @param path
+    */
+    public void importarTeclados(String path) {
+        try {
+            String[][] teclados = CtrlPersistencia.cargarTeclados(path);
+            ctrlE.importarTeclados(teclados);
+            for (String[] actual : teclados) CtrlPersistencia.guardarTeclado(actual);
+        }
+        catch (TecladoYaExiste e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+
+    /**
      * Función que modifica un teclado existente de la base de datos y hace
      * saltar una excepción en caso de que no sea posible
      * @param nombreTeclado : el nombre del teclado a modificar
      * @param nombreAlfabeto : el nombre del alfabeto que se usará
      * @param nombresTLP : los nombres de los textos y listas que se usaran
     */
-    public void modificarTeclado(String nombreTeclado, String nombreAlfabeto, Vector<String> nombresTLP) {
+    public void modificarTeclado(String nombreTeclado, String nombreAlfabeto, String[] nombresTLP) {
     	String nombreAlgoritmo = "";
     	try {nombreAlgoritmo = ctrlE.getAlgoritmo(nombreTeclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         
         String letras;
-        try{letras = ctrlE.getAlfabeto(nombreAlfabeto).getLetras();}
+        try{letras = ctrlE.getAlfabeto(nombreAlfabeto)[1];}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
@@ -130,7 +145,7 @@ public class CtrlDominio {
 
             ctrlE.setLayout(nombreTeclado, layout);   
                 
-            CtrlPersistencia.modificarTeclado(ctrlE.getTeclado(nombreTeclado).toStringArray());
+            CtrlPersistencia.modificarTeclado(ctrlE.getTeclado(nombreTeclado));
             }
         catch (NGrande e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -151,7 +166,7 @@ public class CtrlDominio {
      * @param nombreTeclado : nombre del teclado a modificar
      * @param nombresTLP : nombres de los textos y listas que se usaran
     */
-    public void modificarTeclado(String nombreTeclado, Vector<String> nombresTLP) {
+    public void modificarTeclado(String nombreTeclado, String[] nombresTLP) {
     	String alfabeto = "";
     	try {alfabeto = ctrlE.getAlfabetoTeclado(nombreTeclado);}
     	catch (TecladoInexistente e)
@@ -175,16 +190,16 @@ public class CtrlDominio {
     }
 
     /**
-     * Función que importa un alfabeto a la base de datos y salta una
+     * Función que crea un alfabeto y salta una
      * excepción si el alfabeto ya está creado o si tiene algun carácter
      * repetido
      * @param nombreAlfabeto
      * @param alfabeto
     */
-    public void importarAlfabeto(String nombreAlfabeto, String alfabeto) {
+    public void crearAlfabeto(String nombreAlfabeto, String alfabeto) {
         try {
-            ctrlE.importarAlfabeto(nombreAlfabeto, alfabeto);
-            CtrlPersistencia.guardarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto).toStringArray());
+            ctrlE.crearAlfabeto(nombreAlfabeto, alfabeto);
+            CtrlPersistencia.guardarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto));
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -193,6 +208,21 @@ public class CtrlDominio {
         catch (InputInexistente e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e) //Aqui nunca entrara
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+
+    /**
+     * Función que importa alfabetos de un fichero de texto. 
+     * Si el formato o el Path está mal definido salta una excepción.
+     * @param path
+    */
+    public void importarAlfabetos(String path) {
+        try {
+            String[][] alfabetos = CtrlPersistencia.cargarAlfabetos(path);
+            ctrlE.importarAlfabetos(alfabetos);
+            for (String[] actual : alfabetos) CtrlPersistencia.guardarAlfabeto(actual);
+        }
+        catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
@@ -206,7 +236,7 @@ public class CtrlDominio {
     public void modificarAlfabeto(String nombreAlfabeto, String letrasNuevas) {
         try {
             ctrlE.modificarAlfabeto(nombreAlfabeto, letrasNuevas);
-            CtrlPersistencia.modificarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto).toStringArray());
+            CtrlPersistencia.modificarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto));
         }
         catch (AlfabetoUsandose e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -238,14 +268,14 @@ public class CtrlDominio {
     }
 
     /**
-     * Función que importa un texto y salta una excepción si el texto existe
+     * Función que crea un texto y salta una excepción si el texto existe
      * @param nombreTexto
      * @param texto 
     */
-    public void importarTexto(String nombreTexto, String texto) {
+    public void crearTexto(String nombreTexto, String texto) {
         try {
-            ctrlE.importarTexto(nombreTexto, texto);
-            CtrlPersistencia.guardarTexto(ctrlE.getTexto(nombreTexto).toStringArray());
+            ctrlE.crearTexto(nombreTexto, texto);
+            CtrlPersistencia.guardarTexto(ctrlE.getTexto(nombreTexto));
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -254,6 +284,22 @@ public class CtrlDominio {
         catch (WrongInputType e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); return;}
     }
+
+    /**
+     * Función que importa textos de un fichero de texto. 
+     * Si el formato o el Path está mal definido salta una excepción.
+     * @param path
+    */
+    public void importarTextos(String path) {
+        try {
+            String[][] textos = CtrlPersistencia.cargarTextos(path);
+            ctrlE.importarTextos(textos);
+            for (String[] actual : textos) CtrlPersistencia.guardarTexto(actual);
+        }
+        catch (InputJaCreat e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
+    
 
 
     /**
@@ -265,7 +311,7 @@ public class CtrlDominio {
     public void modificarTexto(String nombreTexto, String textoNuevo) {
         try {
             ctrlE.modificarTexto(nombreTexto, textoNuevo);
-            CtrlPersistencia.modificarTexto(ctrlE.getTexto(nombreTexto).toStringArray());
+            CtrlPersistencia.modificarTexto(ctrlE.getTexto(nombreTexto));
         }
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -292,15 +338,15 @@ public class CtrlDominio {
 
 
     /**
-     * Función que importa una lista de palabras y salta una excepción si la
+     * Función que crea una lista de palabras y salta una excepción si la
      * lista ya existe
      * @param nombreLista
      * @param lista : lista de palabras con frecuencias 
     */
-    public void importarListaPalabras(String nombreLista, Map<String, Integer> lista) {
+    public void crearListaPalabras(String nombreLista, Map<String, Integer> lista) {
         try {
-            ctrlE.importarListaPalabras(nombreLista, lista);
-            CtrlPersistencia.guardarLista(ctrlE.getListaPalabras(nombreLista).toStringArray());
+            ctrlE.crearListaPalabras(nombreLista, lista);
+            CtrlPersistencia.guardarLista(ctrlE.getListaPalabras(nombreLista));
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -310,6 +356,20 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;} 
     }
 
+    /**
+     * Función que importa listas de palabras de un fichero de texto. 
+     * Si el formato o el Path está mal definido salta una excepción.
+     * @param path
+    */
+    public void importarListasPalabras(String path) {
+        try {
+            String[][] listas = CtrlPersistencia.cargarListas(path);
+            ctrlE.importarListasPalabras(listas);
+            for (String[] actual : listas) CtrlPersistencia.guardarLista(actual);
+        }
+        catch (InputJaCreat e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    }
     
 
     /**
@@ -321,7 +381,7 @@ public class CtrlDominio {
     public void modificarListaPalabras(String nombreLista, Map<String, Integer> listaNueva) {
         try {
             ctrlE.modificarListaPalabras(nombreLista, listaNueva);
-            CtrlPersistencia.modificarLista(ctrlE.getInput(nombreLista).toStringArray());
+            CtrlPersistencia.modificarLista(ctrlE.getInput(nombreLista));
         }
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -352,7 +412,7 @@ public class CtrlDominio {
      * Consulta de los teclados
      * @return HashMap(String, Teclado) : contiene los teclados guardados
     */
-    public HashMap<String, Teclado> consultarTeclados() {
+    public HashMap<String, String[]> consultarTeclados() {
         return ctrlE.getTeclados();
     }
 
@@ -361,7 +421,7 @@ public class CtrlDominio {
      * @param nombreTeclado
      * @return Teclado : contiene el teclado consultado
     */
-    public Teclado consultarTeclado(String nombreTeclado) {
+    public String[] consultarTeclado(String nombreTeclado) {
         try {return ctrlE.getTeclado(nombreTeclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return null;}
@@ -371,7 +431,7 @@ public class CtrlDominio {
      * Consulta de los alfabetos
      * @return HashMap(String, Input) : contiene los alfabetos guardados
     */
-    public HashMap<String, Input> consultarAlfabetos() {
+    public HashMap<String, String[]> consultarAlfabetos() {
         return ctrlE.getAlfabetos();
     }
 
@@ -379,7 +439,7 @@ public class CtrlDominio {
      * Consulta de los textos
      * @return HashMap(String, Input) : contiene los textos guardados
     */
-    public HashMap<String, Input> consultarTextos() {
+    public HashMap<String, String[]> consultarTextos() {
         return ctrlE.getTextos();
     }
 
@@ -387,7 +447,7 @@ public class CtrlDominio {
      * Consulta de las listas
      * @return HashMap(String, Input) : contiene las listas guardadas
     */
-    public HashMap<String, Input> consultarListas() {
+    public HashMap<String, String[]> consultarListas() {
         return ctrlE.getListas();
     }
 
@@ -397,8 +457,8 @@ public class CtrlDominio {
      * @param nombreAlfabeto
      * @return String : contiene el alfabeto consultado
     */
-    public String consultarAlfabeto(String nombreAlfabeto) {
-        try {return ctrlE.getAlfabeto(nombreAlfabeto).getLetras();}
+    public String[] consultarAlfabeto(String nombreAlfabeto) {
+        try {return ctrlE.getAlfabeto(nombreAlfabeto);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return null;}
         catch (WrongInputType e)
@@ -410,9 +470,9 @@ public class CtrlDominio {
      * @param nombreTexto
      * @return String : contiene el texto consultado
     */
-    public String consultarTexto(String nombreTexto) {
+    public String[] consultarTexto(String nombreTexto) {
         try {
-            return ctrlE.getTexto(nombreTexto).getTexto();
+            return ctrlE.getTexto(nombreTexto);
         }
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return null;}
@@ -425,9 +485,9 @@ public class CtrlDominio {
      * @param nombreLista
      * @return Map(String, Integer) : contiene la lista consultada
     */
-    public Map<String, Integer> consultarLista(String nombreLista) {
+    public String[] consultarLista(String nombreLista) {
         try {
-            return ctrlE.getListaPalabras(nombreLista).getListaFreq();
+            return ctrlE.getListaPalabras(nombreLista);
         }
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return null;}
@@ -448,11 +508,11 @@ public class CtrlDominio {
      * @param nombresTLP : Vector de nombres TLP
     */
     private void asignarTextosYListas(Vector<String> textos, 
-            Vector<Map<String, Integer>> listas, Vector<String> nombresTLP,
+            Vector<Map<String, Integer>> listas, String[] nombresTLP,
             String alfabeto) throws InputInexistente, WrongInputType, TextoNoValido, ListaNoValida {
 
-        for (int i = 0; i < nombresTLP.size(); ++i) {
-            String nombreTLP = nombresTLP.elementAt(i);
+        for (int i = 0; i < nombresTLP.length; ++i) {
+            String nombreTLP = nombresTLP[i];
 
             TLP tlp;
             try {tlp = ctrlE.getTLP(nombreTLP);}
