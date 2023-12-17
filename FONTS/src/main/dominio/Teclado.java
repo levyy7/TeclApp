@@ -83,6 +83,25 @@ public class Teclado {
         return this.layout;
     }
 
+    public char[][] consultaLayout() {
+        int[][] play = playout.toIntArray();
+        int size = play.length;
+        char[][] lay = new char[size][size];
+
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                //System.out.print(i + " "+ j);
+                if (play[i][j] != 0) {
+                    int num = play[i][j];
+                    lay[i][j] = layout[num-1];
+                } else lay[i][j] = '-';
+                //System.out.println();
+            }
+        }
+
+        return lay;
+    }
+
     /**
      * Obtiene el tamaño del diseño de teclado.
      * @return El número de caracteres en el diseño de teclado.

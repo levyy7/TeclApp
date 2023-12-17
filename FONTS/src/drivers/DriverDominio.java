@@ -71,15 +71,23 @@ public class DriverDominio {
         Scanner tec = new Scanner(System.in);      
         System.out.print("Nombre del teclado a consultar: ");
         String teclado = tec.nextLine();
-        String[] t = ctrlD.consultarTeclado(teclado);
+        String[] t = ctrlD.consultarInfoTeclado(teclado);
 
         System.out.println("El Teclado se compone de\n");
         System.out.println("Nombre: "+t[0]);
         System.out.println("Algoritmo: "+t[1]);
         System.out.println("Alfabeto: "+t[2]);
-        System.out.print("Layout:");
-        char[] lay = t[3].toCharArray();
-        for (int i = 0; i < lay.length; ++i) System.out.print(" "+lay[i]);
+
+        char[][] lay = ctrlD.consultarLayoutTeclado(teclado);
+        System.out.println("Layout:");
+        if (lay.length > 0) {
+            for (int i = 0; i < lay.length; ++i) {
+                for (int j = 0; j < lay[0].length; ++j)
+                    System.out.print(" "+lay[i][j]);
+
+                System.out.println();    
+            }
+        }
         //System.out.println("\nPlayout:");
         //Point2D[] playout = t.getPlayout();
         //for (int i = 0; i < playout.length; ++i) 

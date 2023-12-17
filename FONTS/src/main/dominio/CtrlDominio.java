@@ -76,7 +76,7 @@ public class CtrlDominio {
             char[] layout = ctrlA.calcularLayout(textos, listas, letrasAlfabeto, playout, nombreAlgoritmo);
 
             ctrlE.setLayout(nombreTeclado, layout);
-            CtrlPersistencia.guardarTeclado(ctrlE.getTeclado(nombreTeclado));
+            CtrlPersistencia.guardarTeclado(ctrlE.consultaTeclado(nombreTeclado));
         }
         catch (NGrande e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -145,7 +145,7 @@ public class CtrlDominio {
 
             ctrlE.setLayout(nombreTeclado, layout);   
                 
-            CtrlPersistencia.modificarTeclado(ctrlE.getTeclado(nombreTeclado));
+            CtrlPersistencia.modificarTeclado(ctrlE.consultaTeclado(nombreTeclado));
             }
         catch (NGrande e)
             {System.out.println("Error: "+e.getMessage()); return;}
@@ -421,10 +421,19 @@ public class CtrlDominio {
      * @param nombreTeclado
      * @return Teclado : contiene el teclado consultado
     */
-    public String[] consultarTeclado(String nombreTeclado) {
-        try {return ctrlE.getTeclado(nombreTeclado);}
+    public String[] consultarInfoTeclado(String nombreTeclado) {
+        try {return ctrlE.consultaTeclado(nombreTeclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return null;}
+    }
+
+    /**
+     * Consulta del layout de un teclado existente
+     * @param nombreTeclado
+     * @return char[][] : contiene el Layout consultado
+    */
+    public char[][] consultarLayoutTeclado(String nombreTeclado) {
+        return ctrlE.consultaLayoutTeclado(nombreTeclado);
     }
 
     /** 

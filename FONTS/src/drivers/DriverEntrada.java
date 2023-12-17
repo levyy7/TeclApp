@@ -391,7 +391,7 @@ public class DriverEntrada {
         System.out.print("Nombre del teclado a consultar: ");
         String teclado = tec.nextLine();
         String[] t = new String[4];
-        try {t = ctrlE.getTeclado(teclado);}
+        try {t = ctrlE.consultaTeclado(teclado);}
         catch (TecladoInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
 

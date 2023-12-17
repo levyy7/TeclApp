@@ -34,6 +34,20 @@ public class Playout {
         return this.teclas;
     }
 
+    public int[][] toIntArray() {
+
+        int size = (int) Math.ceil(Math.sqrt(teclas.length));
+        int[][] resultado = new int[size][size];
+        int i = 1;
+        for (Point2D actual : teclas) {
+            int x = (int) actual.getX();
+            int y = (int) actual.getY();
+            resultado[x][y] = i;
+            ++i;
+        }
+        return resultado;
+    }
+
     // Método privado para organizar las teclas en un cuadrado perfecto
     private void perfectSquare(int n) {
         for(double i = 0; i<n; ++i){

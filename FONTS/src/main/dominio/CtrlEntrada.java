@@ -190,11 +190,20 @@ public class CtrlEntrada{
      * @param nombreTeclado : nombre del teclado
      * @return Teclado : el teclado
     */
-	public String[] getTeclado(String nombreTeclado) throws TecladoInexistente {
+	public String[] consultaTeclado(String nombreTeclado) throws TecladoInexistente {
 		if (teclados.containsKey(nombreTeclado) == false) throw new TecladoInexistente(nombreTeclado);
 		String[] board = teclados.get(nombreTeclado).toStringArray();
 
 		return board;
+	}
+
+	/**
+	 * Consulta de un layout de un teclado existente
+	 * @param nombreTeclado
+	 * @return char[][] : layout consultado
+	*/
+	public char[][] consultaLayoutTeclado(String nombreTeclado) {
+		return teclados.get(nombreTeclado).consultaLayout();
 	}
 
 	/**
