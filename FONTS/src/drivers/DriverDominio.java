@@ -88,10 +88,7 @@ public class DriverDominio {
                 System.out.println();    
             }
         }
-        //System.out.println("\nPlayout:");
-        //Point2D[] playout = t.getPlayout();
-        //for (int i = 0; i < playout.length; ++i) 
-        //    System.out.print(" "+playout[i]);
+
         System.out.println("\n");
     }
 

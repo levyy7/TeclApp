@@ -399,13 +399,18 @@ public class DriverEntrada {
         System.out.println("Nombre: "+t[0]);
         System.out.println("Algoritmo: "+t[1]);
         System.out.println("Alfabeto: "+t[2]);
-        System.out.print("Layout:");
-        char[] lay = t[3].toCharArray();
-        for (int i = 0; i < lay.length; ++i) System.out.print(" "+lay[i]);
-        //System.out.println("\nPlayout:");
-        //Point2D[] playout = t.getPlayout();
-        //for (int i = 0; i < playout.length; ++i) 
-        //    System.out.print(" "+playout[i]);
+        
+        char[][] lay = ctrlE.consultaLayoutTeclado(teclado);
+        System.out.println("Layout:");
+        if (lay.length > 0) {
+            for (int i = 0; i < lay.length; ++i) {
+                for (int j = 0; j < lay[0].length; ++j)
+                    System.out.print(" "+lay[i][j]);
+
+                System.out.println();    
+            }
+        }
+
         System.out.println("\n");
     }
 
