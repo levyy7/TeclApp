@@ -278,11 +278,12 @@ public class DriverEntrada {
      * Permite al usuario consultar la lista de alfabetos disponibles.
      */
 	private static void consultarAlfabetos() {
-        HashMap<String, String[]> alf = ctrlE.getAlfabetos();
+        String[][] alf = ctrlE.consultaAlfabetos();
 
-        System.out.println("Los alfabetos guardados son");
-        for (String key : alf.keySet())
-            System.out.println(key);
+        System.out.println("Los alfabetos guardados son\n");
+        for (String[] actual : alf) {
+            System.out.println(actual[0] + " " + actual[1]);
+        }
         System.out.println("\n");
     }
 
@@ -312,11 +313,12 @@ public class DriverEntrada {
      * Permite al usuario consultar la lista de textos disponibles.
      */
 	private static void consultarTextos() {
-        HashMap<String, String[]> textos = ctrlE.getTextos();
+        String[][] textos = ctrlE.consultaTextos();
 
-        System.out.println("Los textos guardado son");
-        for (String key : textos.keySet())
-            System.out.println(key);
+        System.out.println("Los textos guardados son\n");
+        for (String[] actual : textos) {
+            System.out.println(actual[0] + " " + actual[1]);
+        }
         System.out.println("\n");
     }
 
@@ -342,11 +344,12 @@ public class DriverEntrada {
     * Método para consultar y mostrar los nombres de las listas guardadas en el controlador de entrada.
     */
 	private static void consultarListas() {
-        HashMap<String, String[]> listas = ctrlE.getListas();
+        String[][] listas = ctrlE.consultaListas();
 
-        System.out.println("Las listas guardadas son");
-        for (String key : listas.keySet())
-            System.out.println(key);
+        System.out.println("Las listas guardadas son\n");
+        for (String[] actual : listas) {
+            System.out.println(actual[0] + " " + actual[1]);
+        }
         System.out.println("\n");
     }
 
@@ -375,10 +378,11 @@ public class DriverEntrada {
      * Método para consultar y mostrar los nombres de los teclados guardados en el controlador de entrada.
      */
 	private static void consultarTeclados() {
-        HashMap<String, String[]> teclados = ctrlE.getTeclados();
+        String[][] teclados = ctrlE.consultaInfoTeclados();
         System.out.println("Los teclados guardados son\n");
-        for (String key : teclados.keySet())
-            System.out.println(key);
+        for (String[] actual : teclados) 
+            System.out.println(actual[0] + " " + actual[1] + " " + actual[2]);
+        
         System.out.println("\n");
     }
 

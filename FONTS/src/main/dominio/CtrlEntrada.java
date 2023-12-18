@@ -500,10 +500,14 @@ public class CtrlEntrada{
      * Consulta de los teclados
      * @return HashMap(String, Teclado): conjunto de teclados
     */
-	public HashMap<String, String[]> getTeclados() {
-		HashMap<String, String[]> tec = new HashMap<>();
-		for (Map.Entry<String, Teclado> actual : teclados.entrySet())
-			tec.put(actual.getKey(), actual.getValue().toStringArray());
+	public String[][] consultaInfoTeclados() {
+		String[][] tec = new String[teclados.size()][3];
+		int i = 0;
+		for (Map.Entry<String, Teclado> actual : teclados.entrySet()) {
+			String[] tecladoActual = actual.getValue().toStringArray();
+			tec[i] = tecladoActual;
+			++i;
+		}
 		return tec;
 	}
 
@@ -511,36 +515,60 @@ public class CtrlEntrada{
      * Consulta de todos los alfabetos
      * @return HashMap(String, Input): conjunto de alfabetos
     */
-	public HashMap<String, String[]> getAlfabetos() {
+	public String[][] consultaAlfabetos() {
 		HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
         	if (actual.getValue() instanceof Alfabeto) a.put(actual.getKey(),actual.getValue().toStringArray());
         }
-        return a;
+
+		String[][] alf = new String[a.size()][2];
+		int i = 0;
+		for (Map.Entry<String, String[]> actual : a.entrySet()) {
+			String[] alfabetoActual = actual.getValue();
+			alf[i] = alfabetoActual;
+			++i;
+		}
+		return alf;
     }
 
     /**
      * Consulta de todos los textos
      * @return HashMap(String, Input): conjunto de textos
     */
-    public HashMap<String, String[]> getTextos() {
+    public String[][] consultaTextos() {
     	HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
         	if (actual.getValue() instanceof Texto) a.put(actual.getKey(),actual.getValue().toStringArray());
         }
-        return a;
+        
+        String[][] tex = new String[a.size()][2];
+		int i = 0;
+		for (Map.Entry<String, String[]> actual : a.entrySet()) {
+			String[] textoActual = actual.getValue();
+			tex[i] = textoActual;
+			++i;
+		}
+		return tex;
     }
 
 	/**
      * Consulta de todas las listas
      * @return HashMap(String, Input): conjunto de listas
     */
-    public HashMap<String, String[]> getListas() {
+    public String[][] consultaListas() {
     	HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
         	if (actual.getValue() instanceof ListaPalabras) a.put(actual.getKey(),actual.getValue().toStringArray());
         }
-        return a;
+
+        String[][] list = new String[a.size()][2];
+		int i = 0;
+		for (Map.Entry<String, String[]> actual : a.entrySet()) {
+			String[] listaActual = actual.getValue();
+			list[i] = listaActual;
+			++i;
+		}
+		return list;
     }
 
 }

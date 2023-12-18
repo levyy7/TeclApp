@@ -412,8 +412,8 @@ public class CtrlDominio {
      * Consulta de los teclados
      * @return HashMap(String, Teclado) : contiene los teclados guardados
     */
-    public HashMap<String, String[]> consultarTeclados() {
-        return ctrlE.getTeclados();
+    public String[][] consultarInfoTeclados() {
+        return ctrlE.consultaInfoTeclados();
     }
 
     /**
@@ -440,24 +440,24 @@ public class CtrlDominio {
      * Consulta de los alfabetos
      * @return HashMap(String, Input) : contiene los alfabetos guardados
     */
-    public HashMap<String, String[]> consultarAlfabetos() {
-        return ctrlE.getAlfabetos();
+    public String[][] consultarAlfabetos() {
+        return ctrlE.consultaAlfabetos();
     }
 
     /** 
      * Consulta de los textos
      * @return HashMap(String, Input) : contiene los textos guardados
     */
-    public HashMap<String, String[]> consultarTextos() {
-        return ctrlE.getTextos();
+    public String[][] consultarTextos() {
+        return ctrlE.consultaTextos();
     }
 
     /** 
      * Consulta de las listas
      * @return HashMap(String, Input) : contiene las listas guardadas
     */
-    public HashMap<String, String[]> consultarListas() {
-        return ctrlE.getListas();
+    public String[][] consultarListas() {
+        return ctrlE.consultaListas();
     }
 
 

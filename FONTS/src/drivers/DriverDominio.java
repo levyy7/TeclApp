@@ -59,10 +59,11 @@ public class DriverDominio {
 
     /** Función que consulta los teclados guardados */
     private static void consultarTeclados() {
-        HashMap<String, String[]> teclados = ctrlD.consultarTeclados();
+        String[][] teclados = ctrlD.consultarInfoTeclados();
         System.out.println("Los teclados guardados son\n");
-        for (String key : teclados.keySet())
-            System.out.println(key);
+        for (String[] actual : teclados) {
+            System.out.println(actual[0] + " " + actual[1] + " " + actual[2]);
+        }
         System.out.println("\n");
     }
 
@@ -94,11 +95,12 @@ public class DriverDominio {
 
     /** Función que consultalos alfabetos guardados */
     private static void consultarAlfabetos() {
-        HashMap<String, String[]> alf = ctrlD.consultarAlfabetos();
+        String[][] alf = ctrlD.consultarAlfabetos();
 
-        System.out.println("Los alfabetos guardado son");
-        for (String key : alf.keySet())
-            System.out.println(key);
+        System.out.println("Los alfabetos guardados son\n");
+        for (String[] actual : alf) {
+            System.out.println(actual[0] + " " + actual[1]);
+        }
         System.out.println("\n");
     }
 
@@ -119,11 +121,12 @@ public class DriverDominio {
 
     /** Función que consulta los textos guardados*/
     private static void consultarTextos() {
-        HashMap<String, String[]> textos = ctrlD.consultarTextos();
+       String[][] textos = ctrlD.consultarTextos();
 
-        System.out.println("Los textos guardado son");
-        for (String key : textos.keySet())
-            System.out.println(key);
+        System.out.println("Los textos guardados son\n");
+        for (String[] actual : textos) {
+            System.out.println(actual[0] + " " + actual[1]);
+        }
         System.out.println("\n");
     }
 
@@ -140,11 +143,12 @@ public class DriverDominio {
 
     /** Función que consulta las listas guardadas*/
     private static void consultarListas() {
-        HashMap<String, String[]> listas = ctrlD.consultarListas();
+        String[][] listas = ctrlD.consultarListas();
 
-        System.out.println("Las listas guardadas son");
-        for (String key : listas.keySet())
-            System.out.println(key);
+        System.out.println("Las listas guardadas son\n");
+        for (String[] actual : listas) {
+            System.out.println(actual[0] + " " + actual[1]);
+        }
         System.out.println("\n");
     }
 
