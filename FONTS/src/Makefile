@@ -1,4 +1,4 @@
-MAIN_INPUT = ./main/dominio/*.java ./main/dominio/algoritmos/*.java ./main/dominio/ed/*.java ./Excepcions/*.java ./main/persistencia/*.java
+MAIN_INPUT = ./main/dominio/*.java ./main/dominio/algoritmos/*.java ./main/dominio/ed/*.java ./Excepcions/*.java ./main/persistencia/*.java ./main/presentacion/*.java
 
 TEST_INPUT = ./tests/*.java
 
