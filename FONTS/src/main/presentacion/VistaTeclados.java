@@ -9,6 +9,9 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.*;
 
+import main.presentacion.*;
+
+
 
 public class VistaTeclados extends JFrame {
 
@@ -23,6 +26,7 @@ public class VistaTeclados extends JFrame {
 
     private JButton bmodificar;
     private JButton bcrear;
+    private JButton bimportar;
     private JButton bconsultarT;
     private JButton bconsultarLay;
     private JButton bborrar;
@@ -71,16 +75,18 @@ public class VistaTeclados extends JFrame {
         
         JPanel botfuncion = new JPanel(new GridLayout(7, 1, 5, 10));
         bcrear = iniButton("Crear", botfuncion);
+        bimportar = iniButton("Importar", botfuncion);
         botfuncion.add(Box.createRigidArea(new Dimension()));
         bmodificar = iniButton("Modificar", botfuncion);
         bconsultarT = iniButton("Consultar", botfuncion);
         bconsultarLay = iniButton("Ver Layout", botfuncion);
         bborrar = iniButton("Borrar", botfuncion);
 
-        bmodificar.setVisible(false);
-        bconsultarT.setVisible(false);
-        bconsultarLay.setVisible(false);
-        bborrar.setVisible(false);
+        
+        bmodificar.setEnabled(false);
+        bconsultarT.setEnabled(false);
+        bconsultarLay.setEnabled(false);
+        bborrar.setEnabled(false);
 
         func.add(botfuncion, BorderLayout.CENTER);
         general.add(func, BorderLayout.EAST);
@@ -133,14 +139,41 @@ public class VistaTeclados extends JFrame {
         ListSelectionListener clicarElemento = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 // Mostrar todos los botones
-                bmodificar.setVisible(true);
-                bconsultarT.setVisible(true);
-                bconsultarLay.setVisible(true);
-                bborrar.setVisible(true);
+                bmodificar.setEnabled(true);
+                bconsultarT.setEnabled(true);
+                bconsultarLay.setEnabled(true);
+                bborrar.setEnabled(true);
             }
         }; 
+
+        JFrame act = this;
+        ActionListener crearteclado = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                VistaCrearTeclado vct = new VistaCrearTeclado(act, "Crear Teclado");
+                vct.setVisible(true);
+            }
+        };
+
+        ActionListener goAlfabetos = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //ira a alfabetos
+            }
+        };
     
+        ActionListener goTLP = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //ira a tlp
+            }
+        };
+    
+
         teclados.addListSelectionListener(clicarElemento);
+        bcrear.addActionListener(crearteclado);
+        balfabetos.addActionListener(goAlfabetos);
+        btlp.addActionListener(goTLP);
     }
     
     public static void main(String[] args) {
