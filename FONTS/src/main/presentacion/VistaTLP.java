@@ -18,7 +18,7 @@ import main.presentacion.*;
 
 
 
-public class VistaTeclados extends JFrame {
+public class VistaTLP extends JFrame {
 
     private JPanel general;
     private JPanel menuSup;
@@ -30,15 +30,17 @@ public class VistaTeclados extends JFrame {
     private JButton btlp;
 
     private JButton bmodificar;
-    private JButton bcrear;
-    private JButton bimportar;
+    private JButton bcreart;
+    private JButton bcrearl;
+    private JButton bimportart;
+    private JButton bimportarl;
     private JFileChooser imp;
-    private JButton bconsultarT;
+    private JButton bconsultarTLP;
     private JButton bborrar;
 
     private JTextField barrabusq;
     private  DefaultListModel<String> listat;
-    private JList<String> teclados;
+    private JList<String> tlps;
 
 
     private void inicializar() {
@@ -52,12 +54,12 @@ public class VistaTeclados extends JFrame {
         for(int i = 0; i<15; ++i) {
             listat.addElement(String.valueOf(i));
         }
-        teclados = new JList<String>(listat);
+        tlps = new JList<String>(listat);
 
         /*
          * listat = new DefaultListModel<String>();
-         * listat.addAll(ctrlPres.getAllTeclados());
-         * teclados = new JList<String>(listat);
+         * listat.addAll(ctrlPres.getAllTLP());
+         * tlps = new JList<String>(listat);
          */
     }
 
@@ -70,7 +72,7 @@ public class VistaTeclados extends JFrame {
 
     private void actualizarlistat(){
         //listat.removeAllElements();
-        //listat.addAll(ctrlPres.getAllTeclados());
+        //listat.addAll(ctrlPres.getALLTLP());
     }
 
     private Boolean areyousure(String name){
@@ -96,20 +98,19 @@ public class VistaTeclados extends JFrame {
         }
     
         // Establecer la lista filtrada como el nuevo modelo de la JList
-        teclados.setModel(listaFiltrada);
+        tlps.setModel(listaFiltrada);
     }
 
-    public VistaTeclados(){
+    public VistaTLP(){
         super("Creadora de Teclados");
         inicializar();
 
         //MENU SUPERIOR
         menuSup = new JPanel(new GridLayout(1, 3));
         bteclados = iniButton("Teclados", menuSup);
-        //bteclados.setBackground(new Color(204, 204, 204));
-        bteclados.setEnabled(false);
         balfabetos = iniButton("Alfabetos", menuSup);
         btlp = iniButton("Textos y Listas de palabras", menuSup);
+        btlp.setEnabled(false);
 
         general.add(menuSup, BorderLayout.NORTH);
 
@@ -119,37 +120,39 @@ public class VistaTeclados extends JFrame {
         func.add(Box.createRigidArea(new Dimension(10, 10)), BorderLayout.EAST);
         func.add(Box.createRigidArea(new Dimension(10, 10)), BorderLayout.SOUTH);
         
-        JPanel botfuncion = new JPanel(new GridLayout(7, 1, 5, 10));
-        bcrear = iniButton("Crear", botfuncion);
-        bimportar = iniButton("Importar", botfuncion);
+        JPanel botfuncion = new JPanel(new GridLayout(9, 1, 5, 10));
+        bcreart = iniButton("Crear Texto", botfuncion);
+        bcrearl = iniButton("Crear Lista", botfuncion);
+        bimportart = iniButton("Importar Texto", botfuncion);
+        bimportarl = iniButton("Importar Lista", botfuncion);
         botfuncion.add(Box.createRigidArea(new Dimension()));
         bmodificar = iniButton("Modificar", botfuncion);
-        bconsultarT = iniButton("Consultar", botfuncion);
+        bconsultarTLP = iniButton("Consultar", botfuncion);
         bborrar = iniButton("Borrar", botfuncion);
 
         
         bmodificar.setEnabled(false);
-        bconsultarT.setEnabled(false);
+        bconsultarTLP.setEnabled(false);
         bborrar.setEnabled(false);
 
         func.add(botfuncion, BorderLayout.CENTER);
         general.add(func, BorderLayout.EAST);
 
-        //LISTA DE TECLADOS
+        //LISTA DE TLP
         cont = new JPanel(new BorderLayout());
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.EAST);
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.WEST);
 
         //BARRA DE BUSQUEDA
         JPanel busqueda = new JPanel(new FlowLayout());
-        barrabusq = new JTextField("Introduce el nombre del teclado");
+        barrabusq = new JTextField("Introduce el nombre del texto o lista");
         busqueda.add(barrabusq);
         cont.add(busqueda, BorderLayout.NORTH);
         
         //LISTA
-        teclados.setFont(new Font("Arial", Font.PLAIN, 16));
+        tlps.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JScrollPane laminaDesplazamiento = new JScrollPane(teclados);
+        JScrollPane laminaDesplazamiento = new JScrollPane(tlps);
         cont.add(laminaDesplazamiento, BorderLayout.CENTER);
 
         general.add(cont, BorderLayout.CENTER);
@@ -171,7 +174,7 @@ public class VistaTeclados extends JFrame {
 
             @Override
             public void focusLost(FocusEvent e) {
-                if(barrabusq == new JTextField("")) barrabusq.setText("Introduce el nombre del teclado");
+                if(barrabusq == new JTextField("")) barrabusq.setText("Introduce el nombre del alfabeto");
             }
         };
 
@@ -181,48 +184,53 @@ public class VistaTeclados extends JFrame {
         
         ListSelectionListener clicarElemento = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                if (teclados.isSelectionEmpty()) {
+                if (tlps.isSelectionEmpty()) {
                     bmodificar.setEnabled(false);
-                    bconsultarT.setEnabled(false);
+                    bconsultarTLP.setEnabled(false);
                     bborrar.setEnabled(false);
                 } 
                 else {
                     bmodificar.setEnabled(true);
-                    bconsultarT.setEnabled(true);
+                    bconsultarTLP.setEnabled(true);
                     bborrar.setEnabled(true);
                 }
             }
         }; 
 
         JFrame act = this;
-        ActionListener crearteclado = new ActionListener() {
+        ActionListener crearT = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-
-                //supongo que se tiene que hacer desde el controlador
-                VistaCrearTeclado vct = new VistaCrearTeclado(act, "Crear Teclado", "");
-                vct.setVisible(true);
+                //llamar a creartexto 
                 actualizarlistat();
             }
         };
 
-        ActionListener modificarteclado = new ActionListener() {
+        ActionListener crearL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+            //llamar a crear lista
+            actualizarlistat();
+            }
+        };
+
+
+        ActionListener modificar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VistaCrearTeclado vct = new VistaCrearTeclado(act, "Modificar Teclado", teclados.getSelectedValue());
-                vct.setVisible(true);
+                //llamar a modificar 
                 actualizarlistat();
             }
         };
 
-        ActionListener borrarteclado = new ActionListener() {
+        ActionListener borrar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                Boolean res = areyousure(teclados.getSelectedValue());
+                Boolean res = areyousure(tlps.getSelectedValue());
                 if(res) {
-                    //ctrPres.deleteTeclado(teclados.getSelectedValue());
+                    //ctrPres.deleteTLP(tlps.getSelectedValue());
                     JOptionPane.showMessageDialog(act,
-                            "Teclado borrado correctamente.",
+                            "Texto o lista borrado correctamente.",
                             "Borrado Exitoso",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -237,37 +245,50 @@ public class VistaTeclados extends JFrame {
             }
         };
 
+        ActionListener goTeclados = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //ctrlPres.enableVTeclados();
+            }
+        };
+
         ActionListener goAlfabetos = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVAlfabetos();
+                //ctrlPres.enableVAlfabeto();
             }
         };
 
-        ActionListener goTLP = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVTLP();
-            }
-        };
-
-        ActionListener importTecl = new ActionListener(){
+        ActionListener importT = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 imp = new JFileChooser();
                 int result = imp.showOpenDialog(act);
                 if (result == JFileChooser.APPROVE_OPTION){
                     File selected = imp.getSelectedFile();
-                    //ctrlPres.importTeclado(selected.getAbsolutePath());
+                    //ctrlPres.importTextos(selected.getAbsolutePath());
                 }
                 actualizarlistat();
             }
         };
 
-        ActionListener consultarteclado = new ActionListener() {
+        ActionListener importL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVerTeclado(teclados.getSelectedValue());
+                imp = new JFileChooser();
+                int result = imp.showOpenDialog(act);
+                if (result == JFileChooser.APPROVE_OPTION){
+                    File selected = imp.getSelectedFile();
+                    //ctrlPres.importListas(selected.getAbsolutePath());
+                }
+                actualizarlistat();
+            }
+        };
+
+        ActionListener consultar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //ctrlPres.enableVerTLP(tlps.getSelectedValue());
             }
         };
 
@@ -289,18 +310,20 @@ public class VistaTeclados extends JFrame {
         };
     
 
-        teclados.addListSelectionListener(clicarElemento);
-        bcrear.addActionListener(crearteclado);
+        tlps.addListSelectionListener(clicarElemento);
+        bcreart.addActionListener(crearT);
+        bcrearl.addActionListener(crearL);
+        bteclados.addActionListener(goTeclados);
         balfabetos.addActionListener(goAlfabetos);
-        btlp.addActionListener(goTLP);
-        bimportar.addActionListener(importTecl);
-        bmodificar.addActionListener(modificarteclado);
-        bborrar.addActionListener(borrarteclado);
+        bimportart.addActionListener(importT);
+        bimportarl.addActionListener(importL);
+        bmodificar.addActionListener(modificar);
+        bborrar.addActionListener(borrar);
         barrabusq.getDocument().addDocumentListener(find);
-        bconsultarT.addActionListener(consultarteclado);
+        bconsultarTLP.addActionListener(consultar);
     }
     
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaTeclados());
+        SwingUtilities.invokeLater(() -> new VistaTLP());
     }
 }

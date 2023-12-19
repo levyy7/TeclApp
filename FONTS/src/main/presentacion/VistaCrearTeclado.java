@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
+import java.io.File;
 import java.awt.event.FocusEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -21,8 +22,13 @@ public class VistaCrearTeclado extends JDialog {
     JLabel alfabeto;
     JTextField nameA;
 
-    JTextArea textos;
-    JTextArea listas;
+    JTextArea tlp;
+
+    JButton bimporttext;
+    JButton bimportlist;
+
+    JButton bct;
+    JButton bcl;
 
     JButton bit;
     JButton bil;
@@ -30,7 +36,7 @@ public class VistaCrearTeclado extends JDialog {
     JButton bcancel;
     JButton bcreate;
 
-    public VistaCrearTeclado(JFrame owner, String title) {
+    public VistaCrearTeclado(JFrame owner, String title, String name) {
         super(owner, title, true);
         setLocationRelativeTo(owner);
         setSize(670, 350);
@@ -40,7 +46,7 @@ public class VistaCrearTeclado extends JDialog {
         // Sección Norte (Arriba)
         JPanel panelNorte = new JPanel(new FlowLayout());
         nombre = new JLabel("Nombre: ");
-        nameT = new JTextField();
+        nameT = new JTextField(name);
         nameT.setPreferredSize(new Dimension(100, 20));
         panelNorte.add(nombre);
         panelNorte.add(nameT);
@@ -59,45 +65,47 @@ public class VistaCrearTeclado extends JDialog {
 
 
         // Sección CENTRO 
-        JPanel panelCentro = new JPanel(new GridLayout(3, 2, 5, 5));
+        JPanel panelCentro = new JPanel(new BorderLayout());
         panelCentro.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        JLabel t = new JLabel("Introduce textos:");
-        textos = new JTextArea();
-        textos.setPreferredSize(new Dimension(100, 1000));
-        textos.setLineWrap(true);
-        textos.setWrapStyleWord(true);
-        JScrollPane st = new JScrollPane(textos);
+        JLabel info = new JLabel("Introduce nombres de textos y/o listas de palabras con frecuencia:");
+        tlp = new JTextArea();
+        tlp.setPreferredSize(new Dimension(75, 1000));
+        tlp.setLineWrap(true);
+        tlp.setWrapStyleWord(true);
+        JScrollPane st = new JScrollPane(tlp);
 
-        JLabel l = new JLabel("Introduce listas de palabras con frecuencia:");
-        listas = new JTextArea();
-        listas.setPreferredSize(new Dimension(100, 1000));
-        listas.setLineWrap(true);
-        listas.setWrapStyleWord(true);
-        JScrollPane sl = new JScrollPane(listas);
 
         //panelCentro.add(Box.createRigidArea(new Dimension(20,0)));
 
         bit = new JButton("Enviar");
         bil = new JButton("Enviar");
 
-        panelCentro.add(t);
-        panelCentro.add(l);
-        panelCentro.add(st);
-        panelCentro.add(sl);
+        bimporttext = new JButton("Importar Texto");
+        bimportlist = new JButton("Importar Lista");
 
-        JPanel aux = new JPanel(new BorderLayout());
-        aux.add(Box.createRigidArea(new Dimension(200, 20)), BorderLayout.CENTER);
-        aux.add(Box.createRigidArea(new Dimension(20, 50)), BorderLayout.SOUTH);
-        aux.add(bit, BorderLayout.EAST);
+        bct = new JButton("Crear Texto");
+        bcl = new JButton("Crear Lista");
 
-        panelCentro.add(aux);
+        panelCentro.add(info, BorderLayout.NORTH);
+        JPanel aux = new JPanel();
+        aux.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        aux.add(Box.createRigidArea(new Dimension(5, 5)));
+        aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
+        aux.add(bct);
+        aux.add(Box.createRigidArea(new Dimension(10, 10)));
+        aux.add(bimporttext);
+        panelCentro.add(aux, BorderLayout.WEST);
 
-        aux = new JPanel(new BorderLayout());
-        aux.add(Box.createRigidArea(new Dimension(200, 20)), BorderLayout.CENTER);
-        aux.add(Box.createRigidArea(new Dimension(20, 50)), BorderLayout.SOUTH);
-        aux.add(bil, BorderLayout.EAST);
+        aux = new JPanel();
+        aux.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        aux.add(Box.createRigidArea(new Dimension(5, 5)));
+        aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
+        aux.add(bcl);
+        aux.add(Box.createRigidArea(new Dimension(10, 10)));
+        aux.add(bimportlist);
+        panelCentro.add(aux, BorderLayout.EAST);
 
-        panelCentro.add(aux);
+        panelCentro.add(st, BorderLayout.CENTER);
 
         general.add(panelCentro, BorderLayout.CENTER);
 
@@ -113,8 +121,68 @@ public class VistaCrearTeclado extends JDialog {
         setLocationRelativeTo(owner);
         getContentPane().add(general);
 
+        JDialog act = this;
+        ActionListener crear = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //recoger toda la informacion de la pantalla y pasarla al controlador de presentacion
+                String[] nameTLP = tlp.getText().split("\n");
+                //ctrlPres.createTeclado(nameT.getText(), nameA.getText(), nameTLP, selecAlgo.getSelectedItem())
+                dispose();
+            }
+        };
 
+        ActionListener cancelar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dispose();
+            }
+        };
 
+        ActionListener crearTexto = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //ctrlPres.enableVCrearTexto(this)
+            }
+        };
+
+        ActionListener crearLista = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //ctrlPres.enableVCrearLista(this)
+            }
+        };
+
+        ActionListener importarTexto = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                JFileChooser imp = new JFileChooser();
+                int result = imp.showOpenDialog(act);
+                if (result == JFileChooser.APPROVE_OPTION){
+                    File selected = imp.getSelectedFile();
+                    //ctrlPres.importTextos(selected.getAbsolutePath());
+                }
+            }
+        };
+
+        ActionListener importarLista = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                JFileChooser imp = new JFileChooser();
+                int result = imp.showOpenDialog(act);
+                if (result == JFileChooser.APPROVE_OPTION){
+                    File selected = imp.getSelectedFile();
+                    //ctrlPres.importListas(selected.getAbsolutePath());
+                }
+            }
+        };
+
+        bcreate.addActionListener(crear);
+        bcancel.addActionListener(cancelar);
+        bct.addActionListener(crearTexto);
+        bcl.addActionListener(crearLista);
+        bimporttext.addActionListener(importarTexto);
+        bimportlist.addActionListener(importarLista);
 
         //los botones enviar recogen la info y la guardan es strings
         //boton crear -> recoge todo y crea el teclado
