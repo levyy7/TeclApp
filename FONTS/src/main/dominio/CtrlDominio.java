@@ -2,8 +2,8 @@ package main.dominio;
 import Excepcions.*;
 import main.dominio.*;
 import main.persistencia.CtrlPersistencia;
+import main.presentacion.CtrlPresentacion;
 
-import java.util.ArrayList;
 import java.util.*;
 import java.awt.geom.Point2D;
 
@@ -16,17 +16,22 @@ import java.awt.geom.Point2D;
 */
 public class CtrlDominio {
 
+    private static final CtrlDominio INSTANCE = new CtrlDominio();
+
     /** Contiene la instancia del controlador de entrada*/
     private static CtrlEntrada ctrlE;
 
     /** Contiene la instancia del controlador de algoritmo*/
     private static CtrlAlgoritmo ctrlA;
 
+
+    private static CtrlPresentacion ctrlPre = CtrlPresentacion.getInstance();
+
     /**
      * Constructora por defecto que instancia los controladores y carga
      * los datos necesarios de persistencia
     */
-    public CtrlDominio() {
+    private CtrlDominio() {
         CtrlPersistencia.inicializar();
         String[][] teclados = CtrlPersistencia.cargarTeclados();
         String[][] alfabetos = CtrlPersistencia.cargarAlfabetos();
@@ -35,6 +40,10 @@ public class CtrlDominio {
 
         ctrlE = new CtrlEntrada(teclados, alfabetos, textos, listas);
         ctrlA = new CtrlAlgoritmo();
+    }
+
+    public static CtrlDominio getInstance() {
+        return INSTANCE;
     }
 
     /**
@@ -93,16 +102,20 @@ public class CtrlDominio {
      * Si el formato o el Path está mal definido salta una excepción.
      * @param path
     */
-    public void importarTeclados(String path) {
+    public String[][] importarTeclados(String path) {
         try {
             String[][] teclados = CtrlPersistencia.cargarTeclados(path);
             ctrlE.importarTeclados(teclados);
             for (String[] actual : teclados) CtrlPersistencia.guardarTeclado(actual);
+
+            String[][] croppedTec = new String[teclados.length][3];
+            for (int i = 0; i < teclados.length; ++i) croppedTec[i] = teclados[i];
+            return croppedTec;
         }
         catch (TecladoYaExiste e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (TecladoMalImportado e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     }
 
     /**
@@ -218,16 +231,18 @@ public class CtrlDominio {
      * Si el formato o el Path está mal definido salta una excepción.
      * @param path
     */
-    public void importarAlfabetos(String path) {
+    public String[][] importarAlfabetos(String path) {
         try {
             String[][] alfabetos = CtrlPersistencia.cargarAlfabetos(path);
             ctrlE.importarAlfabetos(alfabetos);
             for (String[] actual : alfabetos) CtrlPersistencia.guardarAlfabeto(actual);
+
+            return alfabetos;
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (AlfabetoMalImportado e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     }
 
     /**
@@ -294,16 +309,18 @@ public class CtrlDominio {
      * Si el formato o el Path está mal definido salta una excepción.
      * @param path
     */
-    public void importarTextos(String path) {
+    public String[][] importarTextos(String path) {
         try {
             String[][] textos = CtrlPersistencia.cargarTextos(path);
             ctrlE.importarTextos(textos);
             for (String[] actual : textos) CtrlPersistencia.guardarTexto(actual);
+
+            return textos;
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (TextoMalImportado e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     
     }
     
@@ -368,16 +385,18 @@ public class CtrlDominio {
      * Si el formato o el Path está mal definido salta una excepción.
      * @param path
     */
-    public void importarListasPalabras(String path) {
+    public String[][] importarListasPalabras(String path) {
         try {
             String[][] listas = CtrlPersistencia.cargarListas(path);
             ctrlE.importarListasPalabras(listas);
             for (String[] actual : listas) CtrlPersistencia.guardarLista(actual);
+
+            return listas;
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (ListaMalImportada e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         
     }
     
