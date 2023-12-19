@@ -72,7 +72,7 @@ public class GestorCSV {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
         return info.toArray(new String[info.size()][]);
 	}
 

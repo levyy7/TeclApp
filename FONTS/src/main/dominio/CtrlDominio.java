@@ -101,6 +101,8 @@ public class CtrlDominio {
         }
         catch (TecladoYaExiste e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (TecladoMalImportado e)
+            {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -224,6 +226,8 @@ public class CtrlDominio {
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (AlfabetoMalImportado e)
+            {System.out.println("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -298,6 +302,9 @@ public class CtrlDominio {
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (TextoMalImportado e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+    
     }
     
 
@@ -369,6 +376,9 @@ public class CtrlDominio {
         }
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); return;}
+        catch (ListaMalImportada e)
+            {System.out.println("Error: "+e.getMessage()); return;}
+        
     }
     
 

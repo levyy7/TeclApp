@@ -147,11 +147,41 @@ public class CtrlEntrada{
      * @param teclados : teclados a importar
      * @throws TecladoYaExiste
     */
-	public void importarTeclados(String[][] teclados) throws TecladoYaExiste {
+	public void importarTeclados(String[][] teclados) throws TecladoYaExiste, TecladoMalImportado {
 
+		String[] nombres = new String[teclados.length];
+		int i = 0;
 		for (String[] tecladoActual : teclados) {
+
+	        if (tecladoActual.length != 4) throw new TecladoMalImportado("Tamanyo");
+
 			Teclado tec = new Teclado(tecladoActual);
-			if (this.teclados.containsKey(tec.getNombre())) throw new TecladoYaExiste(tec.getNombre());
+
+			Input alfabeto = inputs.get(tec.getAlfabeto());
+
+			if (this.teclados.containsKey(tec.getNombre())) 
+				throw new TecladoYaExiste(tec.getNombre());
+
+	        else if (!tec.getAlgoritmo().equals("QAP") && !tec.getAlgoritmo().equals("GEN")) 
+	        	throw new TecladoMalImportado("Algoritmo");
+
+	        else if (alfabeto == null)	throw new TecladoMalImportado("Alfabeto no existe");
+
+	        else if (!(alfabeto instanceof Alfabeto))
+	        	throw new TecladoMalImportado("Alfabeto no existe");
+
+	        Alfabeto alf = (Alfabeto) alfabeto;
+	        String infoAlf = alf.getLetras();
+	        if (!comproE.layoutCorrespondeAlfabeto(infoAlf, tec.getLayout()))
+	        	throw new TecladoMalImportado("Layout");
+
+	        for (String nombre : nombres) {
+	        	if (nombre == null) break;
+	        	if (nombre.equals(tec.getNombre())) 
+	        		throw new TecladoMalImportado("Nombre repetido");
+	        }
+	        nombres[i] = tec.getNombre();
+	        ++i;
 		}
 
 		for (String[] tecladoActual : teclados) {
@@ -226,7 +256,7 @@ public class CtrlEntrada{
     */
 	public void crearAlfabeto(String nAlfa, String alfa) throws InputJaCreat, AlfabetoInvalido {
 		if(inputs.containsKey(nAlfa)) throw new InputJaCreat(nAlfa);
-		if(comproE.AlfaCorrecto(alfa) == false) throw new AlfabetoInvalido(nAlfa);
+		if(comproE.alfaCorrecto(alfa) == false) throw new AlfabetoInvalido(nAlfa);
 		Input in = new Alfabeto(nAlfa, alfa);
 		inputs.put(nAlfa, in);
 	}
@@ -236,10 +266,31 @@ public class CtrlEntrada{
      * @param alfabetos : alfabetos a importar
      * @throws InputJaCreat
     */
-	public void importarAlfabetos(String[][] alfabetos) throws InputJaCreat {
+	public void importarAlfabetos(String[][] alfabetos) throws InputJaCreat, AlfabetoMalImportado {
+		
+		String[] nombres = new String[alfabetos.length];
+		int i = 0;
 		for (String[] alfabetoActual : alfabetos) {
-			Input in = new Alfabeto(alfabetoActual);
-			if(inputs.containsKey(in.getNombre())) throw new InputJaCreat(in.getNombre());
+
+			if (alfabetoActual.length != 2) 
+				throw new AlfabetoMalImportado("Tamanyo");
+			
+			Input in = new Alfabeto(alfabetoActual);	
+			if (inputs.containsKey(in.getNombre())) 
+				throw new InputJaCreat(in.getNombre());
+
+			Alfabeto alf = (Alfabeto) in;
+			if (!comproE.alfaCorrecto(alf.getLetras())) 
+				throw new AlfabetoMalImportado("Caracteres repetidos");
+			
+			for (String nombreActual : nombres) {
+				if (nombreActual == null) break;
+				if (nombreActual.equals(in.getNombre())) 
+					throw new AlfabetoMalImportado("Nombre repetido");
+			}
+
+			nombres[i] = in.getNombre();
+			++i;
 		}
 
 		for (String[] alfabetoActual : alfabetos) {
@@ -278,7 +329,7 @@ public class CtrlEntrada{
 			Teclado board = texplorado.getValue();
 			if (board.getAlfabeto() == nombreAlfabeto) throw new AlfabetoUsandose(nombreAlfabeto);
 		}
-		if(comproE.AlfaCorrecto(alfabetoNuevo) == false) throw new AlfabetoInvalido(nombreAlfabeto);
+		if(comproE.alfaCorrecto(alfabetoNuevo) == false) throw new AlfabetoInvalido(nombreAlfabeto);
 		
 		Alfabeto alf =  (Alfabeto) inputs.get(nombreAlfabeto);
 		
@@ -324,10 +375,24 @@ public class CtrlEntrada{
      * @param textos : textos a importar
      * @throws InputJaCreat
     */
-	public void importarTextos(String[][] textos) throws InputJaCreat {
+	public void importarTextos(String[][] textos) throws InputJaCreat, TextoMalImportado {
+		
+		String[] nombres = new String[textos.length];
+		int i = 0;
 		for (String[] textoActual : textos) {
+
+			if (textoActual.length != 2) throw new TextoMalImportado("Tamanyo");
+
 			Input in = new Texto(textoActual);
 			if(inputs.containsKey(in.getNombre())) throw new InputJaCreat(in.getNombre());
+			
+			for (String nombreActual : nombres) {
+				if (nombreActual == null) break;
+				if (nombreActual.equals(in.getNombre())) 
+					throw new TextoMalImportado("Nombre repetido");
+			}
+			nombres[i] = in.getNombre();
+			++i;
 		}
 
 		for (String[] textoActual : textos) {
@@ -398,10 +463,27 @@ public class CtrlEntrada{
      * @param listas : listas a importar
      * @throws InputJaCreat
     */
-	public void importarListasPalabras(String[][] listas) throws InputJaCreat {
+	public void importarListasPalabras(String[][] listas) throws InputJaCreat, ListaMalImportada {
+		
+		String[] nombres = new String[listas.length];
+		int i = 0;
 		for (String[] listaActual : listas) {
+
+			if (listaActual.length != 2) throw new ListaMalImportada("Tamanyo");
+
+			else if (!comproE.listaBienDefinida(listaActual[1]))
+				throw new ListaMalImportada("Lista mal definida");
+
 			Input in = new ListaPalabras(listaActual);
 			if(inputs.containsKey(in.getNombre())) throw new InputJaCreat(in.getNombre());
+		
+			for (String nombreActual : nombres) {
+				if (nombreActual == null) break;
+				if (nombreActual.equals(in.getNombre())) 
+					throw new ListaMalImportada("Nombre repetido");
+			}
+			nombres[i] = in.getNombre();
+			++i;
 		}
 
 		for (String[] listaActual : listas) {
@@ -483,7 +565,7 @@ public class CtrlEntrada{
      * @throws TextoNoValido
     */
 	public void compruebaTextos(Vector<String> textos, String alfabeto) throws TextoNoValido{
-		if(comproE.TextoCorrecto(textos, alfabeto) == false) throw new TextoNoValido();
+		if(comproE.textoCorrecto(textos, alfabeto) == false) throw new TextoNoValido();
 	}
 
 	/**
@@ -493,7 +575,7 @@ public class CtrlEntrada{
      * @throws ListaNoValida
     */
 	public void compruebaListas(Vector<Map<String, Integer>> listas, String alfabeto) throws ListaNoValida{
-		if(comproE.ListaCorrecto(listas, alfabeto) == false) throw new ListaNoValida();
+		if(comproE.listaCorrecto(listas, alfabeto) == false) throw new ListaNoValida();
 	}
 
 	/**
