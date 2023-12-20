@@ -39,20 +39,19 @@ public class DriverDominio {
         System.out.println("13 = Modificar lista de palabras");
 
         System.out.println("14 = Borrar alfabeto");
-        System.out.println("15 = Borrar texto");
-        System.out.println("16 = Borrar lista de palabras");
+        System.out.println("15 = Borrar TLP");
 
-        System.out.println("17 = Consultar teclados");
-        System.out.println("18 = Consultar teclado");
+        System.out.println("16 = Consultar teclados");
+        System.out.println("17 = Consultar teclado");
 
-        System.out.println("19 = Consultar alfabetos");
-        System.out.println("20 = Consultar alfabeto");
+        System.out.println("18 = Consultar alfabetos");
+        System.out.println("19 = Consultar alfabeto");
 
-        System.out.println("21 = Consultar textos");
-        System.out.println("22 = Consultar texto");
+        System.out.println("20 = Consultar textos");
+        System.out.println("21 = Consultar texto");
 
-        System.out.println("23 = Consultar listas");
-        System.out.println("24 = Consultar lista");
+        System.out.println("22 = Consultar listas");
+        System.out.println("23 = Consultar lista");
         
         System.out.println("33 = Salir");
 	}
@@ -350,19 +349,15 @@ public class DriverDominio {
         System.out.print("Introduce el nombre del teclado a modificar: ");
         String nombreTeclado = tec.nextLine();
 
+        System.out.print("Introduce el nombre del algoritmo a utilizar: ");
+        String nombreAlgoritmo = tec.nextLine();
+
         String[] textos = introducirTextos();
 
-        System.out.println("Quieres modificar el alfabeto?");
-        System.out.println("Y = Si");
-        System.out.println("N = No");
-        String modif = tec.nextLine();
+        System.out.print("Introduce el nombre del nuevo alfabeto: ");
+        String alfabeto = tec.nextLine();
 
-        if (modif == "Y") {
-            System.out.print("Introduce el nombre del nuevo alfabeto: ");
-            String alfabeto = tec.nextLine();
-            ctrlD.modificarTeclado(nombreTeclado, alfabeto, textos);
-        }
-        else ctrlD.modificarTeclado(nombreTeclado, textos);
+        ctrlD.modificarTeclado(nombreTeclado, nombreAlgoritmo, alfabeto, textos);
     }
 
     /** Función que se encarga de comprobar la modificación de un alfabeto */
@@ -419,31 +414,20 @@ public class DriverDominio {
         ctrlD.borrarAlfabeto(nombreAlfabeto);
     }
 
-    /** Función que se encarga de comprobar el borrado de un texto */
-    private static void borrarTexto() {
+    /** Función que se encarga de comprobar el borrado de un TLP*/
+    private static void borrarTLP() {
 
         Scanner tec = new Scanner(System.in);
 
-        System.out.print("Escribe el nombre del texto a borrar: ");
-        String nombreTexto = tec.nextLine();
-        
-        ctrlD.borrarAlfabeto(nombreTexto);
-    }
+        System.out.print("Escribe el nombre del TLP a borrar: ");
+        String nombreTLP = tec.nextLine();
 
-    /** Función que se encarga de comprobar el borrado de una lista */
-    private static void borrarListaPalabras() {
-
-        Scanner tec = new Scanner(System.in);
-
-        System.out.print("Escribe el nombre de la lista a borrar: ");
-        String nombreLista = tec.nextLine();
-
-        ctrlD.borrarListaPalabras(nombreLista);
+        ctrlD.borrarTLP(nombreTLP);
     }
 
 	public static void main(String[] args) {
         
-		ctrlD = new CtrlDominio();
+		ctrlD = CtrlDominio.getInstance();
         Scanner tec = new Scanner (System.in);
 
 		GuiaInstrucciones();
@@ -476,20 +460,19 @@ public class DriverDominio {
                 case 13: modificarListaPalabras(); break;
 
                 case 14: borrarAlfabeto(); break;
-                case 15: borrarTexto(); break;
-                case 16: borrarListaPalabras(); break;
+                case 15: borrarTLP(); break;
 
-                case 17: consultarTeclados(); break;
-                case 18: consultarTeclado(); break;
+                case 16: consultarTeclados(); break;
+                case 17: consultarTeclado(); break;
 
-                case 19: consultarAlfabetos(); break;
-                case 20: consultarAlfabeto(); break;
+                case 18: consultarAlfabetos(); break;
+                case 19: consultarAlfabeto(); break;
 
-                case 21: consultarTextos(); break;
-                case 22: consultarTexto(); break;
+                case 20: consultarTextos(); break;
+                case 21: consultarTexto(); break;
 
-                case 23: consultarListas(); break;
-                case 24: consultarLista(); break;
+                case 22: consultarListas(); break;
+                case 23: consultarLista(); break;
 
                 case 33: salir = true; break;
             }

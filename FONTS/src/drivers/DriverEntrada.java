@@ -37,21 +37,20 @@ public class DriverEntrada {
 		System.out.println("6 = Modificar Lista de palabras con frecuencia");
 
 		System.out.println("7 = Borrar Alfabeto");
-		System.out.println("8 = Borrar Texto");
-		System.out.println("9 = Borrar Lista de palabras con frecuencia");
-		System.out.println("10 = Borrar Teclado");
+		System.out.println("8 = Borrar TLP");
+		System.out.println("9 = Borrar Teclado");
 
-		System.out.println("11 = Consultar alfabetos");
-        System.out.println("12 = Consultar alfabeto");
+		System.out.println("10 = Consultar alfabetos");
+        System.out.println("11 = Consultar alfabeto");
 
-        System.out.println("13 = Consultar textos");
-        System.out.println("14 = Consultar texto");
+        System.out.println("12 = Consultar textos");
+        System.out.println("13 = Consultar texto");
 
-        System.out.println("15 = Consultar listas");
-        System.out.println("16 = Consultar lista");
+        System.out.println("14 = Consultar listas");
+        System.out.println("15 = Consultar lista");
 
-		System.out.println("17 = Consultar teclados");
-		System.out.println("18 = Consultar teclado");
+		System.out.println("16 = Consultar teclados");
+		System.out.println("17 = Consultar teclado");
 
 		System.out.println("33 = Salir");
 	}
@@ -231,34 +230,19 @@ public class DriverEntrada {
 	}
 
     /**
-     * Permite al usuario borrar un texto existente.
-     */
-	private static void borrarTexto(){
-		Scanner tec = new Scanner(System.in);
-		System.out.print("Introduce el nombre del texto a borrar: ");
-		String name = tec.nextLine();	
+     * Permite al usuario borrar un TLP existente
+    */
+    private static void borrarTLP() {
+        Scanner tec = new Scanner(System.in);
+        System.out.print("Introduce el nombre del TLP a borrar: ");
+        String nombreTLP = tec.nextLine();   
 
-		try {ctrlE.borrarTexto(name);}
+        try {ctrlE.borrarTLP(nombreTLP);}
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}	
-	}
-
-    /**
-     * Permite al usuario borrar una lista de palabras con frecuencia existente.
-     */
-	private static void borrarListaPalabras(){
-		Scanner tec = new Scanner(System.in);
-		System.out.print("Introduce el nombre de la lista de palabras con frecuencia a borrar: ");
-		String name = tec.nextLine();	
-
-		try{ctrlE.borrarListaPalabras(name);}
-        catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-        catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}	
-	}
+            {System.out.println("Error: "+e.getMessage()); return;} 
+    }
 
     /**
      * Permite al usuario borrar un teclado existente.
@@ -453,21 +437,20 @@ public class DriverEntrada {
                 case 6: modificarListaPalabras(); break;
 
                 case 7: borrarAlfabeto(); break;
-                case 8: borrarTexto(); break;
-                case 9: borrarListaPalabras(); break;
-				case 10: borrarTeclado(); break;
+                case 8: borrarTLP(); break;
+				case 9: borrarTeclado(); break;
 
-                case 11: consultarAlfabetos(); break;
-                case 12: consultarAlfabeto(); break;
+                case 10: consultarAlfabetos(); break;
+                case 11: consultarAlfabeto(); break;
 
-                case 13: consultarTextos(); break;
-                case 14: consultarTexto(); break;
+                case 12: consultarTextos(); break;
+                case 13: consultarTexto(); break;
 
-                case 15: consultarListas(); break;
-                case 16: consultarLista(); break;
+                case 14: consultarListas(); break;
+                case 15: consultarLista(); break;
 
-                case 17: consultarTeclados(); break;
-                case 18: consultarTeclado(); break;
+                case 16: consultarTeclados(); break;
+                case 17: consultarTeclado(); break;
 
                 case 33: salir = true; break;
             }
