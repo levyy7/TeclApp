@@ -116,6 +116,8 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (TecladoMalImportado e)
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     }
 
     /**
@@ -224,6 +226,8 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (AlfabetoMalImportado e)
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     }
 
     /**
@@ -302,7 +306,8 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (TextoMalImportado e)
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
-    
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     }    
 
     /**
@@ -375,7 +380,8 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
         catch (ListaMalImportada e)
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
-        
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     }
     
     /**
