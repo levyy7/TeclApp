@@ -19,7 +19,7 @@ public class VistaModificarAlfabeto extends JDialog {
     private JLabel nombre;
     private JTextArea valorA;
     private JButton bcancel;
-    private JButton bcreate;
+    private JButton bmodificar;
 
 	private void inicializar() {
         setSize(300, 200);
@@ -49,9 +49,9 @@ public class VistaModificarAlfabeto extends JDialog {
 		String resultado = "";
         int j = 0;
 		for (int i = 0; i < a.length; i += 1) {
-            resultado += a[i]+", ";
+            resultado += a[i];
             j += 1;
-			if(j > 9){
+			if(j > 20){
                 j = 0;
                 resultado += "\n";
             }
@@ -69,15 +69,32 @@ public class VistaModificarAlfabeto extends JDialog {
 
         JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bcancel = new JButton("Cancelar");
-        bcreate = new JButton("Modificar");
+        bmodificar = new JButton("Modificar");
         panelSur.add(bcancel);
-        panelSur.add(bcreate);
+        panelSur.add(bmodificar);
         general.add(panelSur, BorderLayout.SOUTH);
 
+        ActionListener modificar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                String alfabet = valorA.getText().replaceAll("[\n\r]", "");
+                //ctrlPres.createAlfabeto(alfabet);
+                dispose();
+            }
+        };
 
+        ActionListener cancelar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dispose();
+            }
+        };
 
         setLocationRelativeTo(null);
         getContentPane().add(general);
+
+        bmodificar.addActionListener(modificar);
+        bcancel.addActionListener(cancelar);
     }
 
 
