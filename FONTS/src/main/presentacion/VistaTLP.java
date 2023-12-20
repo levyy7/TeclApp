@@ -50,8 +50,10 @@ public class VistaTLP extends JFrame {
      */
     private void inicializar() {
         setSize(700, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         
         general = new JPanel(new BorderLayout());
         
