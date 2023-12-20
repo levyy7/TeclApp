@@ -17,7 +17,10 @@ import javax.swing.event.DocumentListener;
 import main.presentacion.*;
 
 
-
+/**
+ * La clase VistaTLP representa la interfaz gráfica de usuario para la gestión de textos y listas de palabras.
+ * @author Mariona Aguilera Folqué
+ */
 public class VistaTLP extends JFrame {
 
     private JPanel general;
@@ -42,7 +45,9 @@ public class VistaTLP extends JFrame {
     private  DefaultListModel<String> listat;
     private JList<String> tlps;
 
-
+    /**
+     * Inicializa la interfaz gráfica y sus componentes.
+     */
     private void inicializar() {
         setSize(700, 400);
         setVisible(true);
@@ -63,6 +68,13 @@ public class VistaTLP extends JFrame {
          */
     }
 
+    /**
+     * Crea un botón con el texto especificado y lo agrega al contenedor.
+     *
+     * @param text      Texto del botón.
+     * @param container Contenedor al que se agregará el botón.
+     * @return JButton creado.
+     */
     private JButton iniButton(String text, Container container) {
         JButton button = new JButton(text);
         //button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -70,11 +82,20 @@ public class VistaTLP extends JFrame {
         return button;
     }
 
+    /**
+     * Actualiza la lista de textos y listas de palabras en la interfaz gráfica.
+     */
     private void actualizarlistat(){
         //listat.removeAllElements();
         //listat.addAll(ctrlPres.getALLTLP());
     }
 
+    /**
+     * Muestra un cuadro de diálogo para confirmar una operación de borrado.
+     *
+     * @param name Nombre del texto o lista a borrar.
+     * @return true si se confirma el borrado, false si se cancela.
+     */
     private Boolean areyousure(String name){
         int confirmacion = JOptionPane.showConfirmDialog(
                         this,
@@ -85,6 +106,9 @@ public class VistaTLP extends JFrame {
         return (confirmacion == JOptionPane.YES_OPTION);
     }
 
+    /**
+     * Filtra la lista de textos y listas según el texto de búsqueda.
+     */
     private void buscando(){
         String textoBusqueda = barrabusq.getText().toLowerCase();
         DefaultListModel<String> listaFiltrada = new DefaultListModel<>();
@@ -101,6 +125,9 @@ public class VistaTLP extends JFrame {
         tlps.setModel(listaFiltrada);
     }
 
+    /**
+     * Constructor de la clase VistaTLP.
+    */
     public VistaTLP(){
         super("Creadora de Teclados");
         inicializar();

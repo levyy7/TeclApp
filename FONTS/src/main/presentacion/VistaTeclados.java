@@ -17,7 +17,10 @@ import javax.swing.event.DocumentListener;
 import main.presentacion.*;
 
 
-
+/**
+ * La clase VistaTeclados representa la interfaz gráfica de usuario para la gestión de teclados.
+ * @author Mariona Aguilera Folqué
+ */
 public class VistaTeclados extends JFrame {
 
     private JPanel general;
@@ -40,7 +43,9 @@ public class VistaTeclados extends JFrame {
     private  DefaultListModel<String> listat;
     private JList<String> teclados;
 
-
+    /**
+     * Inicializa la interfaz gráfica y sus componentes.
+     */
     private void inicializar() {
         setSize(700, 400);
         setVisible(true);
@@ -61,6 +66,13 @@ public class VistaTeclados extends JFrame {
          */
     }
 
+    /**
+     * Crea un botón con el texto especificado y lo agrega al contenedor.
+     *
+     * @param text      Texto del botón.
+     * @param container Contenedor al que se agregará el botón.
+     * @return JButton creado.
+     */
     private JButton iniButton(String text, Container container) {
         JButton button = new JButton(text);
         //button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -68,11 +80,20 @@ public class VistaTeclados extends JFrame {
         return button;
     }
 
+    /**
+     * Actualiza la lista de teclados en la interfaz gráfica.
+     */
     private void actualizarlistat(){
         //listat.removeAllElements();
         //listat.addAll(ctrlPres.getAllTeclados());
     }
 
+    /**
+     * Muestra un cuadro de diálogo para confirmar una operación de borrado.
+     *
+     * @param name Nombre del teclado a borrar.
+     * @return true si se confirma el borrado, false si se cancela.
+     */
     private Boolean areyousure(String name){
         int confirmacion = JOptionPane.showConfirmDialog(
                         this,
@@ -83,6 +104,9 @@ public class VistaTeclados extends JFrame {
         return (confirmacion == JOptionPane.YES_OPTION);
     }
 
+    /**
+     * Filtra la lista de teclados según el texto de búsqueda.
+     */
     private void buscando(){
         String textoBusqueda = barrabusq.getText().toLowerCase();
         DefaultListModel<String> listaFiltrada = new DefaultListModel<>();
@@ -99,6 +123,9 @@ public class VistaTeclados extends JFrame {
         teclados.setModel(listaFiltrada);
     }
 
+    /**
+     * Constructor de la clase VistaTeclados.
+    */
     public VistaTeclados(){
         super("Creadora de Teclados");
         inicializar();

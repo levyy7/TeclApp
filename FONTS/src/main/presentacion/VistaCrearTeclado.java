@@ -10,6 +10,10 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.*;
 
+/**
+ * La clase VistaCrearTeclado representa la interfaz gráfica de usuario para la creación de teclados.
+ * @author Mariona Aguilera Folqué
+ */
 public class VistaCrearTeclado extends JDialog {
 
     JPanel general;
@@ -36,6 +40,13 @@ public class VistaCrearTeclado extends JDialog {
     JButton bcancel;
     JButton bcreate;
 
+    /**
+     * Constructor de la clase VistaCrearTeclado.
+     *
+     * @param owner Ventana principal propietaria de este diálogo.
+     * @param title Título del diálogo.
+     * @param name Nombre inicial para el teclado.
+     */
     public VistaCrearTeclado(JFrame owner, String title, String name) {
         super(owner, title, true);
         setLocationRelativeTo(owner);
@@ -122,6 +133,10 @@ public class VistaCrearTeclado extends JDialog {
         getContentPane().add(general);
 
         JDialog act = this;
+
+        /**
+         * ActionListener para el botón "Crear", recoge la información y crea el teclado.
+         */
         ActionListener crear = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -131,7 +146,9 @@ public class VistaCrearTeclado extends JDialog {
                 dispose();
             }
         };
-
+        /**
+         * ActionListener para el botón "Cancelar", cierra la ventana sin realizar ninguna acción.
+         */
         ActionListener cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -139,6 +156,9 @@ public class VistaCrearTeclado extends JDialog {
             }
         };
 
+        /**
+         * ActionListener para el botón "Crear Texto", habilita la interfaz para la creación de texto.
+         */
         ActionListener crearTexto = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -146,6 +166,9 @@ public class VistaCrearTeclado extends JDialog {
             }
         };
 
+        /**
+         * ActionListener para el botón "Crear Lista", habilita la interfaz para la creación de lista.
+         */
         ActionListener crearLista = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -153,6 +176,9 @@ public class VistaCrearTeclado extends JDialog {
             }
         };
 
+        /**
+         * ActionListener para el botón "Importar Texto", permite al usuario seleccionar un archivo de texto para importar.
+         */
         ActionListener importarTexto = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -165,6 +191,9 @@ public class VistaCrearTeclado extends JDialog {
             }
         };
 
+        /**
+         * ActionListener para el botón "Importar Lista", permite al usuario seleccionar un archivo de lista para importar.
+         */
         ActionListener importarLista = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
