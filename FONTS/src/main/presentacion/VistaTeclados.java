@@ -21,7 +21,7 @@ import main.presentacion.*;
  * La clase VistaTeclados representa la interfaz gráfica de usuario para la gestión de teclados.
  * @author Mariona Aguilera Folqué
  */
-public class VistaTeclados extends JFrame {
+public class VistaTeclados extends JPanel {
 
     private JPanel general;
     private JPanel menuSup;
@@ -44,26 +44,20 @@ public class VistaTeclados extends JFrame {
     private JList<String> teclados;
 
     /**
-     * Inicializa la interfaz gráfica y sus componentes.
+     * Inicializa los componentes.
      */
     private void inicializar() {
-        setSize(700, 400);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-        
         general = new JPanel(new BorderLayout());
-        
+       
         listat = new DefaultListModel<String>();
         for(int i = 0; i<15; ++i) {
             listat.addElement(String.valueOf(i));
         }
         teclados = new JList<String>(listat);
-
+        
         /*
          * listat = new DefaultListModel<String>();
-         * listat.addAll(ctrlPres.getAllTeclados());
+         * listat.addAll(CtrlPresentacion.getInstance().getAllTeclados());
          * teclados = new JList<String>(listat);
          */
     }
@@ -83,11 +77,17 @@ public class VistaTeclados extends JFrame {
     }
 
     /**
-     * Actualiza la lista de teclados en la interfaz gráfica.
+     * Busqueda del elemento la lista de teclados en la interfaz gráfica.
+     * @param elemento nombre del teclado a buscar.
+     * @return elemento encontrado.
      */
-    private void actualizarlistat(){
-        //listat.removeAllElements();
-        //listat.addAll(ctrlPres.getAllTeclados());
+    private Boolean buscarElemento(String elemento) {
+        for (int i = 0; i < listat.size(); i++) {
+            if (listat.getElementAt(i).equals(elemento)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -128,8 +128,8 @@ public class VistaTeclados extends JFrame {
     /**
      * Constructor de la clase VistaTeclados.
     */
-    public VistaTeclados(){
-        super("Creadora de Teclados");
+    public VistaTeclados(JFrame padre){
+        super();
         inicializar();
 
         //MENU SUPERIOR
@@ -185,10 +185,8 @@ public class VistaTeclados extends JFrame {
 
         //PARTE INFERIOR
         general.add(Box.createRigidArea(new Dimension(10,10)), BorderLayout.SOUTH);
-
         
-        setLocationRelativeTo(null);
-        getContentPane().add(general);
+        add(general);
 
         //FUNCIONALIDADES ESTETICAS
         FocusListener borrarTexto = new FocusListener() {
@@ -207,6 +205,9 @@ public class VistaTeclados extends JFrame {
         barrabusq.addFocusListener(borrarTexto);
 
         //FUNCIONALIDADES DE LOS BOTONES
+
+        JPanel act = this;
+        CtrlPresentacion cp = CtrlPresentacion.getInstance();
         
         ListSelectionListener clicarElemento = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -222,25 +223,25 @@ public class VistaTeclados extends JFrame {
                 }
             }
         }; 
-
-        JFrame act = this;
         ActionListener crearteclado = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-
-                //supongo que se tiene que hacer desde el controlador
-                VistaCrearTeclado vct = new VistaCrearTeclado(act, "Crear Teclado", "");
+                VistaCMTeclado vct = new VistaCMTeclado(padre, "Crear Teclado", "");
                 vct.setVisible(true);
-                actualizarlistat();
+                String[] info = vct.getData();
+                cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
+                listat.addElement(info[0]);
             }
         };
 
         ActionListener modificarteclado = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VistaCrearTeclado vct = new VistaCrearTeclado(act, "Modificar Teclado", teclados.getSelectedValue());
-                vct.setVisible(true);
-                actualizarlistat();
+                VistaCMTeclado vct = new VistaCMTeclado(padre, "Modificar Teclado", teclados.getSelectedValue());
+                String[] info = vct.getData();
+                String[] n = cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
+                for(int i = 0; i<listat.size(); ++i)
+                    if(!buscarElemento(n[0])) listat.addElement(n[0]);
             }
         };
 
@@ -249,34 +250,34 @@ public class VistaTeclados extends JFrame {
             public void actionPerformed(ActionEvent e){
                 Boolean res = areyousure(teclados.getSelectedValue());
                 if(res) {
-                    //ctrPres.deleteTeclado(teclados.getSelectedValue());
-                    JOptionPane.showMessageDialog(act,
+                    listat.removeElement(teclados.getSelectedValue());
+                    JOptionPane.showMessageDialog(padre,
                             "Teclado borrado correctamente.",
                             "Borrado Exitoso",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    JOptionPane.showMessageDialog(act,
+                    JOptionPane.showMessageDialog(padre,
                             "Operación de borrado cancelada.",
                             "Cancelado",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
-                actualizarlistat();
             }
         };
 
         ActionListener goAlfabetos = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVAlfabetos();
+                padre.getContentPane().add(new VistaAlfabetos(padre));
+                act.setVisible(false);
             }
         };
 
         ActionListener goTLP = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVTLP();
+                padre.getContentPane().add(new VistaTLP(padre));
+                act.setVisible(false);
             }
         };
 
@@ -284,19 +285,23 @@ public class VistaTeclados extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
+                int result = imp.showOpenDialog(padre);
                 if (result == JFileChooser.APPROVE_OPTION){
                     File selected = imp.getSelectedFile();
-                    //ctrlPres.importTeclado(selected.getAbsolutePath());
+                    String[][] tt = cp.importTeclados(selected.getAbsolutePath());
+                    for(int i = 0; i< tt.length; ++i) {
+                        listat.addElement(tt[i][0]);
+                    }
                 }
-                actualizarlistat();
+                
             }
         };
 
         ActionListener consultarteclado = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVerTeclado(teclados.getSelectedValue());
+                //VistaVerTeclado vct = new VistaVerTeclado(padre);
+                //vct.setVisible(true);
             }
         };
 
@@ -327,9 +332,5 @@ public class VistaTeclados extends JFrame {
         bborrar.addActionListener(borrarteclado);
         barrabusq.getDocument().addDocumentListener(find);
         bconsultarT.addActionListener(consultarteclado);
-    }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaTeclados());
     }
 }

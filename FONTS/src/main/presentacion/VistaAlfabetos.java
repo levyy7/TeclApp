@@ -21,7 +21,7 @@ import main.presentacion.*;
  * La clase VistaAlfabetos representa la interfaz gráfica de usuario para la gestión de alfabetos.
  * @author Mariona Aguilera Folqué
  */
-public class VistaAlfabetos extends JFrame {
+public class VistaAlfabetos extends JPanel {
 
     private JPanel general;
     private JPanel menuSup;
@@ -44,15 +44,10 @@ public class VistaAlfabetos extends JFrame {
     private JList<String> alfabetos;
 
     /**
-     * Inicializa la interfaz gráfica y sus componentes.
+     * Inicializa los componentes.
      */
     private void inicializar() {
-        setSize(700, 400);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-        
+      
         general = new JPanel(new BorderLayout());
         
         listat = new DefaultListModel<String>();
@@ -63,7 +58,7 @@ public class VistaAlfabetos extends JFrame {
 
         /*
          * listat = new DefaultListModel<String>();
-         * listat.addAll(ctrlPres.getAllAlfabetos());
+         * listat.addAll(CtrlPresentacion.getInstance().getAllAlfabetos());
          * alfabetos = new JList<String>(listat);
          */
     }
@@ -83,11 +78,17 @@ public class VistaAlfabetos extends JFrame {
     }
 
     /**
-     * Actualiza la lista de alfabetos en la interfaz gráfica.
+     * Busqueda del elemento la lista de teclados en la interfaz gráfica.
+     * @param elemento nombre del teclado a buscar.
+     * @return elemento encontrado.
      */
-    private void actualizarlistat(){
-        //listat.removeAllElements();
-        //listat.addAll(ctrlPres.getAllAlfabetos());
+    private Boolean buscarElemento(String elemento) {
+        for (int i = 0; i < listat.size(); i++) {
+            if (listat.getElementAt(i).equals(elemento)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -129,8 +130,8 @@ public class VistaAlfabetos extends JFrame {
     /**
      * Constructor de la clase VistaAlfabetos.
     */
-    public VistaAlfabetos(){
-        super("Creadora de Teclados");
+    public VistaAlfabetos(JFrame padre){
+        super();
         inicializar();
 
         //MENU SUPERIOR
@@ -187,8 +188,8 @@ public class VistaAlfabetos extends JFrame {
         general.add(Box.createRigidArea(new Dimension(10,10)), BorderLayout.SOUTH);
 
         
-        setLocationRelativeTo(null);
-        getContentPane().add(general);
+        //setLocationRelativeTo(null);
+        add(general);
 
         //FUNCIONALIDADES ESTETICAS
         FocusListener borrarTexto = new FocusListener() {
@@ -223,20 +224,27 @@ public class VistaAlfabetos extends JFrame {
             }
         }; 
 
-        JFrame act = this;
+        JPanel act = this;
+        CtrlPresentacion cp = CtrlPresentacion.getInstance();
         ActionListener crear = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //llamar a crear alfabeto
-                actualizarlistat();
+                VistaCrearAlfabeto vca = new VistaCrearAlfabeto();
+                vca.setVisible(true);
+                String[] info = vca.getData();
+                cp.createAlfabeto(info[0], info[1]);
+                listat.addElement(info[0]);
             }
         };
 
         ActionListener modificar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //llamar a modificar alfabeto
-                actualizarlistat();
+                VistaCrearAlfabeto vca = new VistaCrearAlfabeto();
+                String[] info = vca.getData();
+                String[] n = cp.modifyAlfabeto(info[0], info[1]);
+                for(int i = 0; i<listat.size(); ++i)
+                    if(!buscarElemento(n[0])) listat.addElement(n[0]);
             }
         };
 
@@ -245,7 +253,7 @@ public class VistaAlfabetos extends JFrame {
             public void actionPerformed(ActionEvent e){
                 Boolean res = areyousure(alfabetos.getSelectedValue());
                 if(res) {
-                    //ctrPres.deleteAlfabeto(alfabetos.getSelectedValue());
+                    listat.removeElement(alfabetos.getSelectedValue());
                     JOptionPane.showMessageDialog(act,
                             "Alfabeto borrado correctamente.",
                             "Borrado Exitoso",
@@ -257,22 +265,22 @@ public class VistaAlfabetos extends JFrame {
                             "Cancelado",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
-                actualizarlistat();
             }
         };
 
         ActionListener goTeclados = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVTeclados();
+                padre.getContentPane().add(new VistaTeclados(padre));
+                act.setVisible(false);
             }
         };
 
         ActionListener goTLP = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVTLP();
+                padre.getContentPane().add(new VistaTLP(padre));
+                act.setVisible(false);
             }
         };
 
@@ -280,19 +288,21 @@ public class VistaAlfabetos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
+                int result = imp.showOpenDialog(padre);
                 if (result == JFileChooser.APPROVE_OPTION){
                     File selected = imp.getSelectedFile();
-                    //ctrlPres.importAlfabeto(selected.getAbsolutePath());
+                    String[][] tt = cp.importAlfabetos(selected.getAbsolutePath());
+                    for(int i = 0; i< tt.length; ++i) {
+                        listat.addElement(tt[i][0]);
+                    }
                 }
-                actualizarlistat();
             }
         };
 
         ActionListener consultar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVerAlfabeto(alfabetos.getSelectedValue());
+                //verTlp????
             }
         };
 
@@ -323,9 +333,5 @@ public class VistaAlfabetos extends JFrame {
         bborrar.addActionListener(borrar);
         barrabusq.getDocument().addDocumentListener(find);
         bconsultarA.addActionListener(consultar);
-    }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaAlfabetos());
     }
 }

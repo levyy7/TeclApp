@@ -21,7 +21,7 @@ import main.presentacion.*;
  * La clase VistaTLP representa la interfaz gráfica de usuario para la gestión de textos y listas de palabras.
  * @author Mariona Aguilera Folqué
  */
-public class VistaTLP extends JFrame {
+public class VistaTLP extends JPanel {
 
     private JPanel general;
     private JPanel menuSup;
@@ -46,15 +46,9 @@ public class VistaTLP extends JFrame {
     private JList<String> tlps;
 
     /**
-     * Inicializa la interfaz gráfica y sus componentes.
+     * Inicializa los componentes.
      */
-    private void inicializar() {
-        setSize(700, 400);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-        
+    private void inicializar() {   
         general = new JPanel(new BorderLayout());
         
         listat = new DefaultListModel<String>();
@@ -65,7 +59,7 @@ public class VistaTLP extends JFrame {
 
         /*
          * listat = new DefaultListModel<String>();
-         * listat.addAll(ctrlPres.getAllTLP());
+         * listat.addAll(CtrlPresentacion.getInstance().getAllTLP());
          * tlps = new JList<String>(listat);
          */
     }
@@ -85,11 +79,17 @@ public class VistaTLP extends JFrame {
     }
 
     /**
-     * Actualiza la lista de textos y listas de palabras en la interfaz gráfica.
+     * Busqueda del elemento la lista de teclados en la interfaz gráfica.
+     * @param elemento nombre del teclado a buscar.
+     * @return elemento encontrado.
      */
-    private void actualizarlistat(){
-        //listat.removeAllElements();
-        //listat.addAll(ctrlPres.getALLTLP());
+    private Boolean buscarElemento(String elemento) {
+        for (int i = 0; i < listat.size(); i++) {
+            if (listat.getElementAt(i).equals(elemento)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -130,8 +130,8 @@ public class VistaTLP extends JFrame {
     /**
      * Constructor de la clase VistaTLP.
     */
-    public VistaTLP(){
-        super("Creadora de Teclados");
+    public VistaTLP(JFrame padre){
+        super();
         inicializar();
 
         //MENU SUPERIOR
@@ -171,7 +171,7 @@ public class VistaTLP extends JFrame {
         cont = new JPanel(new BorderLayout());
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.EAST);
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.WEST);
-
+        cont.add(Box.createRigidArea(new Dimension(60, 60)), BorderLayout.SOUTH);
         //BARRA DE BUSQUEDA
         JPanel busqueda = new JPanel(new FlowLayout());
         barrabusq = new JTextField("Introduce el nombre del texto o lista");
@@ -190,8 +190,7 @@ public class VistaTLP extends JFrame {
         general.add(Box.createRigidArea(new Dimension(10,10)), BorderLayout.SOUTH);
 
         
-        setLocationRelativeTo(null);
-        getContentPane().add(general);
+        add(general);
 
         //FUNCIONALIDADES ESTETICAS
         FocusListener borrarTexto = new FocusListener() {
@@ -226,20 +225,28 @@ public class VistaTLP extends JFrame {
             }
         }; 
 
-        JFrame act = this;
+        JPanel act = this;
+        CtrlPresentacion cp = CtrlPresentacion.getInstance();
+
         ActionListener crearT = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //llamar a creartexto 
-                actualizarlistat();
+                VistaCrearTexto vct = new VistaCrearTexto();
+                vct.setVisible(true);
+                String[] info = vct.getData();
+                cp.createTexto(info[0], info[1]);
+                listat.addElement(info[0]); 
             }
         };
 
         ActionListener crearL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-            //llamar a crear lista
-            actualizarlistat();
+                VistaCrearLista vct = new VistaCrearLista();
+                vct.setVisible(true);
+                String[] info = vct.getData();
+                cp.createTexto(info[0], info[1]);
+                listat.addElement(info[0]);
             }
         };
 
@@ -247,8 +254,13 @@ public class VistaTLP extends JFrame {
         ActionListener modificar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //llamar a modificar 
-                actualizarlistat();
+                VistaModificarTLP vmt = new VistaModificarTLP();
+                vmt.setVisible(true);
+                String[] info = vmt.getData();
+                //MODIFY TEXTO O MODIFY LISTA O MODIFY TLP?
+                //String[] n = cp.modi
+                //for(int i = 0; i<listat.size(); ++i)
+                    //if(!buscarElemento(n[0])) listat.addElement(n[0]);
             }
         };
 
@@ -257,8 +269,8 @@ public class VistaTLP extends JFrame {
             public void actionPerformed(ActionEvent e){
                 Boolean res = areyousure(tlps.getSelectedValue());
                 if(res) {
-                    //ctrPres.deleteTLP(tlps.getSelectedValue());
-                    JOptionPane.showMessageDialog(act,
+                    listat.removeElement(tlps.getSelectedValue());
+                    JOptionPane.showMessageDialog(padre,
                             "Texto o lista borrado correctamente.",
                             "Borrado Exitoso",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -269,22 +281,22 @@ public class VistaTLP extends JFrame {
                             "Cancelado",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
-                actualizarlistat();
             }
         };
 
         ActionListener goTeclados = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVTeclados();
+                padre.getContentPane().add(new VistaTeclados(padre));
+                act.setVisible(false);
             }
         };
 
         ActionListener goAlfabetos = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVAlfabeto();
+                padre.getContentPane().add(new VistaAlfabetos(padre));
+                act.setVisible(false);
             }
         };
 
@@ -292,12 +304,14 @@ public class VistaTLP extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
+                int result = imp.showOpenDialog(padre);
                 if (result == JFileChooser.APPROVE_OPTION){
                     File selected = imp.getSelectedFile();
-                    //ctrlPres.importTextos(selected.getAbsolutePath());
+                    String[][] tt = cp.importTextos(selected.getAbsolutePath());
+                    for(int i = 0; i<tt.length; ++i) {
+                        listat.addElement(tt[i][0]);
+                    }
                 }
-                actualizarlistat();
             }
         };
 
@@ -305,19 +319,22 @@ public class VistaTLP extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
+                int result = imp.showOpenDialog(padre);
                 if (result == JFileChooser.APPROVE_OPTION){
                     File selected = imp.getSelectedFile();
-                    //ctrlPres.importListas(selected.getAbsolutePath());
+                    String[][] tt = cp.importListas(selected.getAbsolutePath());
+                    for(int i = 0; i<tt.length; ++i) {
+                        listat.addElement(tt[i][0]);
+                    }
                 }
-                actualizarlistat();
             }
         };
 
         ActionListener consultar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVerTLP(tlps.getSelectedValue());
+                VistaVerTLP vvt = new VistaVerTLP();
+                vvt.setVisible(true);
             }
         };
 
@@ -337,7 +354,6 @@ public class VistaTLP extends JFrame {
                  buscando();
             }
         };
-    
 
         tlps.addListSelectionListener(clicarElemento);
         bcreart.addActionListener(crearT);
@@ -350,9 +366,6 @@ public class VistaTLP extends JFrame {
         bborrar.addActionListener(borrar);
         barrabusq.getDocument().addDocumentListener(find);
         bconsultarTLP.addActionListener(consultar);
-    }
     
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaTLP());
     }
 }
