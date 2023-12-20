@@ -2,7 +2,7 @@ package main.dominio;
 import Excepcions.*;
 import main.dominio.*;
 import main.persistencia.CtrlPersistencia;
-import main.presentacion.CtrlPresentacion;
+//import main.presentacion.CtrlPresentacion;
 
 import java.util.*;
 import java.awt.geom.Point2D;
@@ -25,7 +25,7 @@ public class CtrlDominio {
     private static CtrlAlgoritmo ctrlA;
 
 
-    private static CtrlPresentacion ctrlPre = CtrlPresentacion.getInstance();
+    //private static CtrlPresentacion ctrlPre = CtrlPresentacion.getInstance();
 
     /**
      * Constructora por defecto que instancia los controladores y carga
@@ -122,14 +122,11 @@ public class CtrlDominio {
      * Función que modifica un teclado existente de la base de datos y hace
      * saltar una excepción en caso de que no sea posible
      * @param nombreTeclado : el nombre del teclado a modificar
+     * @param nombreAlgoritmo : el algoritmo que se usara
      * @param nombreAlfabeto : el nombre del alfabeto que se usará
      * @param nombresTLP : los nombres de los textos y listas que se usaran
     */
-    public void modificarTeclado(String nombreTeclado, String nombreAlfabeto, String[] nombresTLP) {
-    	String nombreAlgoritmo = "";
-    	try {nombreAlgoritmo = ctrlE.getAlgoritmo(nombreTeclado);}
-        catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+    public void modificarTeclado(String nombreTeclado, String nombreAlgoritmo, String nombreAlfabeto, String[] nombresTLP) {
         
         String letras;
         try{letras = ctrlE.getAlfabeto(nombreAlfabeto)[1];}
@@ -172,22 +169,6 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
         
         
-    }
-
-    /**
-     * Subfunción de modificar teclado que se encarga de asignarle el mismo
-     * alfabeto que ya contenía el teclado inicialmente a la hora de modificar
-     * el teclado
-     * @param nombreTeclado : nombre del teclado a modificar
-     * @param nombresTLP : nombres de los textos y listas que se usaran
-    */
-    public void modificarTeclado(String nombreTeclado, String[] nombresTLP) {
-    	String alfabeto = "";
-    	try {alfabeto = ctrlE.getAlfabetoTeclado(nombreTeclado);}
-    	catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-
-        modificarTeclado(nombreTeclado, alfabeto, nombresTLP);
     }
 
     /**
@@ -322,9 +303,7 @@ public class CtrlDominio {
         catch (TextoMalImportado e)
             {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
     
-    }
-    
-
+    }    
 
     /**
      * Función que modifica un texto existente y salta una excepción si el
@@ -343,23 +322,22 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); return;}
     }
 
-
     /**
-     * Función que borra un texto y salta una excepción si el texto no existe
-     * o no pertenece a un texto
-     * @param nombreTexto
+     * Función que borra un TLP y salta una excepción si el TLP no existe
+     * @param nombreTLP
     */
-    public void borrarTexto(String nombreTexto) {
+    public void borrarTLP(String nombreTLP) {
         try {
-            ctrlE.borrarTexto(nombreTexto);
-            CtrlPersistencia.borrarTexto(nombreTexto);
+            TLP tlp = ctrlE.getTLP(nombreTLP);
+            ctrlE.borrarTLP(nombreTLP);
+            if (tlp instanceof Texto) CtrlPersistencia.borrarTexto(nombreTLP);
+            else CtrlPersistencia.borrarLista(nombreTLP);
         }
         catch (InputInexistente e)
             {System.out.println("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); return;}  
     }
-
 
     /**
      * Función que crea una lista de palabras y salta una excepción si la
@@ -400,7 +378,6 @@ public class CtrlDominio {
         
     }
     
-
     /**
      * Función que modifica una lista de palabras y salta una excepción si no
      * existe o no pertenece a una lista
@@ -417,25 +394,6 @@ public class CtrlDominio {
         catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); return;} 
     }
-
-    
-
-    /**
-     * Función que borra una lista de palabras y salta una excepción si no
-     * existe o el Input no pertenece a una lista
-     * @param nombreLista
-    */
-    public void borrarListaPalabras(String nombreLista) {
-        try {
-            ctrlE.borrarListaPalabras(nombreLista);
-            CtrlPersistencia.borrarLista(nombreLista);
-        }
-        catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-        catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;} 
-    }
-
 
     /** 
      * Consulta de los teclados
