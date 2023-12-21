@@ -403,7 +403,7 @@ public class CtrlDominio {
 
     /** 
      * Consulta de los teclados
-     * @return HashMap(String, Teclado) : contiene los teclados guardados
+     * @return String[][] : contiene los teclados guardados
     */
     public String[][] consultarInfoTeclados() {
         return ctrlE.consultaInfoTeclados();
@@ -412,7 +412,7 @@ public class CtrlDominio {
     /**
      * Consulta de un teclado
      * @param nombreTeclado
-     * @return Teclado : contiene el teclado consultado
+     * @return String[] : contiene el teclado consultado
     */
     public String[] consultarInfoTeclado(String nombreTeclado) {
         try {return ctrlE.consultaTeclado(nombreTeclado);}
@@ -431,7 +431,7 @@ public class CtrlDominio {
 
     /** 
      * Consulta de los alfabetos
-     * @return HashMap(String, Input) : contiene los alfabetos guardados
+     * @return String[][] : contiene los alfabetos guardados
     */
     public String[][] consultarAlfabetos() {
         return ctrlE.consultaAlfabetos();
@@ -439,7 +439,7 @@ public class CtrlDominio {
 
     /** 
      * Consulta de los textos
-     * @return HashMap(String, Input) : contiene los textos guardados
+     * @return String[][] : contiene los textos guardados
     */
     public String[][] consultarTextos() {
         return ctrlE.consultaTextos();
@@ -447,24 +447,24 @@ public class CtrlDominio {
 
     /** 
      * Consulta de las listas
-     * @return HashMap(String, Input) : contiene las listas guardadas
+     * @return String[][] : contiene las listas guardadas
     */
     public String[][] consultarListas() {
         return ctrlE.consultaListas();
     }
 
-    public String[] consultarTLP(String nombreTLP) {
-        try {return ctrlE.getInfoTLP(nombreTLP);}
-        catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
-        catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
+    /**
+     * Consulta de los TLPs
+     * @return String[][] : contiene los TLPs guardadas
+    */
+    public String[][] consultarTLPs() {
+        return ctrlE.consultaInfoTLPs();
     }
 
     /** 
      * Consulta de un alfabeto
      * @param nombreAlfabeto
-     * @return String : contiene el alfabeto consultado
+     * @return String[] : contiene el alfabeto consultado
     */
     public String[] consultarAlfabeto(String nombreAlfabeto) {
         try {return ctrlE.getAlfabeto(nombreAlfabeto);}
@@ -477,7 +477,7 @@ public class CtrlDominio {
     /** 
      * Consulta de un texto
      * @param nombreTexto
-     * @return String : contiene el texto consultado
+     * @return String[] : contiene el texto consultado
     */
     public String[] consultarTexto(String nombreTexto) {
         try {
@@ -492,7 +492,7 @@ public class CtrlDominio {
     /** 
      * Consulta de una lista de palabras
      * @param nombreLista
-     * @return Map(String, Integer) : contiene la lista consultada
+     * @return String[] : contiene la lista consultada
     */
     public String[] consultarLista(String nombreLista) {
         try {
@@ -503,7 +503,19 @@ public class CtrlDominio {
         catch (WrongInputType e)
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
     }
-    
+
+    /**
+     * Consulta de un TLP
+     * @param nombreTLP
+     * @return String[] : contiene el LTP consultado
+    */
+    public String[] consultarTLP(String nombreTLP) {
+        try {return ctrlE.getInfoTLP(nombreTLP);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
+    }
 
     /**
      * Asigna los textos y las listas correspondientes de los nombresTLP y

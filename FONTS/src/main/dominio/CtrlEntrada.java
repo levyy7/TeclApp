@@ -647,5 +647,21 @@ public class CtrlEntrada{
 		return list;
     }
 
+    public String[][] consultaTLPs() {
+    	HashMap<String, String[]> a  = new HashMap<String, String[]>();
+		for (Map.Entry<String, Input> actual: inputs.entrySet()){
+        	if (actual.getValue() instanceof TLP) a.put(actual.getKey(),actual.getValue().toStringArray());
+        }
+
+        String[][] tlp = new String[a.size()][2];
+		int i = 0;
+		for (Map.Entry<String, String[]> actual : a.entrySet()) {
+			String[] tlpActual = actual.getValue();
+			tlp[i] = tlpActual;
+			++i;
+		}
+		return tlp;
+    }
+
 }
 //classe implementada per POL
