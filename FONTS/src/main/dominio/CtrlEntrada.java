@@ -417,6 +417,15 @@ public class CtrlEntrada{
 		return in.toStringArray();
 	}
 
+	public String[] getInfoTLP(String nombreTLP) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreTLP);
+
+		if (in == null)	throw new InputInexistente();
+		else if (!(in instanceof TLP)) throw new WrongInputType("TLP", in.getClass().getName());
+
+		return in.toStringArray();
+	}
+
 	/**
      * Modificación de un texto
      * @param nombreTexto : nombre del texto
