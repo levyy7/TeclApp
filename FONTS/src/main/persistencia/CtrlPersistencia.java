@@ -206,7 +206,7 @@ public class CtrlPersistencia {
 	/** Función que comprueba que un Path contiene la exntension .csv*/
 	private static boolean compruebaPath(String path) {
 		if (path.length() < 5) return false;
-		String tipoArchivo = path.substring(path.length() - 5);
+		String tipoArchivo = path.substring(path.length() - 4);
 		if (!tipoArchivo.equals(".csv")) return false;
 		return true;
 	}
