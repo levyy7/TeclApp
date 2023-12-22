@@ -17,21 +17,6 @@ Elementos del directorio
 - rubrica:
 	Contiene la informacion de los metodos de evaluacion
 
-- 2aEntregaDocumentacion
-	Contiene la descripcion de los diagramas UML nuevos y de mas
-	informacion relevante para la segunda entrega
-
-- CasosDeUso.svg:
-	Contiene el diagrama de casos de uso (hecho en draw.io)
-
-- UMLPersistencia.svg:
-	Contiene el diagrama de clases de la capa de persistencia (hecho en
-	draw.io)
-
-- UMLPresentacion.svg:
-	Contiene el diagrama de clases de la capa de presentacion (hecho en
-	draw.io)
-
-- UMLDominio.svg:
-	Contiene el diagrama de clases de la capa de dominio (hecho en
-	draw.io)
+- ManualDeUsuario.pdf:
+	Contiene el manual de usuario necesario para entender como utilizar el
+	programa

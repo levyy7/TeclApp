@@ -16,27 +16,22 @@
 
 - Ricardo Fernández Domenech ([ricardo.fernandez.domenech@upc.edu]())
 
-## Cambios respecto a la primera entrega
+## Cambios respecto a la segunda entrega
 
-- Implementación segundo algoritmo
-- Implementación capa persistencia
-- Drivers y tests persistencia
-- Mejora del código en la capa de dominio
-- Descripción y diagramas UML 3 capas
-- Documentación de todo el código implementado hasta el momento (Javadoc)
-- Ampliación de la documentación de estructuras de datos y algoritmos
+- Implementación de la capa de presentación
+- Manual de usuario
+- Cambios en el dominio, como la adición de las importaciones
 
 ## Elementos del directorio
 
-Cada carpeta (menos lib), contiene un **index.txt** que explica más
+Cada carpeta (menos lib y Javadoc), contiene un **index.txt** que explica más
 detalladamente el contenido de ésta.
 
 ### DOCS:
 
-Contiene la documentación asignada a la segunda entrega. En un solo
-archivo pdf se encuentra la información necesaria (2aEntregaDocumentacion).
-
-A parte de ese documento están los gráficos de los diagramas de clases.
+Contiene la documentación asignada a la tercera entrega. En un solo
+archivo pdf se encuentra la información necesaria para utilizar el programa
+(ManualDeUsuario.pdf).
 
 ### EXE:
 
@@ -49,8 +44,8 @@ de las clases correspondientes.
 
 Tiene una carpeta para guardar la informacion necesaria del proyecto y 
 tiene la carpeta src, que contiene todas las clases, que son los
-tests, los drivers, las excepciones y todas las clases del dominio, y
-persistencia.
+tests, los drivers, las excepciones y todas las clases del dominio,
+persistencia y presentación.
 
 A parte también tiene el Makefile que genera los ejecutables de todas
 los archivos .java.
@@ -62,7 +57,7 @@ tests de los JUnit.
 
 ### Javadoc:
 
-Contiene el javadoc de todo el código implementado hasta el momento.
+Contiene el javadoc de todo el código implementado.
 
 
 
