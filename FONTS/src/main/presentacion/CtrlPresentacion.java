@@ -29,10 +29,17 @@ public class CtrlPresentacion {
     /** Instancia de la vista Menu Principal del programa  */
     private static FrameMenuPrincipal mp;
 
+
+    /** 
+     * Constructora de CtrlPresentacion
+    */
     private CtrlPresentacion() {
         //enableVTeclados();
     }
 
+    /** 
+     * Asigna a la instancia actual la instancia de CtrlDominio y ejecuta la vista principal
+    */
     public void inicializar() {
         ctrlD = CtrlDominio.getInstance();
         SwingUtilities.invokeLater(() -> mp = new FrameMenuPrincipal());
@@ -68,25 +75,32 @@ public class CtrlPresentacion {
     }
 
     /** 
-     * Devuelve las características de un teclado
-     * @param nameTec : Nombre del teclado que se quiere consultar
-     * @return String[] : Teclado expresado tal y como se especifica en
-     * la funcion .toStringArray() de la clase Teclado
+     * Devuelve las características de un alfabeto
+     * @param nameTec : Nombre del alfabeto que se quiere consultar
+     * @return String[] : Alfabeto expresado tal y como se especifica en
+     * la funcion .toStringArray() de la clase Alfabeto
     */
     public String[] getAlfabeto(String nameAlf) {
         return ctrlD.consultarAlfabeto(nameAlf);
     }
 
     /** 
-     * Devuelve las características de un teclado
-     * @param nameTec : Nombre del teclado que se quiere consultar
-     * @return String[] : Teclado expresado tal y como se especifica en
-     * la funcion .toStringArray() de la clase Teclado
+     * Devuelve las características de un TLP
+     * @param nameTec : Nombre del TLP que se quiere consultar
+     * @return String[] : TLP expresado tal y como se especifica en
+     * la funcion .toStringArray() de la clase TLP
     */
     public String[] getTLP(String nameTLP) {
         return ctrlD.consultarTLP(nameTLP);
     }
 
+    /** 
+     * Devuelve el tipo de un TLP
+     * @param nameTec : Nombre del TLP que se quiere consultar
+     * @return String : Devuelve el tipo de TLP de la siguiente forma:
+     *  - "Texto", si el TLP era de clase Texto
+     *  - "Lista", si el TLP era de clase ListaPalabras
+    */
     public String getTypeTLP(String nameTLP) {
         return ctrlD.consultarTipoTLP(nameTLP);
     }
@@ -290,20 +304,6 @@ public class CtrlPresentacion {
     */
     public void deleteTLP(String nameTLP) {
         ctrlD.borrarTLP(nameTLP);
-    }
-
-
-
-    public void enableVTeclados() {
-        VistaTeclados vtec = new VistaTeclados(mp);
-    }
-
-    public void enableVAlfabetos() {
-        VistaAlfabetos va = new VistaAlfabetos(mp);
-    }
-
-    public void enableVTLP() {
-        VistaTLP vtlp = new VistaTLP(mp);
     }
 
     /** 

@@ -8,7 +8,7 @@ import Excepcions.ArchivoNoEsCSV;
  * Controlador de persistencia
  * Controlador que une los datos del dominio con los datos de la persistencia,
  * haciendo que los datos se guarden en la carpeta "informacion"
- * @author Miguel Ángel Montero Flores
+ * @author Eneko Sabate Iturgaiz
 */
 public class CtrlPersistencia {
 
