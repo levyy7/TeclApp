@@ -9,6 +9,11 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.*;
 
+/**
+ * VistaModificarInput es una clase que extiende JDialog para crear una interfaz gráfica de usuario
+ * para modificar un input.
+ * @author Pol Ribera Moreno
+ */
 
 public class VistaModificarInput extends JDialog {
 	private JPanel general;
@@ -30,11 +35,21 @@ public class VistaModificarInput extends JDialog {
         general = new JPanel(new BorderLayout());
         centre = new JPanel();
     }
-
+    /**
+     * Coge el texto del área de texto, eliminando cualquier carácter de nueva línea.
+     * 
+     * @return String Los datos de entrada modificados.
+     */
     public String getData(){
         return valorI.getText().replaceAll("[\n\r]", "");
     }
 
+     /**
+     * Constructor para VistaModificarInput. 
+     * 
+     * @param nom El nombre del input que se mostrará en el diálogo.
+     * @param in El texto del input que se quiere modificar.
+     */
     public VistaModificarInput(String nom, String in){
         super();
         inicializar();
@@ -100,9 +115,5 @@ public class VistaModificarInput extends JDialog {
         bcancel.addActionListener(cancelar);
     }
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaModificarInput(args[0], args[1]));
-    }
 }
 //clase make by Pol
