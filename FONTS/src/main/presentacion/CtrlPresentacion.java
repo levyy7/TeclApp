@@ -30,9 +30,12 @@ public class CtrlPresentacion {
     private static FrameMenuPrincipal mp;
 
     private CtrlPresentacion() {
+        //enableVTeclados();
+    }
+
+    public void inicializar() {
         ctrlD = CtrlDominio.getInstance();
         mp = new FrameMenuPrincipal();
-        //enableVTeclados();
     }
 
     /** 

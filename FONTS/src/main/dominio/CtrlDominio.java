@@ -16,7 +16,7 @@ import java.awt.geom.Point2D;
 */
 public class CtrlDominio {
 
-    private static final CtrlDominio INSTANCE = new CtrlDominio();
+    private static CtrlDominio INSTANCE = new CtrlDominio();
 
     /** Contiene la instancia del controlador de entrada*/
     private static CtrlEntrada ctrlE;
@@ -25,7 +25,7 @@ public class CtrlDominio {
     private static CtrlAlgoritmo ctrlA;
 
 
-    private static CtrlPresentacion ctrlP = CtrlPresentacion.getInstance();
+    private static CtrlPresentacion ctrlP;
 
     /**
      * Constructora por defecto que instancia los controladores y carga
@@ -33,6 +33,7 @@ public class CtrlDominio {
     */
     private CtrlDominio() {
         CtrlPersistencia.inicializar();
+        ctrlP = CtrlPresentacion.getInstance();
         String[][] teclados = CtrlPersistencia.cargarTeclados();
         String[][] alfabetos = CtrlPersistencia.cargarAlfabetos();
         String[][] textos = CtrlPersistencia.cargarTextos();
@@ -43,6 +44,7 @@ public class CtrlDominio {
     }
 
     public static CtrlDominio getInstance() {
+        if (INSTANCE == null) INSTANCE = new CtrlDominio();
         return INSTANCE;
     }
 
