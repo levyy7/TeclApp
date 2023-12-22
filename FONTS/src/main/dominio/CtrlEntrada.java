@@ -417,6 +417,13 @@ public class CtrlEntrada{
 		return in.toStringArray();
 	}
 
+	/**
+	 * Consulta de un TLP
+	 * @param nombreTLP
+	 * @return String[]
+	 * @throws InputInexistente
+	 * @throws WronInputType
+	*/
 	public String[] getInfoTLP(String nombreTLP) throws InputInexistente, WrongInputType {
 		Input in = inputs.get(nombreTLP);
 
@@ -504,7 +511,7 @@ public class CtrlEntrada{
 	/**
      * Consulta de una lista de palabras
      * @param nombreLista : nombre de la lista
-     * @return ListaPalabras : Lista consultada
+     * @return String[] : Lista consultada
     */
 	public String[] getListaPalabras(String nombreLista) throws InputInexistente, WrongInputType {
 		Input in = inputs.get(nombreLista);
@@ -529,7 +536,7 @@ public class CtrlEntrada{
     /**
 	 * Consulta de un input
 	 * @param e : Input a consultar
-	 * @return Input : Input consultado
+	 * @return String[][] : Input consultado
     */
 	public String[] getInput(String e) throws InputInexistente{
 		String[] in = inputs.get(e).toStringArray();			
@@ -574,7 +581,7 @@ public class CtrlEntrada{
 
 	/**
      * Consulta de los teclados
-     * @return HashMap(String, Teclado): conjunto de teclados
+     * @return String[][] : conjunto de teclados
     */
 	public String[][] consultaInfoTeclados() {
 		String[][] tec = new String[teclados.size()][3];
@@ -589,7 +596,7 @@ public class CtrlEntrada{
 
 	/**
      * Consulta de todos los alfabetos
-     * @return HashMap(String, Input): conjunto de alfabetos
+     * @return String[][] : conjunto de alfabetos
     */
 	public String[][] consultaAlfabetos() {
 		HashMap<String, String[]> a  = new HashMap<String, String[]>();
@@ -609,7 +616,7 @@ public class CtrlEntrada{
 
     /**
      * Consulta de todos los textos
-     * @return HashMap(String, Input): conjunto de textos
+     * @return String[][] : conjunto de textos
     */
     public String[][] consultaTextos() {
     	HashMap<String, String[]> a  = new HashMap<String, String[]>();
@@ -629,7 +636,7 @@ public class CtrlEntrada{
 
 	/**
      * Consulta de todas las listas
-     * @return HashMap(String, Input): conjunto de listas
+     * @return String[][] : conjunto de listas
     */
     public String[][] consultaListas() {
     	HashMap<String, String[]> a  = new HashMap<String, String[]>();
@@ -647,6 +654,10 @@ public class CtrlEntrada{
 		return list;
     }
 
+    /**
+	 * Consulta de todos los TLPs
+     * @return String[][] : consulta de TLPs
+    */
     public String[][] consultaInfoTLPs() {
     	HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
