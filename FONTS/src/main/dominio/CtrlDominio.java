@@ -128,7 +128,7 @@ public class CtrlDominio {
      * @param nombreAlfabeto : el nombre del alfabeto que se usará
      * @param nombresTLP : los nombres de los textos y listas que se usaran
     */
-    public void modificarTeclado(String nombreTeclado, String nombreAlgoritmo, String nombreAlfabeto, String[] nombresTLP) {
+    public void modificarTeclado(String nombreTeclado, String nombreAlfabeto, String[] nombresTLP, String nombreAlgoritmo) {
         
         String letras;
         try{letras = ctrlE.getAlfabeto(nombreAlfabeto)[1];}
