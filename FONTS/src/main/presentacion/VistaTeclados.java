@@ -250,7 +250,7 @@ public class VistaTeclados extends JPanel {
                 String closeReason = vct.getCloseReason();
                 if (closeReason.equals("Operation Finished")) {
                     String[] info = vct.getData();
-                    String[] n = cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
+                    String[] n = cp.modifyTeclado(info[0], info[1], info[2].split("\\n+"), info[3]);
                     for(int i = 0; i<listat.size(); ++i)
                         if(!buscarElemento(n[0])) listat.addElement(n[0]);
                 }
