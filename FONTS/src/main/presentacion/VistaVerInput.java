@@ -10,23 +10,23 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.*;
 
 
-public class VistaVerAlfabeto extends JDialog {
+public class VistaVerInput extends JDialog {
 	private JPanel general;
     private JPanel centre;
     private JPanel cont;
     private JLabel title;
-    private JList alfabeto;
+    private JList input;
 
 	private void inicializar() {
         setSize(300, 300);
         setVisible(true);
-        
+        setResizable(false);
         general = new JPanel(new BorderLayout());
         centre = new JPanel();
     }
 
 
-    public VistaVerAlfabeto(String nom, String[] a){
+    public VistaVerInput(String nom, String[] a){
         super();
         inicializar();
 
@@ -57,9 +57,9 @@ public class VistaVerAlfabeto extends JDialog {
 			}
 			resultado[i] = particion;
 		}
-        alfabeto = new JList<String>(resultado);
-        alfabeto.setFont(new Font("Arial", Font.PLAIN, 16));
-        JScrollPane laminaDesplazamiento = new JScrollPane(alfabeto);
+        input = new JList<String>(resultado);
+        input.setFont(new Font("Arial", Font.PLAIN, 16));
+        JScrollPane laminaDesplazamiento = new JScrollPane(input);
         cont.add(laminaDesplazamiento, BorderLayout.CENTER);
 
         general.add(cont, BorderLayout.CENTER);
@@ -74,7 +74,7 @@ public class VistaVerAlfabeto extends JDialog {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaVerAlfabeto(args[0], args));
+        SwingUtilities.invokeLater(() -> new VistaVerInput(args[0], args));
     }
 }
 //clase make by Pol

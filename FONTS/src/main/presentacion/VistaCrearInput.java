@@ -14,19 +14,26 @@ import javax.swing.*;
 
 
 
-public class VistaCrearAlfabeto extends JDialog {
+public class VistaCrearInput extends JDialog {
 	JPanel general;
     JLabel nombre;
     JTextField nameA;
     JTextArea valorA;
     JButton bcancel;
     JButton bcreate;
-    JButton bimportalfa;
-    public VistaCrearAlfabeto(){
+
+    public String[] getData(){
+        String[] Vinput;
+        Vinput[0] = nameA.getText();
+        Vinput[1] = valorA.getText().replaceAll("[\n\r]", "");
+        return Vinput;
+    }
+    public VistaCrearInput(){
         super();//owner, title, true
         //setLocationRelativeTo(owner);
         setSize(350, 200);
         setVisible(true);
+        setResizable(false);
         general = new JPanel(new BorderLayout());
 
         JPanel panelNorte = new JPanel(new FlowLayout());
@@ -47,8 +54,6 @@ public class VistaCrearAlfabeto extends JDialog {
         JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bcancel = new JButton("Cancelar");
         bcreate = new JButton("Crear");
-        bimportalfa = new JButton("Importar");
-        panelSur.add(bimportalfa);
         panelSur.add(bcancel);
         panelSur.add(bcreate);
         general.add(panelSur, BorderLayout.SOUTH);
@@ -61,9 +66,7 @@ public class VistaCrearAlfabeto extends JDialog {
         ActionListener crear = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                String alfabet = valorA.getText().replaceAll("[\n\r]", "");
-                String nom = nameA.getText();
-                //ctrlPres.createAlfabeto(nom ,alfabet);
+                getData();
                 dispose();
             }
         };
@@ -75,29 +78,15 @@ public class VistaCrearAlfabeto extends JDialog {
             }
         };
 
-        ActionListener importarAlfa = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                JFileChooser imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
-                if (result == JFileChooser.APPROVE_OPTION){
-                    File selected = imp.getSelectedFile();
-                    //ctrlPres.importAlfabeto(selected.getAbsolutePath());
-                    dispose();
-                } 
-                
-            }
-        };
 
         bcreate.addActionListener(crear);
         bcancel.addActionListener(cancelar);
-        bimportalfa.addActionListener(importarAlfa);
 
     }
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaCrearAlfabeto());
+        SwingUtilities.invokeLater(() -> new VistaCrearInput());
     }
 }
 //clase make by Pol
