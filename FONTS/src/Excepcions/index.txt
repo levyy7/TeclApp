@@ -2,8 +2,6 @@
 
 En este directorio se encuentran todas las excepciones que saltaran
 siempre que haya algun problema en alguna ejecucion del programa.
-Para mas informacion sobre casos alternativos sobre los casos de
-uso, consultar el documento "1aEntregaDocumentacion".
 
 Elementos del directorio
 
@@ -15,10 +13,18 @@ Elementos del directorio
 	Clase que pertenece a la excepcion AlfabetoInvalido que salta cuando
 	importamos un alfabeto con nombres repetidos
 
+- AlfabetoMalImportado.java:
+	Clase que pertenece a la excepcion AlfabetoMalImportado que salta cuando
+	importamos un alfabeto mal definido
+
 - AlfabetoUsandose.java:
 	Clase que pertenece a la excepcion AlfabetoUsandose que salta cuando
 	intentamos borrar un alfabeto que se haya usado en algun teclado 
 	guardado
+
+- ArchivoNoEsCSV.java:
+	Clase que pertenece a la excepcion ArchivoNoEsCSV que salta cuando
+	intentamos importar un archivo que no tiene la extension .csv.
 
 - InputInexistente.java:
 	Clase que pertenece a la excepcion InputInexistente que salta cuando
@@ -29,6 +35,14 @@ Elementos del directorio
 	InputJaCreatl cuando intentamos importar un input con el mismo
 	nombre que otro
 
+- InvalidAlgorithm.java
+	Clase que pertenece a la excepcion InvalidAlgorithm que salta cuando
+	intentamos utilizar un algoritmo que no es ni QAP ni GEN.
+
+- ListaMalImportada.java:
+	Clase que pertenece a la excepcion ListaMalImportada que salta cuando
+	importamos una lista mal definida
+
 - ListaNoValida.java:
 	Clase que pertenece a la excepcion ListaNoValida que salta cuando
 	asignamos a la creacion de un teclado un alfabeto y una lista que
@@ -38,15 +52,27 @@ Elementos del directorio
 	Clase que pertenece a la excepcion NGrande que salta cuando intentamos
 	usar el algoritmo QAP y el alfabeto tiene mas de 19 caracteres
 
-- TecladoInexistente:
+- TecladoInexistente.java:
 	Clase que pertenece a la excepcion TecladoInexistente que salta cuando
 	intentamos acceder a un teclado que no existe
 
-- TecladoYaExiste:
+- TecladoMalImportado.java:
+	Clase que pertenece a la excepcion TecladoMalImportado que salta cuando
+	importamos un teclado mal definido
+
+- TecladoYaExiste.java:
 	Clase que pertenece a la excepcion TecladoYaExiste que salta cuando
 	intentamos crear un teclado que ya exista
 
-- TextoNoValido:
+- TextoMalImportado.java:
+	Clase que pertenece a la excepcion AlfabetoMalImportado que salta cuando
+	importamos un texto mal definido
+
+- TextoNoValido.java:
 	Clase que pertenece a la excepcion TextoNoValido que salta cuando
 	asignamos a la creacion de un teclado un alfabeto y una lista que
 	tiene caracteres que no pertenezcan al alfabeto en cuestion
+
+- WronInputType.java:
+	Clase que pertenece a la excepcion WrongInputType que salta cuando
+	intentamos acceder a un tipo de Input que no es el buscado

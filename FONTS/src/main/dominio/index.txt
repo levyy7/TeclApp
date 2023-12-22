@@ -2,8 +2,7 @@
 
 Este directorio contiene todos los archivos .java de las clases
 del dominio. Para compilar el programa usar el Makefile de la
-carpeta src en FONTS/. Para mas informacion sobre las clases del
-dominio mirar el documento "2aEntregaDocumentacion".
+carpeta src en FONTS/.
 
 Elementos del directorio
 - algoritmos/:
