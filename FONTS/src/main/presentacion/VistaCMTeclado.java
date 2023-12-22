@@ -86,7 +86,7 @@ public class VistaCMTeclado extends JDialog {
         general.add(panelNorte, BorderLayout.NORTH);
 
         algoritmo = new JLabel("Algoritmo: ");
-        selecAlgo = new JComboBox<>(new String[]{"QAP", "Algoritmo"});
+        selecAlgo = new JComboBox<>(new String[]{"QAP", "GEN"});
         panelNorte.add(algoritmo);
         panelNorte.add(selecAlgo);
 
