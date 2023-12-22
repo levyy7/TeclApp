@@ -35,7 +35,7 @@ public class CtrlPresentacion {
 
     public void inicializar() {
         ctrlD = CtrlDominio.getInstance();
-        mp = new FrameMenuPrincipal();
+        SwingUtilities.invokeLater(() -> mp = new FrameMenuPrincipal());
     }
 
     /** 

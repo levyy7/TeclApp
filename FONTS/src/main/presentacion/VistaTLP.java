@@ -45,15 +45,19 @@ public class VistaTLP extends JPanel {
     private  DefaultListModel<String> listat;
     private JList<String> tlps;
 
+    private CtrlPresentacion cp;
+
     /**
      * Inicializa los componentes.
      */
     private void inicializar() {   
         general = new JPanel(new BorderLayout());
+        cp = CtrlPresentacion.getInstance();
         
         listat = new DefaultListModel<String>();
-        for(int i = 0; i<15; ++i) {
-            listat.addElement(String.valueOf(i));
+        String[][] tlp = cp.getAllTLP();
+        for (String[] s : tlp) {
+            listat.addElement(s[0]);
         }
         tlps = new JList<String>(listat);
 
@@ -226,7 +230,7 @@ public class VistaTLP extends JPanel {
         }; 
 
         JPanel act = this;
-        CtrlPresentacion cp = CtrlPresentacion.getInstance();
+        
 
         ActionListener crearT = new ActionListener() {
             @Override

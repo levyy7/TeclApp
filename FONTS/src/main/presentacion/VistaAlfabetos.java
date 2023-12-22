@@ -43,16 +43,19 @@ public class VistaAlfabetos extends JPanel {
     private  DefaultListModel<String> listat;
     private JList<String> alfabetos;
 
+    private CtrlPresentacion cp;
+
     /**
      * Inicializa los componentes.
      */
     private void inicializar() {
-      
+        cp = CtrlPresentacion.getInstance();
         general = new JPanel(new BorderLayout());
         
         listat = new DefaultListModel<String>();
-        for(int i = 0; i<15; ++i) {
-            listat.addElement(String.valueOf(i));
+        String[][] alf = cp.getAllAlfabetos();
+        for (String[] s : alf) {
+            listat.addElement(s[0]);
         }
         alfabetos = new JList<String>(listat);
 
@@ -225,7 +228,6 @@ public class VistaAlfabetos extends JPanel {
         }; 
 
         JPanel act = this;
-        CtrlPresentacion cp = CtrlPresentacion.getInstance();
         ActionListener crear = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
