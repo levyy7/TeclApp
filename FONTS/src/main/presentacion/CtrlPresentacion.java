@@ -1,6 +1,9 @@
 package main.presentacion;
 
 import javax.swing.*;
+
+import org.mockito.internal.matchers.Null;
+
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Map;
@@ -20,7 +23,7 @@ import main.presentacion.*;
 public class CtrlPresentacion {
     
     /** Instancia singleton de CtrlPresentacion */
-    private static final CtrlPresentacion INSTANCE = new CtrlPresentacion();
+    private static CtrlPresentacion INSTANCE;
 
     /** Instancia singleton de CtrlDominio */
     private static CtrlDominio ctrlD;
@@ -30,8 +33,8 @@ public class CtrlPresentacion {
 
     private CtrlPresentacion() {
         ctrlD = CtrlDominio.getInstance();
-        mp = new FrameMenuPrincipal();
-        enableVTeclados();
+        //mp = new FrameMenuPrincipal();
+        //enableVTeclados();
     }
 
     /** 
@@ -39,10 +42,21 @@ public class CtrlPresentacion {
      * @return CtrlPresentacion : Única instancia de la clase CtrlPresentacion
     */
     public static CtrlPresentacion getInstance() {
+        if (INSTANCE == null) INSTANCE = new CtrlPresentacion();
         return INSTANCE;
     }
 
     
+    /** 
+     * Devuelve las características de un teclado
+     * @param nameTec : Nombre del teclado que se quiere consultar
+     * @return String[] : Teclado expresado tal y como se especifica en
+     * la funcion .toStringArray() de la clase Teclado
+    */
+    public String[] getInfoTeclado(String nameTec) {
+        return ctrlD.consultarInfoTeclado(nameTec);
+    }
+
     /** 
      * Devuelve el layout de un teclado
      * @param nameTec : Nombre del teclado del que se quiere consultar el layout

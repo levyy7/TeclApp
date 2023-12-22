@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * La clase App representa la aplicación principal que 
+ * La clase FrameMenuPrincipal representa el menú principal del programa que 
  * actúa como un contenedor JFrame para la creación de teclados.
  * @author Mariona Aguilera Folqué.
  */
@@ -25,9 +25,9 @@ public class FrameMenuPrincipal extends JFrame {
     }
     
     /**
-     * Constructor de la clase App.
-     * Crea una instancia de la aplicación, establece el título y
-     * agrega la vista de teclados al contenido del JFrame.
+     * Constructora de la clase FrameMenuPrincipal.
+     * Inicializa el frame del menú principal con el objetivo de que contenga los
+     * JPanels principales del programa.
      */
     public FrameMenuPrincipal(){
         super("Creadora de teclados");
@@ -39,6 +39,7 @@ public class FrameMenuPrincipal extends JFrame {
 
 
     public static void main(String[] args) {
+        //CtrlPresentacion = 
         SwingUtilities.invokeLater(() -> new FrameMenuPrincipal());
     }
 }
