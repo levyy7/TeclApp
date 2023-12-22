@@ -67,6 +67,26 @@ public class CtrlPresentacion {
     }
 
     /** 
+     * Devuelve las características de un teclado
+     * @param nameTec : Nombre del teclado que se quiere consultar
+     * @return String[] : Teclado expresado tal y como se especifica en
+     * la funcion .toStringArray() de la clase Teclado
+    */
+    public String[] getAlfabeto(String nameAlf) {
+        return ctrlD.consultarAlfabeto(nameAlf);
+    }
+
+    /** 
+     * Devuelve las características de un teclado
+     * @param nameTec : Nombre del teclado que se quiere consultar
+     * @return String[] : Teclado expresado tal y como se especifica en
+     * la funcion .toStringArray() de la clase Teclado
+    */
+    public String[] getTLP(String nameTLP) {
+        return ctrlD.consultarTLP(nameTLP);
+    }
+
+    /** 
      * Devuelve todos los teclados existentes en el programa
      * @return String[][] : Array de teclados expresados tal y como se especifica en
      * la funcion .toStringArray() de la clase Teclado
