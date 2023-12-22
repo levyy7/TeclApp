@@ -305,7 +305,9 @@ public class VistaAlfabetos extends JPanel {
         ActionListener consultar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //verTlp????
+                String[] info = cp.getAlfabeto(alfabetos.getSelectedValue());
+                VistaVerInput vvi = new VistaVerInput(padre, info[0], info[1]);
+                vvi.setVisible(true);
             }
         };
 

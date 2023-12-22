@@ -35,8 +35,9 @@ public class VistaVerInput extends JDialog {
      * @param nom El nombre del input que se mostrará en el diálogo.
      * @param in El texto del input.
      */
-    public VistaVerInput(String nom, String in){
-        super();
+    public VistaVerInput(JFrame owner, String nom, String in){
+        super(owner, nom);
+        setLocationRelativeTo(owner);
         inicializar();
 
         char[] a = in.toCharArray();
@@ -77,7 +78,7 @@ public class VistaVerInput extends JDialog {
         general.add(Box.createRigidArea(new Dimension(10,10)), BorderLayout.SOUTH);
 
 
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(owner);
         getContentPane().add(general);
     }
 

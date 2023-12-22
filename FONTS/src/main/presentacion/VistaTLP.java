@@ -340,8 +340,8 @@ public class VistaTLP extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] info = cp.getTLP(tlps.getSelectedValue());
-                VistaVerInput vvt = new VistaVerInput(info[0], info[1]);
-                vvt.setVisible(true);
+                VistaVerInput vvi = new VistaVerInput(padre, info[0], info[1]);
+                vvi.setVisible(true);
             }
         };
 
