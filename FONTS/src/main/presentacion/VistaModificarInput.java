@@ -10,28 +10,34 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.*;
 
 
-public class VistaModificarAlfabeto extends JDialog {
+public class VistaModificarInput extends JDialog {
 	private JPanel general;
     private JPanel centre;
     private JPanel cont;
     private JLabel title;
-    private JList alfabeto;
+    private JList input;
     private JLabel nombre;
-    private JTextArea valorA;
+    private JTextArea valorI;
     private JButton bcancel;
     private JButton bmodificar;
 
 	private void inicializar() {
         setSize(300, 200);
         setVisible(true);
+        setResizable(false);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         general = new JPanel(new BorderLayout());
         centre = new JPanel();
     }
+    public String[] getData(){
+        String[] Vinput;
+        Vinput[0] = nom;
+        Vinput[1] = valorI.getText().replaceAll("[\n\r]", "");
+        return Vinput;
+    }
 
-
-    public VistaModificarAlfabeto(String nom, String[] a){
+    public VistaModificarInput(String nom, String[] a){
         super();
         inicializar();
 
@@ -58,11 +64,11 @@ public class VistaModificarAlfabeto extends JDialog {
 		}
 
         JPanel panelCentral = new JPanel(new FlowLayout());
-        nombre = new JLabel("Alfabeto: ");
-        valorA = new JTextArea(5, 20);
-        valorA.setText(resultado);
+        nombre = new JLabel("Input: ");
+        valorI = new JTextArea(5, 20);
+        valorI.setText(resultado);
         panelCentral.add(nombre);
-        panelCentral.add(valorA);
+        panelCentral.add(valorI);
 
         general.add(panelCentral, BorderLayout.CENTER);
 
@@ -77,8 +83,7 @@ public class VistaModificarAlfabeto extends JDialog {
         ActionListener modificar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                String alfabet = valorA.getText().replaceAll("[\n\r]", "");
-                //ctrlPres.createAlfabeto(alfabet);
+                getData();
                 dispose();
             }
         };
@@ -99,6 +104,6 @@ public class VistaModificarAlfabeto extends JDialog {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaModificarAlfabeto(args[0], args));
+        SwingUtilities.invokeLater(() -> new VistaModificarInput(args[0], args));
     }
 }
