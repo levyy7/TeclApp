@@ -49,10 +49,11 @@ public class VistaCrearInput extends JDialog {
      * Constructor para VistaCrearInput. 
      * 
      */
-    public VistaCrearInput(){
-        super();
+    public VistaCrearInput(JFrame owner){
+        super(owner, "Creadora Inputs", true);
+        //super();
+        setLocationRelativeTo(owner);
         setSize(350, 200);
-        setVisible(true);
         setResizable(false);
         general = new JPanel(new BorderLayout());
         closeReason = "Closed by user";
@@ -104,7 +105,7 @@ public class VistaCrearInput extends JDialog {
 
         bcreate.addActionListener(crear);
         bcancel.addActionListener(cancelar);
-
+        setVisible(true);
     }
 
 }

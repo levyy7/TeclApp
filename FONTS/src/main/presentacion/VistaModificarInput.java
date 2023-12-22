@@ -35,7 +35,6 @@ public class VistaModificarInput extends JDialog {
 
 	private void inicializar() {
         setSize(300, 200);
-        setVisible(true);
         setResizable(false);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         
@@ -57,8 +56,8 @@ public class VistaModificarInput extends JDialog {
      * @param nom El nombre del input que se mostrará en el diálogo.
      * @param in El texto del input que se quiere modificar.
      */
-    public VistaModificarInput(String nom, String in){
-        super();
+    public VistaModificarInput(JFrame owner, String nom, String in){
+        super(owner, "Modificadora Inputs", true);
         inicializar();
         char[] a = in.toCharArray();
         closeReason = "Closed by user";
@@ -123,6 +122,7 @@ public class VistaModificarInput extends JDialog {
 
         bmodificar.addActionListener(modificar);
         bcancel.addActionListener(cancelar);
+        setVisible(true);
     }
 
 }

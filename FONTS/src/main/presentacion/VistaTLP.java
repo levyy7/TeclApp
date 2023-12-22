@@ -238,7 +238,7 @@ public class VistaTLP extends JPanel {
         ActionListener crearT = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                VistaCrearInput vca = new VistaCrearInput();
+                VistaCrearInput vca = new VistaCrearInput(padre);
                 vca.setVisible(true);
 
                 String closeReason = vca.getCloseReason();
@@ -253,7 +253,7 @@ public class VistaTLP extends JPanel {
         ActionListener crearL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                VistaCrearInput vca = new VistaCrearInput();
+                VistaCrearInput vca = new VistaCrearInput(padre);
                 vca.setVisible(true);
 
                 String closeReason = vca.getCloseReason();
@@ -277,7 +277,7 @@ public class VistaTLP extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] info = cp.getTLP(tlps.getSelectedValue());
-                VistaModificarInput vca = new VistaModificarInput(info[0], info[1]);
+                VistaModificarInput vca = new VistaModificarInput(padre, info[0], info[1]);
                 vca.setVisible(true);
 
                 String closeReason = vca.getCloseReason();
