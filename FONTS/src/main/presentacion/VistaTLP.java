@@ -283,10 +283,22 @@ public class VistaTLP extends JPanel {
                 String closeReason = vca.getCloseReason();
                 if (closeReason.equals("Operation Finished")) {
                     String ret = vca.getData();
-                    //MODIFY TEXTO O MODIFY LISTA O MODIFY TLP?
-                    //String[] n = cp.modi
-                    //for(int i = 0; i<listat.size(); ++i)
-                        //if(!buscarElemento(n[0])) listat.addElement(n[0]);
+                    String type = cp.getTypeTLP(info[0]);
+
+                    String[] n;
+                    if (type.equals("Texto")) n = cp.modifyTexto(info[0], ret);
+                    else {
+                        String[] s = ret.split(" ");
+                        Map<String, Integer> listaFreq = new HashMap<>();
+
+                        for (int i = 0; i < s.length; i += 2) 
+                            listaFreq.put(s[i], Integer.valueOf(s[i + 1]));
+                        n = cp.modifyLista(info[0], listaFreq);
+                    }
+
+
+                    for(int i = 0; i<listat.size(); ++i)
+                        if(!buscarElemento(n[0])) listat.addElement(n[0]);
                 }
             }
         };

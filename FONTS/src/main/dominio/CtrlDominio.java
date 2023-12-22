@@ -519,6 +519,18 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return null;}
     }
 
+    public String consultarTipoTLP(String nombreTLP) {
+        try {
+            TLP tlp = ctrlE.getTLP(nombreTLP);
+            if (tlp instanceof Texto) return "Texto";
+            else return "Lista";
+        }
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return null;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return null;}
+    }
+
     /**
      * Asigna los textos y las listas correspondientes de los nombresTLP y
      * salta una excepción si alguno de los nombres no existe como Input,

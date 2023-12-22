@@ -87,6 +87,10 @@ public class CtrlPresentacion {
         return ctrlD.consultarTLP(nameTLP);
     }
 
+    public String getTypeTLP(String nameTLP) {
+        return ctrlD.consultarTipoTLP(nameTLP);
+    }
+
     /** 
      * Devuelve todos los teclados existentes en el programa
      * @return String[][] : Array de teclados expresados tal y como se especifica en
