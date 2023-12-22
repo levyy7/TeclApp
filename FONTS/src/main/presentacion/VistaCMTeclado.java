@@ -40,6 +40,13 @@ public class VistaCMTeclado extends JDialog {
     JButton bcancel;
     JButton bconfirm;
 
+    String closeReason;
+    
+    
+    public String getCloseReason() {
+        return closeReason;
+    }
+
     /**
  * Obtiene los datos ingresados en la interfaz gráfica para la creación de un teclado.
  *
@@ -65,6 +72,7 @@ public class VistaCMTeclado extends JDialog {
         super(owner, title, true);
         setLocationRelativeTo(owner);
         setSize(670, 350);
+        closeReason = "Closed by user";
 
         general = new JPanel(new BorderLayout());
     
@@ -155,7 +163,7 @@ public class VistaCMTeclado extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e){
                 //recoger toda la informacion de la pantalla y pasarla al controlador de presentacion
-                String[] nameTLP = tlp.getText().split("\n");
+                closeReason = "Operation Finished";
                 //ctrlPres.createTeclado(nameT.getText(), nameA.getText(), nameTLP, selecAlgo.getSelectedItem())
                 getData();
                 dispose();
@@ -167,6 +175,7 @@ public class VistaCMTeclado extends JDialog {
         ActionListener cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                closeReason = "Closed by user";
                 dispose();
             }
         };

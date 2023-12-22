@@ -11,6 +11,9 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -237,9 +240,13 @@ public class VistaTLP extends JPanel {
             public void actionPerformed(ActionEvent e){
                 VistaCrearInput vca = new VistaCrearInput();
                 vca.setVisible(true);
-                String[] ret = vca.getData();
-                cp.createTexto(ret[0], ret[1]);
-                listat.addElement(ret[0]); 
+
+                String closeReason = vca.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String[] ret = vca.getData();
+                    cp.createTexto(ret[0], ret[1]);
+                    listat.addElement(ret[0]); 
+                }
             }
         };
 
@@ -248,9 +255,20 @@ public class VistaTLP extends JPanel {
             public void actionPerformed(ActionEvent e){
                 VistaCrearInput vca = new VistaCrearInput();
                 vca.setVisible(true);
-                String[] ret = vca.getData();
-                cp.createTexto(ret[0], ret[1]);
-                listat.addElement(ret[0]);
+
+                String closeReason = vca.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String[] ret = vca.getData();
+
+                    String[] s = ret[1].split(" ");
+                    Map<String, Integer> listaFreq = new HashMap<>();
+
+                    for (int i = 0; i < s.length; i += 2) 
+                        listaFreq.put(s[i], Integer.valueOf(s[i + 1]));
+
+                    cp.createLista(ret[0], listaFreq);
+                    listat.addElement(ret[0]);
+                }
             }
         };
 
@@ -262,11 +280,14 @@ public class VistaTLP extends JPanel {
                 VistaModificarInput vca = new VistaModificarInput(info[0], info[1]);
                 vca.setVisible(true);
 
-                String ret = vca.getData();
-                //MODIFY TEXTO O MODIFY LISTA O MODIFY TLP?
-                //String[] n = cp.modi
-                //for(int i = 0; i<listat.size(); ++i)
-                    //if(!buscarElemento(n[0])) listat.addElement(n[0]);
+                String closeReason = vca.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String ret = vca.getData();
+                    //MODIFY TEXTO O MODIFY LISTA O MODIFY TLP?
+                    //String[] n = cp.modi
+                    //for(int i = 0; i<listat.size(); ++i)
+                        //if(!buscarElemento(n[0])) listat.addElement(n[0]);
+                }
             }
         };
 

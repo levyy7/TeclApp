@@ -26,6 +26,13 @@ public class VistaCrearInput extends JDialog {
     JButton bcancel;
     JButton bcreate;
 
+    String closeReason;
+    
+    
+    public String getCloseReason() {
+        return closeReason;
+    }
+
      /**
      * Coge el nombre y el texto del área de texto, eliminando cualquier carácter de nueva línea.
      * 
@@ -48,6 +55,7 @@ public class VistaCrearInput extends JDialog {
         setVisible(true);
         setResizable(false);
         general = new JPanel(new BorderLayout());
+        closeReason = "Closed by user";
 
         JPanel panelNorte = new JPanel(new FlowLayout());
         nombre = new JLabel("Nombre: ");
@@ -79,6 +87,7 @@ public class VistaCrearInput extends JDialog {
         ActionListener crear = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                closeReason = "Operation Finished";
                 getData();
                 dispose();
             }
@@ -87,6 +96,7 @@ public class VistaCrearInput extends JDialog {
         ActionListener cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                closeReason = "Closed by user";
                 dispose();
             }
         };

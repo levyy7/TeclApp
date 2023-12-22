@@ -231,9 +231,13 @@ public class VistaTeclados extends JPanel {
             public void actionPerformed(ActionEvent e){
                 VistaCMTeclado vct = new VistaCMTeclado(padre, "Crear Teclado", "");
                 vct.setVisible(true);
-                String[] info = vct.getData();
-                cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
-                listat.addElement(info[0]);
+
+                String closeReason = vct.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String[] info = vct.getData();
+                    cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
+                    listat.addElement(info[0]);
+                }
             }
         };
 
@@ -241,10 +245,15 @@ public class VistaTeclados extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 VistaCMTeclado vct = new VistaCMTeclado(padre, "Modificar Teclado", teclados.getSelectedValue());
-                String[] info = vct.getData();
-                String[] n = cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
-                for(int i = 0; i<listat.size(); ++i)
-                    if(!buscarElemento(n[0])) listat.addElement(n[0]);
+                vct.setVisible(true);
+
+                String closeReason = vct.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String[] info = vct.getData();
+                    String[] n = cp.createTeclado(info[0], info[1], info[2].split("\n"), info[3]);
+                    for(int i = 0; i<listat.size(); ++i)
+                        if(!buscarElemento(n[0])) listat.addElement(n[0]);
+                }
             }
         };
 

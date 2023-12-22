@@ -233,9 +233,13 @@ public class VistaAlfabetos extends JPanel {
             public void actionPerformed(ActionEvent e){
                 VistaCrearInput vca = new VistaCrearInput();
                 vca.setVisible(true);
-                String[] info = vca.getData();
-                cp.createAlfabeto(info[0], info[1]);
-                listat.addElement(info[0]);
+
+                String closeReason = vca.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String[] info = vca.getData();
+                    cp.createAlfabeto(info[0], info[1]);
+                    listat.addElement(info[0]);
+                }
             }
         };
 
@@ -244,10 +248,14 @@ public class VistaAlfabetos extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String[] info = cp.getAlfabeto(alfabetos.getSelectedValue());
                 VistaModificarInput vca = new VistaModificarInput(info[0], info[1]);
-                String ret = vca.getData();
-                String[] n = cp.modifyAlfabeto(info[0], ret);
-                for(int i = 0; i<listat.size(); ++i)
-                    if(!buscarElemento(n[0])) listat.addElement(n[0]);
+
+                String closeReason = vca.getCloseReason();
+                if (closeReason.equals("Operation Finished")) {
+                    String ret = vca.getData();
+                    String[] n = cp.modifyAlfabeto(info[0], ret);
+                    for(int i = 0; i<listat.size(); ++i)
+                        if(!buscarElemento(n[0])) listat.addElement(n[0]);
+                }
             }
         };
 

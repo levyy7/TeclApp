@@ -26,6 +26,13 @@ public class VistaModificarInput extends JDialog {
     private JButton bcancel;
     private JButton bmodificar;
 
+    String closeReason;
+    
+    
+    public String getCloseReason() {
+        return closeReason;
+    }
+
 	private void inicializar() {
         setSize(300, 200);
         setVisible(true);
@@ -54,6 +61,7 @@ public class VistaModificarInput extends JDialog {
         super();
         inicializar();
         char[] a = in.toCharArray();
+        closeReason = "Closed by user";
 
 		title = new JLabel(nom); 
 		Font font = new Font("Arial", Font.PLAIN, 24);
@@ -96,6 +104,7 @@ public class VistaModificarInput extends JDialog {
         ActionListener modificar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                closeReason = "Operation Finished";
                 getData();
                 dispose();
             }
@@ -104,6 +113,7 @@ public class VistaModificarInput extends JDialog {
         ActionListener cancelar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                closeReason = "Closed by user";
                 dispose();
             }
         };
