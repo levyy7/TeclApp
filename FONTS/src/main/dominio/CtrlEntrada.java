@@ -417,6 +417,15 @@ public class CtrlEntrada{
 		return in.toStringArray();
 	}
 
+	public String[] getInfoTLP(String nombreTLP) throws InputInexistente, WrongInputType {
+		Input in = inputs.get(nombreTLP);
+
+		if (in == null)	throw new InputInexistente();
+		else if (!(in instanceof TLP)) throw new WrongInputType("TLP", in.getClass().getName());
+
+		return in.toStringArray();
+	}
+
 	/**
      * Modificación de un texto
      * @param nombreTexto : nombre del texto
@@ -430,19 +439,19 @@ public class CtrlEntrada{
 		tex.setTexto(textoNuevo);
 	}
 
-	/**
-     * Eliminar un texto
-     * @param nombreTexto : nombre del texto
-     * @throws InputInexistente 
-     * @throws WrongInputType
+    /**
+	 * Eliminar un TLP
+	 * @param nombreTLP
+	 * @throws InputInexistente
+	 * @throws WrongInputType
     */
-    public void borrarTexto(String nombreTexto) throws InputInexistente, WrongInputType {
-		Input in = inputs.get(nombreTexto);
+    public void borrarTLP(String nombreTLP) throws InputInexistente, WrongInputType {
+    	Input in = inputs.get(nombreTLP);
 
-		if (in == null)	throw new InputInexistente();
-		if (!(in instanceof Texto)) throw new WrongInputType("Texto", in.getClass().getName());
+    	if (in == null) throw new InputInexistente();
+    	if (!(in instanceof TLP)) throw new WrongInputType("TLP", in.getClass().getName());
 
-        inputs.remove(nombreTexto);
+    	inputs.remove(nombreTLP);
     }
 
 	/**
@@ -516,21 +525,6 @@ public class CtrlEntrada{
 
 		lp.setListaFreq(listaNueva);
 	}
-
-	/**
-     * Eliminar una lista de palabras
-     * @param nombreLista : nombre de la lista
-     * @throws InputInexistente 
-     * @throws WrongInputType
-    */
-    public void borrarListaPalabras(String nombreLista) throws InputInexistente, WrongInputType {
-		Input in = inputs.get(nombreLista);
-
-		if (in == null)	throw new InputInexistente();
-		if (!(in instanceof ListaPalabras)) throw new WrongInputType("ListaPalabras", in.getClass().getName());
-
-        inputs.remove(nombreLista);
-    }
 
     /**
 	 * Consulta de un input
@@ -651,6 +645,22 @@ public class CtrlEntrada{
 			++i;
 		}
 		return list;
+    }
+
+    public String[][] consultaTLPs() {
+    	HashMap<String, String[]> a  = new HashMap<String, String[]>();
+		for (Map.Entry<String, Input> actual: inputs.entrySet()){
+        	if (actual.getValue() instanceof TLP) a.put(actual.getKey(),actual.getValue().toStringArray());
+        }
+
+        String[][] tlp = new String[a.size()][2];
+		int i = 0;
+		for (Map.Entry<String, String[]> actual : a.entrySet()) {
+			String[] tlpActual = actual.getValue();
+			tlp[i] = tlpActual;
+			++i;
+		}
+		return tlp;
     }
 
 }

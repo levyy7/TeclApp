@@ -25,7 +25,7 @@ public class CtrlDominio {
     private static CtrlAlgoritmo ctrlA;
 
 
-    private static CtrlPresentacion ctrlPre = CtrlPresentacion.getInstance();
+    private static CtrlPresentacion ctrlP = CtrlPresentacion.getInstance();
 
     /**
      * Constructora por defecto que instancia los controladores y carga
@@ -62,9 +62,9 @@ public class CtrlDominio {
         String letrasAlfabeto;
         try {letrasAlfabeto = ctrlE.getAlfabeto(nombreAlfabeto)[1];}
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
 
 
         Vector<String> textos = new Vector<String>();
@@ -72,13 +72,13 @@ public class CtrlDominio {
         
         try {asignarTextosYListas(textos, listas, nombresTLP, letrasAlfabeto);}
         catch (InputInexistente e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (TextoNoValido e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (ListaNoValida e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
 
         try {
             Point2D[] playout = ctrlE.crearTecladoVacio(nombreTeclado, nombreAlfabeto, nombreAlgoritmo);
@@ -88,13 +88,13 @@ public class CtrlDominio {
             CtrlPersistencia.guardarTeclado(ctrlE.consultaTeclado(nombreTeclado));
         }
         catch (NGrande e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (TecladoYaExiste e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InvalidAlgorithm e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (TecladoInexistente e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage());  return;}
     }
 
     /**
@@ -113,43 +113,42 @@ public class CtrlDominio {
             return croppedTec;
         }
         catch (TecladoYaExiste e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
         catch (TecladoMalImportado e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
     }
 
     /**
      * Función que modifica un teclado existente de la base de datos y hace
      * saltar una excepción en caso de que no sea posible
      * @param nombreTeclado : el nombre del teclado a modificar
+     * @param nombreAlgoritmo : el algoritmo que se usara
      * @param nombreAlfabeto : el nombre del alfabeto que se usará
      * @param nombresTLP : los nombres de los textos y listas que se usaran
     */
-    public void modificarTeclado(String nombreTeclado, String nombreAlfabeto, String[] nombresTLP) {
-    	String nombreAlgoritmo = "";
-    	try {nombreAlgoritmo = ctrlE.getAlgoritmo(nombreTeclado);}
-        catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+    public void modificarTeclado(String nombreTeclado, String nombreAlgoritmo, String nombreAlfabeto, String[] nombresTLP) {
         
         String letras;
         try{letras = ctrlE.getAlfabeto(nombreAlfabeto)[1];}
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
 
         Vector<String> textos = new Vector<String>();
         Vector<Map<String, Integer>> listas = new Vector<>();
         
         try {asignarTextosYListas(textos, listas, nombresTLP, letras);}
         catch (InputInexistente e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (TextoNoValido e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage());  return;}
         catch (ListaNoValida e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
 
 
         try {
@@ -163,31 +162,15 @@ public class CtrlDominio {
             CtrlPersistencia.modificarTeclado(ctrlE.consultaTeclado(nombreTeclado));
             }
         catch (NGrande e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InvalidAlgorithm e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (TecladoYaExiste e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (TecladoInexistente e) 
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         
         
-    }
-
-    /**
-     * Subfunción de modificar teclado que se encarga de asignarle el mismo
-     * alfabeto que ya contenía el teclado inicialmente a la hora de modificar
-     * el teclado
-     * @param nombreTeclado : nombre del teclado a modificar
-     * @param nombresTLP : nombres de los textos y listas que se usaran
-    */
-    public void modificarTeclado(String nombreTeclado, String[] nombresTLP) {
-    	String alfabeto = "";
-    	try {alfabeto = ctrlE.getAlfabetoTeclado(nombreTeclado);}
-    	catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-
-        modificarTeclado(nombreTeclado, alfabeto, nombresTLP);
     }
 
     /**
@@ -201,7 +184,7 @@ public class CtrlDominio {
             CtrlPersistencia.borrarTeclado(nombreTeclado);
         }
         catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -217,13 +200,13 @@ public class CtrlDominio {
             CtrlPersistencia.guardarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto));
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (AlfabetoInvalido e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InputInexistente e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -240,9 +223,11 @@ public class CtrlDominio {
             return alfabetos;
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
         catch (AlfabetoMalImportado e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
     }
 
     /**
@@ -258,13 +243,13 @@ public class CtrlDominio {
             CtrlPersistencia.modificarAlfabeto(ctrlE.getAlfabeto(nombreAlfabeto));
         }
         catch (AlfabetoUsandose e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (AlfabetoInvalido e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -279,11 +264,11 @@ public class CtrlDominio {
             CtrlPersistencia.borrarAlfabeto(nombreAlfabeto);
         }
         catch (AlfabetoUsandose e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -297,11 +282,11 @@ public class CtrlDominio {
             CtrlPersistencia.guardarTexto(ctrlE.getTexto(nombreTexto));
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InputInexistente e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -318,13 +303,12 @@ public class CtrlDominio {
             return textos;
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
         catch (TextoMalImportado e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
-    
-    }
-    
-
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
+    }    
 
     /**
      * Función que modifica un texto existente y salta una excepción si el
@@ -338,28 +322,27 @@ public class CtrlDominio {
             CtrlPersistencia.modificarTexto(ctrlE.getTexto(nombreTexto));
         }
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
     }
-
 
     /**
-     * Función que borra un texto y salta una excepción si el texto no existe
-     * o no pertenece a un texto
-     * @param nombreTexto
+     * Función que borra un TLP y salta una excepción si el TLP no existe
+     * @param nombreTLP
     */
-    public void borrarTexto(String nombreTexto) {
+    public void borrarTLP(String nombreTLP) {
         try {
-            ctrlE.borrarTexto(nombreTexto);
-            CtrlPersistencia.borrarTexto(nombreTexto);
+            TLP tlp = ctrlE.getTLP(nombreTLP);
+            ctrlE.borrarTLP(nombreTLP);
+            if (tlp instanceof Texto) CtrlPersistencia.borrarTexto(nombreTLP);
+            else CtrlPersistencia.borrarLista(nombreTLP);
         }
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;}  
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}  
     }
-
 
     /**
      * Función que crea una lista de palabras y salta una excepción si la
@@ -373,11 +356,11 @@ public class CtrlDominio {
             CtrlPersistencia.guardarLista(ctrlE.getListaPalabras(nombreLista));
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (InputInexistente e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); return;} 
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;} 
     }
 
     /**
@@ -394,13 +377,13 @@ public class CtrlDominio {
             return listas;
         }
         catch (InputJaCreat e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
         catch (ListaMalImportada e)
-            {System.out.println("Error: "+e.getMessage()); return new String[0][0];}
-        
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
+        catch (ArchivoNoEsCSV e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return new String[0][0];}
     }
     
-
     /**
      * Función que modifica una lista de palabras y salta una excepción si no
      * existe o no pertenece a una lista
@@ -413,33 +396,14 @@ public class CtrlDominio {
             CtrlPersistencia.modificarLista(ctrlE.getInput(nombreLista));
         }
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;} 
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;} 
     }
-
-    
-
-    /**
-     * Función que borra una lista de palabras y salta una excepción si no
-     * existe o el Input no pertenece a una lista
-     * @param nombreLista
-    */
-    public void borrarListaPalabras(String nombreLista) {
-        try {
-            ctrlE.borrarListaPalabras(nombreLista);
-            CtrlPersistencia.borrarLista(nombreLista);
-        }
-        catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return;}
-        catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return;} 
-    }
-
 
     /** 
      * Consulta de los teclados
-     * @return HashMap(String, Teclado) : contiene los teclados guardados
+     * @return String[][] : contiene los teclados guardados
     */
     public String[][] consultarInfoTeclados() {
         return ctrlE.consultaInfoTeclados();
@@ -448,12 +412,12 @@ public class CtrlDominio {
     /**
      * Consulta de un teclado
      * @param nombreTeclado
-     * @return Teclado : contiene el teclado consultado
+     * @return String[] : contiene el teclado consultado
     */
     public String[] consultarInfoTeclado(String nombreTeclado) {
         try {return ctrlE.consultaTeclado(nombreTeclado);}
         catch (TecladoInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
     }
 
     /**
@@ -467,7 +431,7 @@ public class CtrlDominio {
 
     /** 
      * Consulta de los alfabetos
-     * @return HashMap(String, Input) : contiene los alfabetos guardados
+     * @return String[][] : contiene los alfabetos guardados
     */
     public String[][] consultarAlfabetos() {
         return ctrlE.consultaAlfabetos();
@@ -475,7 +439,7 @@ public class CtrlDominio {
 
     /** 
      * Consulta de los textos
-     * @return HashMap(String, Input) : contiene los textos guardados
+     * @return String[][] : contiene los textos guardados
     */
     public String[][] consultarTextos() {
         return ctrlE.consultaTextos();
@@ -483,56 +447,75 @@ public class CtrlDominio {
 
     /** 
      * Consulta de las listas
-     * @return HashMap(String, Input) : contiene las listas guardadas
+     * @return String[][] : contiene las listas guardadas
     */
     public String[][] consultarListas() {
         return ctrlE.consultaListas();
     }
 
+    /**
+     * Consulta de los TLPs
+     * @return String[][] : contiene los TLPs guardadas
+    */
+    public String[][] consultarTLPs() {
+        return ctrlE.consultaInfoTLPs();
+    }
 
     /** 
      * Consulta de un alfabeto
      * @param nombreAlfabeto
-     * @return String : contiene el alfabeto consultado
+     * @return String[] : contiene el alfabeto consultado
     */
     public String[] consultarAlfabeto(String nombreAlfabeto) {
         try {return ctrlE.getAlfabeto(nombreAlfabeto);}
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
     }
 
     /** 
      * Consulta de un texto
      * @param nombreTexto
-     * @return String : contiene el texto consultado
+     * @return String[] : contiene el texto consultado
     */
     public String[] consultarTexto(String nombreTexto) {
         try {
             return ctrlE.getTexto(nombreTexto);
         }
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
     }
 
     /** 
      * Consulta de una lista de palabras
      * @param nombreLista
-     * @return Map(String, Integer) : contiene la lista consultada
+     * @return String[] : contiene la lista consultada
     */
     public String[] consultarLista(String nombreLista) {
         try {
             return ctrlE.getListaPalabras(nombreLista);
         }
         catch (InputInexistente e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); return null;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
     }
-    
+
+    /**
+     * Consulta de un TLP
+     * @param nombreTLP
+     * @return String[] : contiene el LTP consultado
+    */
+    public String[] consultarTLP(String nombreTLP) {
+        try {return ctrlE.getInfoTLP(nombreTLP);}
+        catch (InputInexistente e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
+        catch (WrongInputType e)
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return null;}
+    }
 
     /**
      * Asigna los textos y las listas correspondientes de los nombresTLP y
