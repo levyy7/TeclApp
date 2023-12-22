@@ -249,34 +249,22 @@ public class CtrlPresentacion {
      * Elimina un texto guardado en la aplicación
      * @param nameTec : Nombre del texto a eliminar
     */
-    public void deleteTexto(String nameTexto) {
-        ctrlD.borrarTexto(nameTexto);
+    public void deleteTLP(String nameTLP) {
+        ctrlD.borrarTLP(nameTLP);
     }
 
-    /** 
-     * Elimina una lista de palabras guardada en la aplicación
-     * @param nameTec : Nombre de la lista a eliminar
-    */
-    public void deleteLista(String nameLista) {
-         ctrlD.borrarTexto(nameLista);
-    }
 
 
     public void enableVTeclados() {
-        VistaTeclados = new VistaTeclados(mp);
+        VistaTeclados vtec = new VistaTeclados(mp);
     }
 
     public void enableVAlfabetos() {
-        VistaAlfabetos = new VistaAlfabetos(mp);
+        VistaAlfabetos va = new VistaAlfabetos(mp);
     }
 
     public void enableVTLP() {
-        VistaTLP = new VistaTLP(mp);
-    }
-
-    public void enableVVerTeclado(String nombreTeclado) {
-        char[][] layout = ctrlD.consultarLayoutTeclado(nombreTeclado);
-        VistaVerTeclado = new VistaVerTeclado(nombreTeclado, layout);
+        VistaTLP vtlp = new VistaTLP(mp);
     }
 
     /** 
@@ -285,7 +273,7 @@ public class CtrlPresentacion {
      * @param nombreExcepcion : Nombre de la excepción que ha ocurrido
      * @param textoExcepcion : Texto explicando la propia excepción
     */
-    public void enableVExcepcion(String nombreExcepcion, String textoExcepcion) {
-        VistaExcepcion = new VistaExcepcion(nombreExcepcion, textoExcepcion);
+    public void saltaExcepcion(String textoExcepcion) { //String nombreExcepcion, 
+        VistaExcepcion vexc = new VistaExcepcion(textoExcepcion);
     }
 }
