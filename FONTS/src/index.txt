@@ -1,14 +1,13 @@
 ---------------------Directorio src----------------------
 
-Este directorio contiene todo el código del proyecto. En cada carpeta
-se encuentra una explicación de todas las clases corresponientes.
+Este directorio contiene todo el codigo del proyecto. En cada carpeta
+se encuentra una explicacion de todas las clases corresponientes.
 
 Elementos del directorio
 
 - Excepcions:
 	Contiene todas las excepciones que hacemos saltar en caso de que algo
-	en el programe no siga la ruta que deberia (especificado en los casos
-	de uso)
+	en el programe no siga la ruta que deberia
 
 - drivers:
 	Contiene los drivers (.java) de todos los controladores del proyecto,
