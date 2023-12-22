@@ -647,7 +647,7 @@ public class CtrlEntrada{
 		return list;
     }
 
-    public String[][] consultaTLPs() {
+    public String[][] consultaInfoTLPs() {
     	HashMap<String, String[]> a  = new HashMap<String, String[]>();
 		for (Map.Entry<String, Input> actual: inputs.entrySet()){
         	if (actual.getValue() instanceof TLP) a.put(actual.getKey(),actual.getValue().toStringArray());
