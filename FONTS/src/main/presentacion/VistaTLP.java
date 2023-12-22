@@ -390,8 +390,7 @@ public class VistaTLP extends JPanel {
         balfabetos.addActionListener(goAlfabetos);
         bimportart.addActionListener(importT);
         bimportarl.addActionListener(importL);
-        bmodificar.addActionListener(modificarT);
-        bmodificar.addActionListener(modificarL);
+        bmodificar.addActionListener(modificar);
         bborrar.addActionListener(borrar);
         barrabusq.getDocument().addDocumentListener(find);
         bconsultarTLP.addActionListener(consultar);

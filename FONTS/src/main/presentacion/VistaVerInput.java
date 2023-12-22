@@ -58,6 +58,11 @@ public class VistaVerInput extends JDialog {
 			for (int j = 0; j < 10; j += 1) {
 				if (i*10+j < a.length){
 					particion += a[i*10+j];
+                    if (i*10+j == a.length-1) {
+                        particion += ".";
+                    } else {
+                        particion += ", ";
+                    }
 				}
 			}
 			resultado[i] = particion;
