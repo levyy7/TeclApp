@@ -142,11 +142,11 @@ public class CtrlDominio {
         
         try {asignarTextosYListas(textos, listas, nombresTLP, letras);}
         catch (InputInexistente e) 
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
         catch (WrongInputType e)
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
         catch (TextoNoValido e) 
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage());  return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
         catch (ListaNoValida e)
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
 
@@ -206,7 +206,7 @@ public class CtrlDominio {
         catch (InputInexistente e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
         catch (WrongInputType e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
     }
 
     /**
@@ -358,7 +358,7 @@ public class CtrlDominio {
         catch (InputJaCreat e)
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
         catch (InputInexistente e) //Aqui nunca entrara
-            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); ctrlP.saltaExcepcion("Error: "+e.getMessage()); return;}
+            {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;}
         catch (WrongInputType e) //Aqui nunca entrara
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return;} 
     }
