@@ -357,7 +357,7 @@ public class DriverDominio {
         System.out.print("Introduce el nombre del nuevo alfabeto: ");
         String alfabeto = tec.nextLine();
 
-        ctrlD.modificarTeclado(nombreTeclado, nombreAlgoritmo, alfabeto, textos);
+        ctrlD.modificarTeclado(nombreTeclado, alfabeto, textos, nombreAlgoritmo);
     }
 
     /** Función que se encarga de comprobar la modificación de un alfabeto */
