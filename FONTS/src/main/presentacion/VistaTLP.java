@@ -231,22 +231,22 @@ public class VistaTLP extends JPanel {
         ActionListener crearT = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                VistaCrearTexto vct = new VistaCrearTexto();
-                vct.setVisible(true);
-                String[] info = vct.getData();
-                cp.createTexto(info[0], info[1]);
-                listat.addElement(info[0]); 
+                VistaCrearInput vca = new VistaCrearInput();
+                vca.setVisible(true);
+                String[] ret = vca.getData();
+                cp.createTexto(ret[0], ret[1]);
+                listat.addElement(ret[0]); 
             }
         };
 
         ActionListener crearL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                VistaCrearLista vct = new VistaCrearLista();
-                vct.setVisible(true);
-                String[] info = vct.getData();
-                cp.createTexto(info[0], info[1]);
-                listat.addElement(info[0]);
+                VistaCrearInput vca = new VistaCrearInput();
+                vca.setVisible(true);
+                String[] ret = vca.getData();
+                cp.createTexto(ret[0], ret[1]);
+                listat.addElement(ret[0]);
             }
         };
 
@@ -254,9 +254,11 @@ public class VistaTLP extends JPanel {
         ActionListener modificar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VistaModificarTLP vmt = new VistaModificarTLP();
-                vmt.setVisible(true);
-                String[] info = vmt.getData();
+                String[] info = cp.getTLP(tlps.getSelectedValue());
+                VistaModificarInput vca = new VistaModificarInput(info[0], info[1]);
+                vca.setVisible(true);
+
+                String ret = vca.getData();
                 //MODIFY TEXTO O MODIFY LISTA O MODIFY TLP?
                 //String[] n = cp.modi
                 //for(int i = 0; i<listat.size(); ++i)
@@ -332,8 +334,9 @@ public class VistaTLP extends JPanel {
 
         ActionListener consultar = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                VistaVerTLP vvt = new VistaVerTLP();
+            public void actionPerformed(ActionEvent e) {
+                String[] info = cp.getTLP(tlps.getSelectedValue());
+                VistaVerInput vvt = new VistaVerInput(info[0], info[1]);
                 vvt.setVisible(true);
             }
         };

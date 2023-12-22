@@ -9,7 +9,11 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.*;
 
-
+/**
+ * VistaVerInput es una clase que extiende JDialog para crear una interfaz gráfica de usuario
+ * para ver un input.
+ * @author Pol Ribera Moreno
+ */
 public class VistaVerInput extends JDialog {
 	private JPanel general;
     private JPanel centre;
@@ -25,12 +29,17 @@ public class VistaVerInput extends JDialog {
         centre = new JPanel();
     }
 
-
-    public VistaVerInput(String nom, String[] a){
+    /**
+     * Constructor para VistaVerInput. 
+     * 
+     * @param nom El nombre del input que se mostrará en el diálogo.
+     * @param in El texto del input.
+     */
+    public VistaVerInput(String nom, String in){
         super();
         inicializar();
 
-
+        char[] a = in.toCharArray();
 		title = new JLabel(nom); 
 		Font font = new Font("Arial", Font.PLAIN, 24);
         title.setFont(font);
@@ -41,12 +50,12 @@ public class VistaVerInput extends JDialog {
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.EAST);
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.WEST);
 
-		int size_a = (int) Math.ceil(a.length-1/10) + 1;
+		int size_a = (int) Math.ceil(a.length/10) + 1;
 		String[] resultado = new String[size_a];
 		for (int i = 0; i < resultado.length; i += 1) {
 			String particion = "";
 			for (int j = 0; j < 10; j += 1) {
-				if (i*10+j < a.length && j+i != 0){
+				if (i*10+j < a.length){
 					particion += a[i*10+j];
 					if(i*10+j == a.length-1){
 						particion += ".";
@@ -72,9 +81,5 @@ public class VistaVerInput extends JDialog {
         getContentPane().add(general);
     }
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaVerInput(args[0], args));
-    }
 }
 //clase make by Pol

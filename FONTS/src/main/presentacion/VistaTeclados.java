@@ -43,15 +43,19 @@ public class VistaTeclados extends JPanel {
     private  DefaultListModel<String> listat;
     private JList<String> teclados;
 
+    private CtrlPresentacion cp;
+
     /**
      * Inicializa los componentes.
      */
     private void inicializar() {
         general = new JPanel(new BorderLayout());
+        cp = CtrlPresentacion.getInstance();
        
         listat = new DefaultListModel<String>();
-        for(int i = 0; i<15; ++i) {
-            listat.addElement(String.valueOf(i));
+        String[][] allTec = cp.getAllTeclados();
+        for(String[] s : allTec) {
+            listat.addElement(s[0]);
         }
         teclados = new JList<String>(listat);
         
@@ -207,7 +211,6 @@ public class VistaTeclados extends JPanel {
         //FUNCIONALIDADES DE LOS BOTONES
 
         JPanel act = this;
-        CtrlPresentacion cp = CtrlPresentacion.getInstance();
         
         ListSelectionListener clicarElemento = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -300,8 +303,10 @@ public class VistaTeclados extends JPanel {
         ActionListener consultarteclado = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //VistaVerTeclado vct = new VistaVerTeclado(padre);
-                //vct.setVisible(true);
+                String[] info = cp.getInfoTeclado(teclados.getSelectedValue());
+                char[][] layout = cp.getLayoutTeclado(teclados.getSelectedValue());
+                VistaVerTeclado vct = new VistaVerTeclado(padre, info[0], info[1], info[2], layout);
+                vct.setVisible(true);
             }
         };
 

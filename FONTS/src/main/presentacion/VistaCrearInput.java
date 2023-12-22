@@ -13,7 +13,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.*;
 
 
-
+/**
+ * VistaCrearInput es una clase que extiende JDialog para crear una interfaz gráfica de usuario
+ * para crear un input.
+ * @author Pol Ribera Moreno
+ */
 public class VistaCrearInput extends JDialog {
 	JPanel general;
     JLabel nombre;
@@ -22,15 +26,24 @@ public class VistaCrearInput extends JDialog {
     JButton bcancel;
     JButton bcreate;
 
+     /**
+     * Coge el nombre y el texto del área de texto, eliminando cualquier carácter de nueva línea.
+     * 
+     * @return String[] Los datos de recogidos.
+     */
     public String[] getData(){
-        String[] Vinput;
+        String[] Vinput= new String[2];
         Vinput[0] = nameA.getText();
         Vinput[1] = valorA.getText().replaceAll("[\n\r]", "");
         return Vinput;
     }
+
+    /**
+     * Constructor para VistaCrearInput. 
+     * 
+     */
     public VistaCrearInput(){
-        super();//owner, title, true
-        //setLocationRelativeTo(owner);
+        super();
         setSize(350, 200);
         setVisible(true);
         setResizable(false);
@@ -84,9 +97,5 @@ public class VistaCrearInput extends JDialog {
 
     }
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaCrearInput());
-    }
 }
 //clase make by Pol
