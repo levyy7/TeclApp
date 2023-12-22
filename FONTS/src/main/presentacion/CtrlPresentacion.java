@@ -2,8 +2,6 @@ package main.presentacion;
 
 import javax.swing.*;
 
-import org.mockito.internal.matchers.Null;
-
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Map;
@@ -33,7 +31,7 @@ public class CtrlPresentacion {
 
     private CtrlPresentacion() {
         ctrlD = CtrlDominio.getInstance();
-        //mp = new FrameMenuPrincipal();
+        mp = new FrameMenuPrincipal();
         //enableVTeclados();
     }
 

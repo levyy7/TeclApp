@@ -37,9 +37,10 @@ public class FrameMenuPrincipal extends JFrame {
         getContentPane().add(vt);
     }
 
-
+    /*
     public static void main(String[] args) {
         //CtrlPresentacion = 
         SwingUtilities.invokeLater(() -> new FrameMenuPrincipal());
     }
+    */
 }

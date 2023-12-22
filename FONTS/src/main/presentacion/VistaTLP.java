@@ -258,7 +258,7 @@ public class VistaTLP extends JPanel {
                 VistaModificarInput vca = new VistaModificarInput(info[0], info[1]);
                 vca.setVisible(true);
 
-                String[] ret = vca.getData();
+                String ret = vca.getData();
                 //MODIFY TEXTO O MODIFY LISTA O MODIFY TLP?
                 //String[] n = cp.modi
                 //for(int i = 0; i<listat.size(); ++i)

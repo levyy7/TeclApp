@@ -242,8 +242,8 @@ public class VistaAlfabetos extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String[] info = cp.getAlfabeto(alfabetos.getSelectedValue());
                 VistaModificarInput vca = new VistaModificarInput(info[0], info[1]);
-                String[] ret = vca.getData();
-                String[] n = cp.modifyAlfabeto(ret[0], ret[1]);
+                String ret = vca.getData();
+                String[] n = cp.modifyAlfabeto(info[0], ret);
                 for(int i = 0; i<listat.size(); ++i)
                     if(!buscarElemento(n[0])) listat.addElement(n[0]);
             }

@@ -1,4 +1,4 @@
-MAIN_INPUT = ./main/dominio/*.java ./main/dominio/algoritmos/*.java ./main/dominio/ed/*.java ./Excepcions/*.java ./main/persistencia/*.java ./main/presentacion/*.java
+MAIN_INPUT = ./main/dominio/*.java ./main/dominio/algoritmos/*.java ./main/dominio/ed/*.java ./Excepcions/*.java ./main/persistencia/*.java ./main/presentacion/*.java App.java
 
 TEST_INPUT = ./tests/*.java
 
@@ -13,6 +13,10 @@ LIBS = ../../lib/byte-buddy-1.12.16.jar:../../lib/byte-buddy-agent-1.12.16.jar:.
 all:
 	javac -d $(CLASS_OUTPUT) $(MAIN_INPUT) $(DRIVER_INPUT)
 	javac -cp $(LIBS) -d $(CLASS_OUTPUT) $(MAIN_INPUT) $(TEST_INPUT)
+
+
+start:
+	java -cp $(CLASS_OUTPUT) App
 
 
 testAlfabeto: 
