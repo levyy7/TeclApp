@@ -2,8 +2,7 @@
 
 Este directorio contiene las clases (.java) de la persistencia. Para
 probar estas clases ejecuta el driver de Persistencia ubicado en la
-carpeta drivers. Para más informacion, consulta el pdf
-"2aEntregaDocumentacion".
+carpeta drivers.
 
 Elementos del directorio:
 

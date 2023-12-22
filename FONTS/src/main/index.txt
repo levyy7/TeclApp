@@ -1,7 +1,6 @@
 ----------------------Directorio main-----------------------
 
-Este directorio contiene las capas del proyecto. De momento solo
-tenemos la capa de dominio y la de persistencia para la segunda entrega.
+Este directorio contiene las capas del proyecto.
 
 Elementos del directorio
 
@@ -10,3 +9,6 @@ Elementos del directorio
 
 - persistencia/:
 	Contiene el codigo de las clases de la persistencia
+
+- presentacion/:
+	Contiene el codigo de las clases de la presentacion

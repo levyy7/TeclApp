@@ -1,0 +1,35 @@
+----------------------Directorio presentacion-----------------------
+
+Este directorio contiene el codigo de la presentacion.
+
+Elementos del directorio
+
+- CtrlPresentacion.java:
+	Archivo que pertenece a la clase CtrlPresentacion
+
+- FrameMenuPrincipal.java:
+	Archivo que pertenece a la vista FrameMenuPrincipal
+
+- VistaAlfabetos.java:
+	Archivo que pertenece a la vista VistaAlfabetos
+
+- VistaCMTeclado.java:
+	Archivo que pertenece a la vista VistaCMTeclado
+
+- VistaCrearInput.java:
+	Archivo que pertenece a la vista VistaCrearInput
+
+- VistaModificarInput.java:
+	Archivo que pertenece a la vista VistaModificarInput
+
+- VistaTeclados.java:
+	Archivo que pertenece a la vista VistaTeclados
+
+- VistaTLP.java:
+	Archivo que pertenece a la vista VistaTLP
+
+- VistaVerInput.java:
+	Archivo que pertenece a la vista VistaVerInput
+
+- VistaVerTeclado.java:
+	Archivo que pertenece a la vista VistaVerTeclado
