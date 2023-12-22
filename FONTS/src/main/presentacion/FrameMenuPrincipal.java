@@ -8,7 +8,7 @@ import javax.swing.*;
  * actúa como un contenedor JFrame para la creación de teclados.
  * @author Mariona Aguilera Folqué.
  */
-public class App extends JFrame {
+public class FrameMenuPrincipal extends JFrame {
     VistaTeclados vt;
     VistaAlfabetos va;
     VistaTLP vl;
@@ -23,13 +23,13 @@ public class App extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
-
+    
     /**
      * Constructor de la clase App.
      * Crea una instancia de la aplicación, establece el título y
      * agrega la vista de teclados al contenido del JFrame.
      */
-    public App(){
+    public FrameMenuPrincipal(){
         super("Creadora de teclados");
         inicializar();
 
@@ -39,6 +39,6 @@ public class App extends JFrame {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new App());
+        SwingUtilities.invokeLater(() -> new FrameMenuPrincipal());
     }
 }

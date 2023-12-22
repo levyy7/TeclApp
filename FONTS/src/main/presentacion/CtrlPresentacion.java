@@ -26,11 +26,11 @@ public class CtrlPresentacion {
     private static CtrlDominio ctrlD;
 
     /** Instancia de la vista Menu Principal del programa  */
-    private static App mp;
+    private static FrameMenuPrincipal mp;
 
     private CtrlPresentacion() {
         ctrlD = CtrlDominio.getInstance();
-        mp = new App();
+        mp = new FrameMenuPrincipal();
         enableVTeclados();
     }
 
@@ -273,7 +273,7 @@ public class CtrlPresentacion {
      * @param nombreExcepcion : Nombre de la excepción que ha ocurrido
      * @param textoExcepcion : Texto explicando la propia excepción
     */
-    public void saltaExcepcion(String textoExcepcion) { //String nombreExcepcion, 
-        VistaExcepcion vexc = new VistaExcepcion(textoExcepcion);
+    public void saltaExcepcion(String nameExcepcion, String textoExcepcion) { //String nombreExcepcion, 
+        JOptionPane.showMessageDialog(mp, textoExcepcion, nameExcepcion, JOptionPane.ERROR_MESSAGE);
     }
 }
