@@ -30,17 +30,15 @@ public class VistaModificarInput extends JDialog {
         general = new JPanel(new BorderLayout());
         centre = new JPanel();
     }
-    public String[] getData(){
-        String[] Vinput;
-        Vinput[0] = nom;
-        Vinput[1] = valorI.getText().replaceAll("[\n\r]", "");
-        return Vinput;
+
+    public String getData(){
+        return valorI.getText().replaceAll("[\n\r]", "");
     }
 
-    public VistaModificarInput(String nom, String[] a){
+    public VistaModificarInput(String nom, String in){
         super();
         inicializar();
-
+        char[] a = in.toCharArray();
 
 		title = new JLabel(nom); 
 		Font font = new Font("Arial", Font.PLAIN, 24);
@@ -104,6 +102,7 @@ public class VistaModificarInput extends JDialog {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VistaModificarInput(args[0], args));
+        SwingUtilities.invokeLater(() -> new VistaModificarInput(args[0], args[1]));
     }
 }
+//clase make by Pol

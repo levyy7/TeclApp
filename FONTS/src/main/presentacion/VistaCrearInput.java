@@ -23,14 +23,13 @@ public class VistaCrearInput extends JDialog {
     JButton bcreate;
 
     public String[] getData(){
-        String[] Vinput;
+        String[] Vinput= new String[2];
         Vinput[0] = nameA.getText();
         Vinput[1] = valorA.getText().replaceAll("[\n\r]", "");
         return Vinput;
     }
     public VistaCrearInput(){
-        super();//owner, title, true
-        //setLocationRelativeTo(owner);
+        super();
         setSize(350, 200);
         setVisible(true);
         setResizable(false);
