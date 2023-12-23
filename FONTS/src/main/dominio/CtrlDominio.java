@@ -519,13 +519,6 @@ public class CtrlDominio {
             {System.out.println("Error: "+e.getMessage()); ctrlP.saltaExcepcion(e.getTipus(), "Error: "+e.getMessage()); return null;}
     }
 
-    /**
-     * Consulta el tipo de TLP
-     * @param nombreTLP
-     * @return String : Devuelve el tipo de TLP de la siguiente forma:
-     *  - "Texto", si el TLP era de clase Texto
-     *  - "Lista", si el TLP era de clase ListaPalabras
-    */
     public String consultarTipoTLP(String nombreTLP) {
         try {
             TLP tlp = ctrlE.getTLP(nombreTLP);

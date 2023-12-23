@@ -34,7 +34,7 @@ public class VistaModificarInput extends JDialog {
     }
 
 	private void inicializar() {
-        setSize(300, 200);
+        setSize(350, 200);
         setResizable(false);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         
@@ -87,8 +87,9 @@ public class VistaModificarInput extends JDialog {
         nombre = new JLabel("Contenido: ");
         valorI = new JTextArea(5, 20);
         valorI.setText(resultado);
+        JScrollPane laminaDesplazamiento = new JScrollPane(valorI);
         panelCentral.add(nombre);
-        panelCentral.add(valorI);
+        panelCentral.add(laminaDesplazamiento);
 
         general.add(panelCentral, BorderLayout.CENTER);
 
