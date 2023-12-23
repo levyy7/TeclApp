@@ -209,7 +209,7 @@ public class VistaTLP extends JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
-                if(barrabusq == new JTextField("")) barrabusq.setText("Introduce el nombre del alfabeto");
+                if(barrabusq == new JTextField("")) barrabusq.setText("Introduce el nombre del texto o lista de palabras");
             }
         };
 
@@ -278,7 +278,6 @@ public class VistaTLP extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String[] info = cp.getTLP(tlps.getSelectedValue());
                 VistaModificarInput vca = new VistaModificarInput(padre, info[0], info[1]);
-                vca.setVisible(true);
 
                 String closeReason = vca.getCloseReason();
                 if (closeReason.equals("Operation Finished")) {
@@ -374,7 +373,6 @@ public class VistaTLP extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String[] info = cp.getTLP(tlps.getSelectedValue());
                 VistaVerInput vvi = new VistaVerInput(padre, info[0], info[1]);
-                vvi.setVisible(true);
             }
         };
 

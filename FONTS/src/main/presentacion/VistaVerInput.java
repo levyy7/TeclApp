@@ -51,18 +51,14 @@ public class VistaVerInput extends JDialog {
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.EAST);
         cont.add(Box.createRigidArea(new Dimension(50, 50)), BorderLayout.WEST);
 
-		int size_a = (int) Math.ceil(a.length/10) + 1;
+		int size_a = (int) Math.ceil(a.length/15) + 1;
 		String[] resultado = new String[size_a];
 		for (int i = 0; i < resultado.length; i += 1) {
 			String particion = "";
-			for (int j = 0; j < 10; j += 1) {
-				if (i*10+j < a.length){
-					particion += a[i*10+j];
-                    if (i*10+j == a.length-1) {
-                        particion += ".";
-                    } else {
-                        particion += ", ";
-                    }
+			for (int j = 0; j < 15; j += 1) {
+				if (i*15+j < a.length){
+					particion += a[i*15+j];
+
 				}
 			}
 			resultado[i] = particion;

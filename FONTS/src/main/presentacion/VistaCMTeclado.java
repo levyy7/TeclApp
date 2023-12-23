@@ -28,12 +28,6 @@ public class VistaCMTeclado extends JDialog {
 
     JTextArea tlp;
 
-    JButton bimporttext;
-    JButton bimportlist;
-
-    JButton bct;
-    JButton bcl;
-
     JButton bit;
     JButton bil;
 
@@ -68,7 +62,7 @@ public class VistaCMTeclado extends JDialog {
      * @param title Título del diálogo.
      * @param name Nombre inicial para el teclado.
      */
-    public VistaCMTeclado(JFrame owner, String title, String name) {
+    public VistaCMTeclado(JFrame owner, String title, String name, String alg, String alph) {
         super(owner, title, true);
         setLocationRelativeTo(owner);
         setSize(670, 350);
@@ -87,11 +81,12 @@ public class VistaCMTeclado extends JDialog {
 
         algoritmo = new JLabel("Algoritmo: ");
         selecAlgo = new JComboBox<>(new String[]{"QAP", "GEN"});
+        selecAlgo.setSelectedItem(alg);
         panelNorte.add(algoritmo);
         panelNorte.add(selecAlgo);
 
         alfabeto = new JLabel("Alfabeto: ");
-        nameA = new JTextField();
+        nameA = new JTextField(alph);
         nameA.setPreferredSize(new Dimension(100, 20));
         panelNorte.add(alfabeto);
         panelNorte.add(nameA);
@@ -101,6 +96,7 @@ public class VistaCMTeclado extends JDialog {
         JPanel panelCentro = new JPanel(new BorderLayout());
         panelCentro.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         JLabel info = new JLabel("Introduce nombres de textos y/o listas de palabras con frecuencia:");
+        StringBuilder f = new StringBuilder();
         tlp = new JTextArea();
         tlp.setPreferredSize(new Dimension(75, 1000));
         tlp.setLineWrap(true);
@@ -113,29 +109,20 @@ public class VistaCMTeclado extends JDialog {
         bit = new JButton("Enviar");
         bil = new JButton("Enviar");
 
-        bimporttext = new JButton("Importar Texto");
-        bimportlist = new JButton("Importar Lista");
-
-        bct = new JButton("Crear Texto");
-        bcl = new JButton("Crear Lista");
-
         panelCentro.add(info, BorderLayout.NORTH);
         JPanel aux = new JPanel();
         aux.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         aux.add(Box.createRigidArea(new Dimension(5, 5)));
         aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
-        aux.add(bct);
         aux.add(Box.createRigidArea(new Dimension(10, 10)));
-        aux.add(bimporttext);
+
         panelCentro.add(aux, BorderLayout.WEST);
 
         aux = new JPanel();
         aux.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         aux.add(Box.createRigidArea(new Dimension(5, 5)));
         aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
-        aux.add(bcl);
         aux.add(Box.createRigidArea(new Dimension(10, 10)));
-        aux.add(bimportlist);
         panelCentro.add(aux, BorderLayout.EAST);
 
         panelCentro.add(st, BorderLayout.CENTER);
@@ -180,62 +167,8 @@ public class VistaCMTeclado extends JDialog {
             }
         };
 
-        /**
-         * ActionListener para el botón "Crear Texto", habilita la interfaz para la creación de texto.
-         */
-        ActionListener crearTexto = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVCrearTexto(this)
-            }
-        };
-
-        /**
-         * ActionListener para el botón "Crear Lista", habilita la interfaz para la creación de lista.
-         */
-        ActionListener crearLista = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                //ctrlPres.enableVCrearLista(this)
-            }
-        };
-
-        /**
-         * ActionListener para el botón "Importar Texto", permite al usuario seleccionar un archivo de texto para importar.
-         */
-        ActionListener importarTexto = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                JFileChooser imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
-                if (result == JFileChooser.APPROVE_OPTION){
-                    File selected = imp.getSelectedFile();
-                    //ctrlPres.importTextos(selected.getAbsolutePath());
-                }
-            }
-        };
-
-        /**
-         * ActionListener para el botón "Importar Lista", permite al usuario seleccionar un archivo de lista para importar.
-         */
-        ActionListener importarLista = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                JFileChooser imp = new JFileChooser();
-                int result = imp.showOpenDialog(act);
-                if (result == JFileChooser.APPROVE_OPTION){
-                    File selected = imp.getSelectedFile();
-                    //ctrlPres.importListas(selected.getAbsolutePath());
-                }
-            }
-        };
-
         bconfirm.addActionListener(crear);
         bcancel.addActionListener(cancelar);
-        bct.addActionListener(crearTexto);
-        bcl.addActionListener(crearLista);
-        bimporttext.addActionListener(importarTexto);
-        bimportlist.addActionListener(importarLista);
 
         //los botones enviar recogen la info y la guardan es strings
         //boton crear -> recoge todo y crea el teclado

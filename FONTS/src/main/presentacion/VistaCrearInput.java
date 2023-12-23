@@ -67,7 +67,7 @@ public class VistaCrearInput extends JDialog {
         general.add(panelNorte, BorderLayout.NORTH);
 
         JPanel panelCentral = new JPanel(new FlowLayout());
-        nombre = new JLabel("Alfabeto: ");
+        nombre = new JLabel("Contenido: ");
         valorA = new JTextArea(5, 20);
         panelCentral.add(nombre);
         panelCentral.add(valorA);

@@ -229,7 +229,7 @@ public class VistaTeclados extends JPanel {
         ActionListener crearteclado = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                VistaCMTeclado vct = new VistaCMTeclado(padre, "Crear Teclado", "");
+                VistaCMTeclado vct = new VistaCMTeclado(padre, "Crear Teclado", "", "", "");
                 vct.setVisible(true);
 
                 String closeReason = vct.getCloseReason();
@@ -244,7 +244,8 @@ public class VistaTeclados extends JPanel {
         ActionListener modificarteclado = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VistaCMTeclado vct = new VistaCMTeclado(padre, "Modificar Teclado", teclados.getSelectedValue());
+                String[] ini = cp.getInfoTeclado(teclados.getSelectedValue());
+                VistaCMTeclado vct = new VistaCMTeclado(padre, "Modificar Teclado", ini[0], ini[1],ini[2]);
                 vct.setVisible(true);
 
                 String closeReason = vct.getCloseReason();

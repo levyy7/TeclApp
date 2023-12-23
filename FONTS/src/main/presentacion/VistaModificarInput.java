@@ -84,7 +84,7 @@ public class VistaModificarInput extends JDialog {
 		}
 
         JPanel panelCentral = new JPanel(new FlowLayout());
-        nombre = new JLabel("Input: ");
+        nombre = new JLabel("Contenido: ");
         valorI = new JTextArea(5, 20);
         valorI.setText(resultado);
         panelCentral.add(nombre);
