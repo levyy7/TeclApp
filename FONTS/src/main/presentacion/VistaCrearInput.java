@@ -105,7 +105,7 @@ public class VistaCrearInput extends JDialog {
 
         bcreate.addActionListener(crear);
         bcancel.addActionListener(cancelar);
-        setVisible(true);
+        //setVisible(false);
     }
 
 }
