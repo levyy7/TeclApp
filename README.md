@@ -1,6 +1,17 @@
-# PROP Grupo 41.2
+# TeclApp - Custom Layout Generator
 
-## Miembros del grupo:
+This is an app developed for the PROP subject, 3rd grade at Universitat Politécnica de Catalunya.
+
+The goal of this project is to create a user-friendly app which can be used to generate efficietly-writable layouts for any given language. That is, given some set of characters and texts using that language, it generates a layout in which, after some adjustment, one should be able to write really fast.
+
+We have implemented two approach this problem:
+
+- QAP, which gives the optimal solution to the problem but, as it has an exponential cost, takes too long for n>20.
+- Genetic Algorithm, which gives a pseudo-optimal solution. This AI approach has polynomial cost and thus can handle large problems.
+
+For a broader understanding of the project, it is advisable to check out the [Algorithm Documentation](DOCS/QAPDocumentacion.pdf), [User Manual](DOCS/ManualDeUsuario.pdf) and [Javadoc](Javadoc/index.html).
+
+## Group Members
 
 - Sabaté Iturgaiz, Eneko 
 - Aguilera Folqué, Mariona
@@ -12,52 +23,47 @@
 - [miguel.angel.montero@estudiantat.upc.edu]()
 - [pol.ribera@estudiantat.upc.edu]()
 
-## Profesor: 
+## Professor
 
 - Ricardo Fernández Domenech ([ricardo.fernandez.domenech@upc.edu]())
 
-## Cambios respecto a la segunda entrega
+## Usage
 
-- Implementación de la capa de presentación
-- Manual de usuario
-- Cambios en el dominio, como la adición de las importaciones
+To run the app, follow these steps:
 
-## Elementos del directorio
+```
+cd FONTS/src/
+make all
+make start
+```
 
-Cada carpeta (menos lib y Javadoc), contiene un **index.txt** que explica más
-detalladamente el contenido de ésta.
+For more information regarding the usage of the app, check the [User Manual](DOCS/ManualDeUsuario.pdf).
 
-### DOCS:
+## Directory Elements
 
-Contiene la documentación asignada a la tercera entrega. En un solo
-archivo pdf se encuentra la información necesaria para utilizar el programa
-(ManualDeUsuario.pdf).
+Each folder (except lib and Javadoc) contains an index.txt file that further explains its contents.
 
-### EXE:
+## DOCS
 
-Se encuentran los archivos ejecutables (.class) de todas las clases
-implementadas que se encuentran en la carpeta FONTS. Toda la salida
-está en la carpeta out y ahí se encuentran los subdirectorios
-de las clases correspondientes.
+Contains the documentation assigned to the third delivery. All the necessary information to use the program is found in a single PDF file (UserManual.pdf).
 
-### FONTS:
+### EXE
 
-Tiene una carpeta para guardar la informacion necesaria del proyecto y 
-tiene la carpeta src, que contiene todas las clases, que son los
-tests, los drivers, las excepciones y todas las clases del dominio,
-persistencia y presentación.
+The executable files (.class) of all implemented classes found in the FONTS folder are located here. All output is in the out folder, where the subdirectories of the corresponding classes are located.
 
-A parte también tiene el Makefile que genera los ejecutables de todas
-los archivos .java.
+### FONTS
 
-### lib:
+It has a folder to store the necessary project information and the src folder, which contains all classes, including tests, drivers, exceptions, and all domain, persistence, and presentation classes.
 
-Contiene las bibliotecas externas necesarias (JARs) para utilizar los
-tests de los JUnit.
+Additionally, it contains the Makefile that generates the executables for all .java files.
 
-### Javadoc:
+### lib
 
-Contiene el javadoc de todo el código implementado.
+Contains the necessary external libraries (JARs) to use the JUnit tests.
+
+### Javadoc
+
+Contains the Javadoc for all implemented code.
 
 
 
